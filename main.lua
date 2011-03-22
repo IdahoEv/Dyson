@@ -1,8 +1,9 @@
 ndraws = 0
 
 CENTER = { x = 150, y = 300 }
-ORBIT_RADIUS = 150
-SPEED = 1 / 50
+MARS_RADIUS = 150
+EARTH_RADIUS = 100
+SPEED = 3
 
 function love.draw()
     love.graphics.setColor(255,255,255)
@@ -11,13 +12,19 @@ function love.draw()
     love.graphics.setColor(200, 200, 0)
     love.graphics.circle("fill", CENTER.x, CENTER.y, 50, 50)
 
-
-    x = (math.sin(ndraws * SPEED) * ORBIT_RADIUS) + CENTER.x
-    y = (math.cos(ndraws * SPEED) * ORBIT_RADIUS) + CENTER.y
-
     -- Draw a planet
+    x, y = orbit_coords(ndraws, SPEED, MARS_RADIUS, CENTER)
     love.graphics.setColor(200, 0, 0) -- Mars
     love.graphics.circle("fill", x, y, 10, 50)
 
+    x, y = orbit_coords(ndraws, SPEED, EARTH_RADIUS, CENTER)
+    love.graphics.setColor(50, 60, 200) -- Mars
+    love.graphics.circle("fill", x, y, 10, 50)
+
     ndraws = ndraws + 1
+end
+
+function orbit_coords(ndraws, speed, radius, center)
+  x = (math.sin(ndraws * speed / radius) * radius) + center.x
+  y = (math.cos(ndraws * speed / radius) * radius) + center.y
 end
