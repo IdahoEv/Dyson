@@ -1,3 +1,8 @@
+-- Simple simulation of a star and planet(s)
+-- to familiarize ourselves with love graphics primitives.
+--
+-- Evan Dorn and Kiri Wagstaff, 3/21/2011
+
 ndraws = 0
 
 CENTER = { x = 200, y = 300 }
@@ -18,10 +23,12 @@ function love.draw()
     x, y = orbit_coords(ndraws, SPEED, MARS_RADIUS, CENTER)
     love.graphics.setColor(200, 0, 0) -- Mars
     love.graphics.circle("fill", x, y, 10, 50)
+    love.graphics.print("Mars", x+12, y-5);
 
     x, y = orbit_coords(ndraws, SPEED, EARTH_RADIUS, CENTER)
     love.graphics.setColor(50, 60, 200) -- Earth
     love.graphics.circle("fill", x, y, 10, 50)
+    love.graphics.print("Earth", x+12, y-5);
 
     x, y = orbit_coords(ndraws, SPEED, JUPITER_RADIUS, CENTER)
     love.graphics.setColor(250, 70, 70) -- Jupiter
