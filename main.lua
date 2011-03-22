@@ -7,6 +7,7 @@ function love.draw()
     love.graphics.setColor(200, 200, 0)
     love.graphics.circle("fill", 100, 300, 50, 50)
 
+    -- Draw a planet
     love.graphics.setColor(200, 0, 0) -- Mars 
     love.graphics.circle("fill", ndraws/10, ndraws/10, 10, 50)
 
