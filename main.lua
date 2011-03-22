@@ -5,21 +5,34 @@
 
 ndraws = 0
 
+CENTER = { x = 200, y = 300 }
+MARS_RADIUS = 150
+EARTH_RADIUS = 100
+SPEED = 3
+
 function love.draw()
-    love.graphics.setColor(255, 255, 255)
-    love.graphics.print("Hello Kiri!", 400, 300)
+    love.graphics.setColor(255,255,255)
+    love.graphics.print("I Love Kiri!", 500, 300)
     love.graphics.print(string.format("%d draws.", ndraws), 400, 350)
     love.graphics.setColor(200, 200, 0)
-    love.graphics.circle("fill", 100, 300, 50, 50)
+    love.graphics.circle("fill", CENTER.x, CENTER.y, 50, 50)
 
     -- Draw a planet
-    love.graphics.setColor(200, 0, 0) -- Mars 
-    love.graphics.circle("fill", ndraws/10, ndraws/10, 10, 50)
-    love.graphics.print("Mars", ndraws/10+12, ndraws/10-5);
+    x, y = orbit_coords(ndraws, SPEED, MARS_RADIUS, CENTER)
+    love.graphics.setColor(200, 0, 0) -- Mars
+    love.graphics.circle("fill", x, y, 10, 50)
+    love.graphics.print("Mars", x+12, y-5);
 
-    love.graphics.setColor(0, 0, 200) -- Earth
-    love.graphics.circle("fill", 400-ndraws/10, ndraws/10, 10, 50)
-    love.graphics.print("Earth", 400-ndraws/10+12, ndraws/10-5);
+    x, y = orbit_coords(ndraws, SPEED, EARTH_RADIUS, CENTER)
+    love.graphics.setColor(50, 60, 200) -- Earth
+    love.graphics.circle("fill", x, y, 10, 50)
+    love.graphics.print("Earth", x+12, y-5);
 
     ndraws = ndraws + 1
+end
+
+function orbit_coords(ndraws, speed, radius, center)
+  x = (math.sin(ndraws * speed / radius) * radius) + center.x
+  y = (math.cos(ndraws * speed / radius) * radius) + center.y
+  return x, y
 end
