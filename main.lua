@@ -3,11 +3,15 @@
 --
 -- Evan Dorn and Kiri Wagstaff, 3/21/2011
 
+require "Spob" -- Space Object class
+
 ndraws = 0
 
 CENTER = { x = 200, y = 300 }
-MARS_RADIUS = 150
-EARTH_RADIUS = 100
+MARS_ORBITAL_RADIUS = 150
+EARTH_ORBITAL_RADIUS = 100
+MARS_RADIUS = 10
+EARTH_RADIUS = 15
 SPEED = 3
 
 function love.draw()
@@ -18,21 +22,24 @@ function love.draw()
     love.graphics.circle("fill", CENTER.x, CENTER.y, 50, 50)
 
     -- Draw a planet
-    x, y = orbit_coords(ndraws, SPEED, MARS_RADIUS, CENTER)
-    love.graphics.setColor(200, 0, 0) -- Mars
-    love.graphics.circle("fill", x, y, 10, 50)
-    love.graphics.print("Mars", x+12, y-5);
+    mars = Spob:new() -- Mars
+    mars:setName("Mars")
+    mars:setColor({ R = 200, G = 0, B = 0 })
+    mars:setRadius(MARS_RADIUS)
+    mars:setOrbitalRadius(MARS_ORBITAL_RADIUS)
+    mars:setSpeed(SPEED)  -- probably setPeriod() instead, next
+    mars:setCenter(CENTER)
+    mars:draw(ndraws)  -- ndraws stands in for time
 
-    x, y = orbit_coords(ndraws, SPEED, EARTH_RADIUS, CENTER)
-    love.graphics.setColor(50, 60, 200) -- Earth
-    love.graphics.circle("fill", x, y, 10, 50)
-    love.graphics.print("Earth", x+12, y-5);
+    earth = Spob:new() -- Earth
+    earth:setName("Earth")
+    earth:setColor({ R = 50, G = 60, B = 200 })
+    earth:setRadius(EARTH_RADIUS)
+    earth:setOrbitalRadius(EARTH_ORBITAL_RADIUS)
+    earth:setSpeed(SPEED)  -- probably setPeriod() instead, next
+    earth:setCenter(CENTER)
+    earth:draw(ndraws)  -- ndraws stands in for time
 
     ndraws = ndraws + 1
 end
 
-function orbit_coords(ndraws, speed, radius, center)
-  x = (math.sin(ndraws * speed / radius) * radius) + center.x
-  y = (math.cos(ndraws * speed / radius) * radius) + center.y
-  return x, y
-end
