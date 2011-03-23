@@ -42,7 +42,7 @@ function love.draw()
     love.graphics.print("('up' to zoom in, 'down' to zoom out)", 20, 38)
     love.graphics.print(string.format("Time: %.3f seconds", time), 20, 52)
     love.graphics.print(string.format("Draws: %d", ndraws), 20, 66)
-    love.graphics.print("I Love Kiri!", 20, 70)
+    love.graphics.print("I Love Kiri!", 20, 80)
     love.graphics.print(string.format("Press 'q' to quit."), 20,
 			love.graphics.getHeight()-20)
 
