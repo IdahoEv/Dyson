@@ -5,8 +5,14 @@
 require 'screen_scale'
 require "Spob" -- Space Object class
 require 'constants'
+require 'screen_size'
+
+function love.conf(t)
+  setFullscreenTemporary(t)
+end
 
 function love.load()
+  initializeScreen()
   scale = ScreenScale:new()
   scale.screen_scale = 0.6e9
   ndraws = 0
@@ -19,6 +25,8 @@ function love.load()
   for _, planet in ipairs(planets) do
     if not planet.host then planet.host = stars.sol end
   end
+
+  fullscreen = false
 end
 
 function love.update(delta_time)
@@ -31,6 +39,7 @@ function love.keypressed(key, unicode)
   elseif  key == 'left'   then time_scale = time_scale / 2
   elseif  key == 'up'     then scale:zoomIn()
   elseif  key == 'down'   then scale:zoomOut()
+  elseif  key == 'f'      then toggleFullscreen()
   elseif  key == 'escape' or key == 'q' then love.event.push('q')
   end
 end
