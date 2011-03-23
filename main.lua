@@ -8,10 +8,6 @@ require 'constants'
 require 'screen_size'
 require 'fps'
 
-function love.conf(t)
-  setFullscreenTemporary(t)
-end
-
 function love.load()
   initializeScreen()
   scale = ScreenScale:new()
