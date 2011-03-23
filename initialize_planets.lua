@@ -15,7 +15,7 @@ mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
 mars:setCenter(CENTER)
 
 earth = Spob:new() -- Earth
-earth:setName("Earth")
+earth.name = "Earth"
 earth:setColor({ R = 50, G = 60, B = 200 })
 earth:setRadius(EARTH_RADIUS)
 earth:setOrbitalRadius(EARTH_ORBIT_RADIUS)
