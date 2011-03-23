@@ -59,27 +59,36 @@ end
 
 -- Draw the object in the current location
 function Spob:draw(scale)
-   love.graphics.setColor(self.color.R, self.color.G, self.color.B)
    -- If no host, location is relative to screen center
    if (self.host == nil) then
-      x, y = scale:screenCoords(self.location.x, self.location.y)
+     host_x, host_y = 0, 0
    else
-      -- location is relative to host's location.
-      x, y = scale:screenCoords(self.location.x + self.host.location.x,
-        self.location.y + self.host.location.y)
+     host_x, host_y = self.host.location.x, self.host.location.y
    end
+   x, y = scale:screenCoords(self.location.x + host_x, self.location.y + host_y)
+
+   -- draw the orbit
+   orbital_radius = self.orbital_radius * scale:pixelScale()
+   if orbital_radius > 10 then
+     love.graphics.setColor(40, 40, 40)
+     hx, hy = scale:screenCoords(host_x, host_y)
+     love.graphics.circle('line', hx, hy, orbital_radius, 100)
+   end
+
    --print("drawing:", self.name, x, y, self.radius,
    --scale:pixelScale(), self.radius*scale:pixelScale())
   radius = self.radius * scale:pixelScale()
   if self.name ~= "Sol" then
-      radius = radius * PLANET_RADIUS_ZOOM
-   end
-   love.graphics.circle("fill", x, y,
+    radius = radius * PLANET_RADIUS_ZOOM
+  end
+  love.graphics.setColor(self.color.R, self.color.G, self.color.B)
+  love.graphics.circle("fill", x, y,
       radius,
       self.segments)
-   love.graphics.print(self.name,
+  love.graphics.print(self.name,
            x+radius+2,
            y-6);
+
 end
 
 -- Update the current position of this spob relative to its parent body

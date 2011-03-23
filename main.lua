@@ -31,7 +31,7 @@ function love.keypressed(key, unicode)
   elseif  key == 'left'   then time_scale = time_scale / 2
   elseif  key == 'up'     then scale:zoomIn()
   elseif  key == 'down'   then scale:zoomOut()
-  elseif  key == 'escape' or k == 'q' then love.event.push('q')
+  elseif  key == 'escape' or key == 'q' then love.event.push('q')
   end
 end
 
