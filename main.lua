@@ -6,6 +6,7 @@ require 'screen_scale'
 require "Spob" -- Space Object class
 require 'constants'
 require 'screen_size'
+require 'fps'
 
 function love.conf(t)
   setFullscreenTemporary(t)
@@ -27,10 +28,12 @@ function love.load()
   end
 
   fullscreen = false
+  initializeFPS()
 end
 
 function love.update(delta_time)
   time = time + delta_time * time_scale
+  updateFPS(delta_time)
   for _, planet in ipairs(planets) do planet:updateCoords(time) end
 end
 
@@ -49,8 +52,11 @@ function love.draw()
     love.graphics.print(string.format("Time scale: %s to 1", time_scale), 20, 10)
     love.graphics.print("('right' to speed up, 'left' to slow down)", 20, 24)
     love.graphics.print("('up' to zoom in, 'down' to zoom out)", 20, 38)
-    love.graphics.print(string.format("Time: %.3f seconds", time), 20, 52)
-    love.graphics.print(string.format("Draws: %d", ndraws), 20, 66)
+    love.graphics.print(string.format("Time: %.0f sec (%d years, %d days)", time,
+        time / SECONDS_PER_YEAR,
+        (time % SECONDS_PER_YEAR) / SECONDS_PER_DAY ),
+        20, 52)
+    love.graphics.print(string.format("FPS: %d", fps), 20, 66)
     love.graphics.print("I Love Kiri!", 20, 80)
     love.graphics.print(string.format("Press 'q' to quit."), 20,
 			love.graphics.getHeight()-20)

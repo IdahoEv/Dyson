@@ -1,1 +1,11 @@
 Super-secret project, tinkering with lua and love.
+
+Right now, it displays a simple simulation of our solar system.
+
+Usage:  With love installed, CD to the directory and run "love ."
+
+Keys:
+  Up/Down     - Zoom in or out
+  Left/Right  - Accelerate / Decelerate time
+  f           - Toggle fullscreen
+  q, esc      - Quit

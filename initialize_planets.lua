@@ -1,4 +1,4 @@
-SECONDS_PER_DAY = 24 * 60 * 60
+require 'constants'
 VENUS_ORBIT_RADIUS   = 1.08e8 -- km
 EARTH_ORBIT_RADIUS   = 1.49e8 -- km
 MARS_ORBIT_RADIUS    = 2.28e8 -- km
