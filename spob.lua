@@ -14,6 +14,8 @@ function Spob:init()
   -- Location: absolute.  With respect to what?  Center of "universe"?
   -- Relative to parent body, in my conception.   So a planet's position is relative to its star.
   self.location = { x = 0, y = 0, z = 0 }
+  -- Host: body around which this Spob orbits
+  self.host = nil
 
   self.orbital_radius = 0 -- in kilometers
   self.orbital_period = 0 -- in seconds
@@ -57,9 +59,16 @@ end
 -- Draw the object in the current location
 function Spob:draw(scale)
    love.graphics.setColor(self.color.R, self.color.G, self.color.B)
-   x, y = scale:screenCoords(self.location.x, self.location.y)
+   -- If no host, location is relative to screen center
+   if (self.host == nil) then
+      x, y = scale:screenCoords(self.location.x, self.location.y)
+   else
+      -- location is relative to host's location.
+      x, y = scale:screenCoords(self.location.x + self.host.location.x, 
+				self.location.y + self.host.location.y)
+   end
    --print("drawing:", self.name, x, y, self.radius, 
-	-- scale:pixelScale(), self.radius*scale:pixelScale())
+   --scale:pixelScale(), self.radius*scale:pixelScale())
    love.graphics.circle("fill", x, y, 
 			self.radius*scale:pixelScale(), 
 			self.segments)

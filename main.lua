@@ -15,11 +15,14 @@ function love.load()
   time_scale = 5e6
   stars = require 'initialize_stars'
   planets = require 'initialize_planets'
+  planets.mars.host  = stars.sol
+  planets.earth.host = stars.sol
+  planets.luna.host  = planets.earth
 end
 
 function love.update(delta_time)
   time = time + delta_time * time_scale
-  for _, planet in ipairs(planets) do planet:updateCoords(time) end
+  for _, planet in pairs(planets) do planet:updateCoords(time) end
 end
 
 function love.draw()
@@ -33,10 +36,10 @@ function love.draw()
 			love.graphics.getHeight()-20)
 
     -- Draw stars
-    for _, star in ipairs(stars) do star:draw(scale) end
+    for _, star in pairs(stars) do star:draw(scale) end
 
     -- Draw planets
-    for _, planet in ipairs(planets) do planet:draw(scale) end
+    for _, planet in pairs(planets) do planet:draw(scale) end
 
     ndraws = ndraws + 1
 end

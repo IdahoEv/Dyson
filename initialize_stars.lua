@@ -8,4 +8,4 @@ sol:setOrbitalRadius(0)
 sol:setOrbitalPeriod(1)
 sol:setCenter(CENTER)
 
-return { sol }
+return { sol = sol }
