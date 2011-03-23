@@ -27,6 +27,8 @@ function love.draw()
     love.graphics.print(string.format("Time: %.3f seconds", time), 20, 22)
     love.graphics.print(string.format("Draws: %d", ndraws), 20, 34)
     love.graphics.print("I Love Kiri!", 20, 46)
+    love.graphics.print(string.format("Press 'q' to quit."), 20, 
+			love.graphics.getHeight()-20)
 
     love.graphics.setColor(200, 200, 0)
     love.graphics.circle("fill", 
@@ -39,3 +41,8 @@ function love.draw()
     ndraws = ndraws + 1
 end
 
+function love.keypressed(k)
+    if k == 'escape' or k == 'q' then
+        love.event.push('q') -- quit the game
+    end
+end
