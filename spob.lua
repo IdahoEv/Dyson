@@ -1,4 +1,5 @@
 require "secs" -- definition of useful class construction methods
+require 'constants'
 
 Spob = class:new()
 
@@ -53,14 +54,15 @@ end
 function Spob:draw(scale)
    love.graphics.setColor(self.color.R, self.color.G, self.color.B)
    x, y = scale:screenCoords(self.location.x, self.location.y)
-   --print("drawing:", self.name, x, y, self.radius, 
+   --print("drawing:", self.name, x, y, self.radius,
 	-- scale:pixelScale(), self.radius*scale:pixelScale())
-   love.graphics.circle("fill", x, y, 
-			self.radius*scale:pixelScale(), 
+	 radius = self.radius*scale:pixelScale()*PLANET_RADIUS_ZOOM
+   love.graphics.circle("fill", x, y,
+			radius,
 			self.segments)
-   love.graphics.print(self.name, 
-		       x+self.radius*scale:pixelScale()+2, 
-		       y-self.radius*scale:pixelScale()/2);
+   love.graphics.print(self.name,
+		       x+radius+2,
+		       y-6);
 end
 
 -- Update the current position of this spob relative to its parent body

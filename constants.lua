@@ -1,1 +1,2 @@
 TAU = 2 * math.pi
+PLANET_RADIUS_ZOOM = 1e3
