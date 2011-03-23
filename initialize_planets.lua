@@ -40,7 +40,7 @@ mars:setOrbitalRadius(MARS_ORBIT_RADIUS)
 mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
 mars:setCenter(CENTER)
 
-jupiter = Spob:new() -- Mars
+jupiter = Spob:new() -- Jupiter
 jupiter:setName("Jupiter")
 jupiter:setColor({ R = 250, G = 100, B = 100 })
 jupiter:setRadius(7.149e4)
@@ -48,12 +48,28 @@ jupiter:setOrbitalRadius(7.785e8)
 jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
 jupiter:setCenter(CENTER)
 
-saturn = Spob:new() -- Mars
-saturn:setName("Mars")
+saturn = Spob:new() -- Saturn
+saturn:setName("Saturn")
 saturn:setColor({ R = 200, G = 200, B = 150 })
 saturn:setRadius(6.0268e4)
 saturn:setOrbitalRadius(1.433e9)
 saturn:setOrbitalPeriod(1.0759e4 * SECONDS_PER_DAY)
 saturn:setCenter(CENTER)
 
-return { mercury, venus, earth, mars, jupiter, saturn }
+uranus = Spob:new() -- Uranus
+uranus:setName("Uranus")
+uranus:setColor({ R = 200, G = 250, B = 220 })
+uranus:setRadius(2.5559e4)
+uranus:setOrbitalRadius(2.7489e9)
+uranus:setOrbitalPeriod(2.0799e4 * SECONDS_PER_DAY)
+uranus:setCenter(CENTER)
+
+neptune = Spob:new() -- Neptune
+neptune:setName("Neptune")
+neptune:setColor({ R = 150, G = 150, B = 250 })
+neptune:setRadius(2.4764e4)
+neptune:setOrbitalRadius(4.4529e9)
+neptune:setOrbitalPeriod(6.0190e4 * SECONDS_PER_DAY)
+neptune:setCenter(CENTER)
+
+return { mercury, venus, earth, mars, jupiter, saturn, uranus, neptune }
