@@ -13,6 +13,7 @@ function love.load()
   time = 0
 
   time_scale = 5e6
+  stars = require 'initialize_stars'
   planets = require 'initialize_planets'
 end
 
@@ -31,10 +32,8 @@ function love.draw()
     love.graphics.print(string.format("Press 'q' to quit."), 20, 
 			love.graphics.getHeight()-20)
 
-    love.graphics.setColor(200, 200, 0)
-    love.graphics.circle("fill", 
-			 scale.screen_center.x, scale.screen_center.y, 
-			 20, 50)
+    -- Draw stars
+    for _, star in ipairs(stars) do star:draw(scale) end
 
     -- Draw planets
     for _, planet in ipairs(planets) do planet:draw(scale) end
