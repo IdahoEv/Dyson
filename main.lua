@@ -24,9 +24,10 @@ end
 function love.draw()
     love.graphics.setColor(255,255,255)
     love.graphics.print(string.format("Time scale: %s to 1", time_scale), 20, 10)
-    love.graphics.print(string.format("Time: %.3f seconds", time), 20, 22)
-    love.graphics.print(string.format("Draws: %d", ndraws), 20, 34)
-    love.graphics.print("I Love Kiri!", 20, 46)
+    love.graphics.print("('Up' to speed up, 'down' to slow down)", 20, 22)
+    love.graphics.print(string.format("Time: %.3f seconds", time), 20, 40)
+    love.graphics.print(string.format("Draws: %d", ndraws), 20, 52)
+    love.graphics.print("I Love Kiri!", 20, 64)
     love.graphics.print(string.format("Press 'q' to quit."), 20, 
 			love.graphics.getHeight()-20)
 
@@ -42,7 +43,11 @@ function love.draw()
 end
 
 function love.keypressed(k)
-    if k == 'escape' or k == 'q' then
-        love.event.push('q') -- quit the game
-    end
+   if k == 'escape' or k == 'q' then
+      love.event.push('q') -- quit the game
+   elseif k == 'up' then
+      time_scale = time_scale * 1.5
+   elseif k == 'down' then
+      time_scale = time_scale / 1.5
+   end
 end
