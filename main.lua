@@ -8,11 +8,11 @@ require 'constants'
 
 function love.load()
   scale = ScreenScale:new()
-  scale.screen_scale = 2e9
+  scale.screen_scale = 0.6e9
   ndraws = 0
   time = 0
 
-  time_scale = 1e7
+  time_scale = 5e6
   planets = require 'initialize_planets'
 end
 
@@ -24,12 +24,14 @@ end
 function love.draw()
     love.graphics.setColor(255,255,255)
     love.graphics.print(string.format("Time scale: %s to 1", time_scale), 20, 10)
-    love.graphics.print(string.format("Time: %s seconds", time), 20, 22)
-    love.graphics.print(string.format("Draws: %s", ndraws), 20, 34)
+    love.graphics.print(string.format("Time: %.3f seconds", time), 20, 22)
+    love.graphics.print(string.format("Draws: %d", ndraws), 20, 34)
     love.graphics.print("I Love Kiri!", 20, 46)
 
     love.graphics.setColor(200, 200, 0)
-    love.graphics.circle("fill", scale.screen_center.x, scale.screen_center.y, 20, 50)
+    love.graphics.circle("fill", 
+			 scale.screen_center.x, scale.screen_center.y, 
+			 20, 50)
 
     -- Draw planets
     for _, planet in ipairs(planets) do planet:draw(scale) end

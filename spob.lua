@@ -51,11 +51,16 @@ end
 
 -- Draw the object in the current location
 function Spob:draw(scale)
-   -- print("drawing:", self.name, self.location.x, self.location.y)
    love.graphics.setColor(self.color.R, self.color.G, self.color.B)
    x, y = scale:screenCoords(self.location.x, self.location.y)
-   love.graphics.circle("fill", x, y, self.radius, self.segments)
-   love.graphics.print(self.name, x+12, y-5);
+   --print("drawing:", self.name, x, y, self.radius, 
+	-- scale:pixelScale(), self.radius*scale:pixelScale())
+   love.graphics.circle("fill", x, y, 
+			self.radius*scale:pixelScale(), 
+			self.segments)
+   love.graphics.print(self.name, 
+		       x+self.radius*scale:pixelScale()+2, 
+		       y-self.radius*scale:pixelScale()/2);
 end
 
 -- Update the current position of this spob relative to its parent body

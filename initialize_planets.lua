@@ -1,10 +1,10 @@
 SECONDS_PER_DAY = 24 * 60 * 60
-MARS_ORBIT_RADIUS = 2.28e8 -- km
-EARTH_ORBIT_RADIUS = 1.49e8 --km
-JUPITER_ORBIT_RADIUS = 7.8e8 -- km
+MARS_ORBIT_RADIUS    = 2.28e8 -- km
+EARTH_ORBIT_RADIUS   = 1.49e8 -- km
+JUPITER_ORBIT_RADIUS = 7.8e8  -- km
 
-MARS_RADIUS = 10
-EARTH_RADIUS = 10
+MARS_RADIUS  = 3393.0 -- km
+EARTH_RADIUS = 6378.0 -- km
 
 mars = Spob:new() -- Mars
 mars:setName("Mars")
@@ -22,4 +22,4 @@ earth:setOrbitalRadius(EARTH_ORBIT_RADIUS)
 earth:setOrbitalPeriod(365 * SECONDS_PER_DAY)
 earth:setCenter(CENTER)
 
-return { mars, earth }
+return { mars , earth }
