@@ -28,12 +28,11 @@ function Spob:setColor(c)
    end
 end
 
-function Spob:setName(n)
-   self.name = n
-end
-
 function Spob:setRadius(r)
-   self.radius = r
+   -- Ignore nonpositive radii 
+   if (r > 0) then
+      self.radius = r
+   end
 end
 
 -- Center c should be a table with x, y, and z values
@@ -42,11 +41,17 @@ function Spob:setCenter(c)
 end
 
 function Spob:setOrbitalPeriod(s)
-   self.orbital_period = s
+   -- Ignore nonpositive periods
+   if (s > 0) then
+      self.orbital_period = s
+   end
 end
 
 function Spob:setOrbitalRadius(r)
-   self.orbital_radius = r
+   -- Ignore nonpositive radii 
+   if (r > 0) then
+      self.orbital_radius = r
+   end
 end
 
 -- Draw the object in the current location

@@ -7,7 +7,7 @@ MARS_RADIUS  = 3393.0 -- km
 EARTH_RADIUS = 6378.0 -- km
 
 mars = Spob:new() -- Mars
-mars:setName("Mars")
+mars.name = "Mars"
 mars:setColor({ R = 200, G = 0, B = 0 })
 mars:setRadius(MARS_RADIUS)
 mars:setOrbitalRadius(MARS_ORBIT_RADIUS)
