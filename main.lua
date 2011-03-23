@@ -26,7 +26,7 @@ function love.draw()
     love.graphics.print(string.format("Time scale: %s to 1", time_scale), 20, 10)
     love.graphics.print(string.format("Time: %s seconds", time), 20, 22)
     love.graphics.print(string.format("Draws: %s", ndraws), 20, 34)
-    -- love.graphics.print("I Love Kiri!", 20, 46)
+    love.graphics.print("I Love Kiri!", 20, 46)
 
     love.graphics.setColor(200, 200, 0)
     love.graphics.circle("fill", scale.screen_center.x, scale.screen_center.y, 20, 50)

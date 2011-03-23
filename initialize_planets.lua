@@ -11,7 +11,7 @@ mars:setName("Mars")
 mars:setColor({ R = 200, G = 0, B = 0 })
 mars:setRadius(MARS_RADIUS)
 mars:setOrbitalRadius(MARS_ORBIT_RADIUS)
-mars:setOrbitalPeriod(365 * SECONDS_PER_DAY)
+mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
 mars:setCenter(CENTER)
 
 earth = Spob:new() -- Earth
@@ -19,7 +19,7 @@ earth:setName("Earth")
 earth:setColor({ R = 50, G = 60, B = 200 })
 earth:setRadius(EARTH_RADIUS)
 earth:setOrbitalRadius(EARTH_ORBIT_RADIUS)
-earth:setOrbitalPeriod(686 * SECONDS_PER_DAY)
+earth:setOrbitalPeriod(365 * SECONDS_PER_DAY)
 earth:setCenter(CENTER)
 
 return { mars, earth }
