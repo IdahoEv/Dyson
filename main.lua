@@ -5,34 +5,22 @@
 require 'screen_scale'
 require "Spob" -- Space Object class
 
-scale = ScreenScale:new()
-scale.screen_scale = 2e9
+function love.load()
+
+  scale = ScreenScale:new()
+  scale.screen_scale = 2e9
 
 
-ndraws = 0
+  ndraws = 0
 
-CENTER = { x = 200, y = 300 }
-MARS_ORBIT_RADIUS = 2.28e8 -- km
-EARTH_ORBIT_RADIUS = 1.49e8 --km
-JUPITER_ORBIT_RADIUS = 7.8e8 -- km
+  CENTER = { x = 200, y = 300 }
+  MARS_ORBIT_RADIUS = 2.28e8 -- km
+  EARTH_ORBIT_RADIUS = 1.49e8 --km
+  JUPITER_ORBIT_RADIUS = 7.8e8 -- km
 
-SPEED = 1e7
-
-mars = Spob:new() -- Mars
-mars:setName("Mars")
-mars:setColor({ R = 200, G = 0, B = 0 })
-mars:setRadius(MARS_RADIUS)
-mars:setOrbitalRadius(MARS_ORBIT_RADIUS)
-mars:setSpeed(SPEED)  -- probably setPeriod() instead, next
-mars:setCenter(CENTER)
-
-earth = Spob:new() -- Earth
-earth:setName("Earth")
-earth:setColor({ R = 50, G = 60, B = 200 })
-earth:setRadius(EARTH_RADIUS)
-earth:setOrbitalRadius(EARTH_ORBIT_RADIUS)
-earth:setSpeed(SPEED)  -- probably setPeriod() instead, next
-earth:setCenter(CENTER)
+  SPEED = 1e7
+  require 'initialize_planets'
+end
 
 function love.draw()
     love.graphics.setColor(255,255,255)
