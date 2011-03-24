@@ -8,4 +8,8 @@ Keys:
   Up/Down     - Zoom in or out
   Left/Right  - Accelerate / Decelerate time
   f           - Toggle fullscreen
+  p           - Toggle planet zoom (show planets 1000 times actual size)
+  r           - Toggle reticle (crosshairs) around planets
+  o           - Toggle display of orbital paths
   q, esc      - Quit
+
