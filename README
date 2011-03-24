@@ -3,6 +3,7 @@ Super-secret project, tinkering with lua and love.
 Right now, it displays a simple simulation of our solar system.
 
 Usage:  With love installed, CD to the directory and run "love ."
+  See http://love2d.org/wiki/Getting_Started
 
 Keys:
   Up/Down     - Zoom in or out
