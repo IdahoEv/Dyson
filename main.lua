@@ -8,6 +8,8 @@ require 'constants'
 require 'screen_size'
 require 'fps'
 require 'preferences'
+require 'text'
+require 'help'
 
 function love.load()
   initializeScreen()
@@ -35,6 +37,7 @@ function love.update(delta_time)
 end
 
 function love.keypressed(key, unicode)
+  -- print(key, unicode)
   if      key == 'right'  then time_scale = time_scale * 2
   elseif  key == 'left'   then time_scale = time_scale / 2
   elseif  key == 'up'     then scale:zoomIn()
@@ -44,29 +47,38 @@ function love.keypressed(key, unicode)
   elseif  key == 'p'      then preferences.toggle('enlarge_planets')
   elseif  key == 'o'      then preferences.toggle('show_orbits')
   elseif  key == 'r'      then preferences.toggle('show_reticle')
+  elseif  key == '?' or key == '/' then preferences.toggle('show_help')
   end
 end
 
-
 function love.draw()
-    love.graphics.setColor(255,255,255)
-    love.graphics.print(string.format("Time scale: %s to 1", time_scale), 20, 10)
-    love.graphics.print("('right' to speed up, 'left' to slow down)", 20, 24)
-    love.graphics.print("('up' to zoom in, 'down' to zoom out)", 20, 38)
-    love.graphics.print(string.format("Time: %.0f sec (%d years, %d days)", time,
+  textLine{str={"Time scale: %s to 1", time_scale}, x=LEFT_MARGIN, y=TOP_MARGIN}
+  textLine{str={"Time: %.0f sec (%d years, %d days)", time,
         time / SECONDS_PER_YEAR,
-        (time % SECONDS_PER_YEAR) / SECONDS_PER_DAY ),
-        20, 52)
-    love.graphics.print(string.format("FPS: %d", fps), 20, 66)
-    love.graphics.print("I Love Kiri!", 20, 80)
-    love.graphics.print(string.format("Press 'q' to quit."), 20,
-			love.graphics.getHeight()-20)
+        ((time % SECONDS_PER_YEAR) / SECONDS_PER_DAY )}}
+  textLine{str={string.format("FPS: %d", fps)}}
+  textLine{str = "Press 'q' to quit, '?' for help.", y = BOTTOM_MARGIN }
+  textLine{str = "E + K!", x = HELP_MARGIN, y = BOTTOM_MARGIN }
 
-    -- Draw stars
-    for _, star in pairs(stars) do star:draw(scale) end
+  if preferences.show_help then drawHelp() end
 
-    -- Draw planets
-    for _, planet in ipairs(planets) do planet:draw(scale) end
+  -- Draw stars
+  for _, star in pairs(stars) do star:draw(scale) end
 
-    ndraws = ndraws + 1
+  -- Draw planets
+  for _, planet in ipairs(planets) do planet:draw(scale) end
+
+  ndraws = ndraws + 1
 end
+
+function drawHelp()
+  textLine{str = "Key Commands:", x = HELP_MARGIN, y = TOP_MARGIN }
+  textLine{str = "right/left: change speed"}
+  textLine{str = "up/down: zoom"}
+  textLine{str = 'f: toggle fullscreen'}
+  textLine{str = 'p: toggle enlarge planets'}
+  textLine{str = 'o: toggle show orbits'}
+  textLine{str = 'r: toggle planet reticles'}
+  textLine{str = 'q: quit'}
+end
+
