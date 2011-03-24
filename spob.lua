@@ -67,28 +67,35 @@ function Spob:draw(scale)
    end
    x, y = scale:screenCoords(self.location.x + host_x, self.location.y + host_y)
 
-   -- draw the orbit
-   orbital_radius = self.orbital_radius * scale:pixelScale()
-   if orbital_radius > 10 then
-     love.graphics.setColor(40, 40, 40)
-     hx, hy = scale:screenCoords(host_x, host_y)
-     love.graphics.circle('line', hx, hy, orbital_radius, 100)
-   end
+   if preferences.show_orbits then self:drawOrbit(host_x, host_y) end
 
    --print("drawing:", self.name, x, y, self.radius,
    --scale:pixelScale(), self.radius*scale:pixelScale())
   radius = self.radius * scale:pixelScale()
-  if self.name ~= "Sol" then
+  if preferences.enlarge_planets and self.name ~= "Sol" then
     radius = radius * PLANET_RADIUS_ZOOM
   end
   love.graphics.setColor(self.color.R, self.color.G, self.color.B)
-  love.graphics.circle("fill", x, y,
-      radius,
-      self.segments)
-  love.graphics.print(self.name,
-           x+radius+2,
-           y-6);
+  love.graphics.circle("fill", x, y, radius, self.segments)
+  if preferences.show_reticle then self:drawReticle(x,y,radius) end
+  love.graphics.print(self.name, x+radius+4, y - 14 );
 
+end
+
+function Spob:drawOrbit(host_x, host_y)
+  orbital_radius = self.orbital_radius * scale:pixelScale()
+  if orbital_radius > 10 then
+    love.graphics.setColor(40, 40, 40)
+    hx, hy = scale:screenCoords(host_x, host_y)
+    love.graphics.circle('line', hx, hy, orbital_radius, 100)
+  end
+end
+
+function Spob:drawReticle(x,y,radius)
+  love.graphics.line(x+radius+RETICLE_SPACING, y, x+radius+RETICLE_SPACING+RETICLE_LENGTH, y )
+  love.graphics.line(x-radius-RETICLE_SPACING, y, x-radius-RETICLE_SPACING-RETICLE_LENGTH, y )
+  love.graphics.line(x, y+radius+RETICLE_SPACING, x, y+radius+RETICLE_SPACING+RETICLE_LENGTH )
+  love.graphics.line(x, y-radius-RETICLE_SPACING, x, y-radius-RETICLE_SPACING-RETICLE_LENGTH )
 end
 
 -- Update the current position of this spob relative to its parent body

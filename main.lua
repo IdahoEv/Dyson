@@ -7,6 +7,7 @@ require "Spob" -- Space Object class
 require 'constants'
 require 'screen_size'
 require 'fps'
+require 'preferences'
 
 function love.load()
   initializeScreen()
@@ -40,8 +41,12 @@ function love.keypressed(key, unicode)
   elseif  key == 'down'   then scale:zoomOut()
   elseif  key == 'f'      then toggleFullscreen()
   elseif  key == 'escape' or key == 'q' then love.event.push('q')
+  elseif  key == 'p'      then preferences.toggle('enlarge_planets')
+  elseif  key == 'o'      then preferences.toggle('show_orbits')
+  elseif  key == 'r'      then preferences.toggle('show_reticle')
   end
 end
+
 
 function love.draw()
     love.graphics.setColor(255,255,255)
