@@ -7,12 +7,24 @@ ScreenScale.screen_scale = 1.5e9     -- kilometers per screen HEIGHT
 
 function ScreenScale:init()
   self:detectScreenSize()
+  -- view center starts as nil (i.e., origin)
+  self.view_center = nil
 end
 
 -- x, y in kilometers relative to the origin, which is assumed at screen center
 function ScreenScale:screenCoords(x, y)
-  return (x * self:pixelScale() + self.screen_center.x),
-         (y * self:pixelScale() + self.screen_center.y)
+   -- Compute offsets if the view center is some spob
+   if self.view_center == nil then
+      px = 0
+      py = 0
+   else
+      px = self.view_center.location.x
+      py = self.view_center.location.y
+   end
+   screenx = (x-px) * self:pixelScale() + self.screen_center.x
+   screeny = (y-py) * self:pixelScale() + self.screen_center.y
+
+   return screenx, screeny
 end
 
 -- pixels per kilometer

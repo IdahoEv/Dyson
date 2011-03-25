@@ -59,13 +59,7 @@ end
 
 -- Draw the object in the current location
 function Spob:draw(scale)
-   -- If no host, location is relative to screen center
-   if (self.host == nil) then
-     host_x, host_y = 0, 0
-   else
-     host_x, host_y = self.host.location.x, self.host.location.y
-   end
-   x, y = scale:screenCoords(self.location.x + host_x, self.location.y + host_y)
+   x, y = self:getCoords(scale)
 
    if preferences.show_orbits then self:drawOrbit(host_x, host_y) end
 
@@ -80,6 +74,17 @@ function Spob:draw(scale)
   if preferences.show_reticle then self:drawReticle(x,y,radius) end
   love.graphics.print(self.name, x+radius+4, y - 14 );
 
+end
+
+function Spob:getCoords(scale)
+   -- If no host, location is relative to screen center
+   if (self.host == nil) then
+      host_x, host_y = 0, 0
+   else
+      host_x, host_y = self.host.location.x, self.host.location.y
+   end
+   x, y = scale:screenCoords(self.location.x + host_x, self.location.y + host_y)
+   return x, y
 end
 
 function Spob:drawOrbit(host_x, host_y)

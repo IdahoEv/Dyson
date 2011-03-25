@@ -51,6 +51,30 @@ function love.keypressed(key, unicode)
   end
 end
 
+function love.mousepressed(x, y, button)
+   if button == 'l' then
+      -- zoom in to spob on left-click
+      -- find nearby-ish spob
+      for _, planet in ipairs(planets) do
+	 px, py = planet:getCoords(scale)
+	 if math.abs(px - x) < CLICK_TOL and
+	    math.abs(py - y) < CLICK_TOL then
+	    scale.view_center = planet
+	 end
+      end
+      for _, star in pairs(stars) do
+	 sx, sy = star:getCoords(scale)
+	 if math.abs(sx - x) < CLICK_TOL and
+	    math.abs(sy - y) < CLICK_TOL then
+	    scale.view_center = star
+	 end
+      end
+   elseif button == 'r' then
+      -- zoom out on right-click
+      scale.view_center = nil
+   end
+end
+
 function love.draw()
   textLine{str={"Time scale: %s to 1", time_scale}, x=LEFT_MARGIN, y=TOP_MARGIN}
   textLine{str={"Time: %.0f sec (%d years, %d days)", time,
@@ -80,5 +104,8 @@ function drawHelp()
   textLine{str = 'o: toggle show orbits'}
   textLine{str = 'r: toggle planet reticles'}
   textLine{str = 'q: quit'}
+  textLine{str = ''}
+  textLine{str = 'Left-click to recenter on a spob'}
+  textLine{str = 'Right-click to recenter at origin'}
 end
 
