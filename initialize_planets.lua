@@ -31,13 +31,13 @@ earth:setRadius(EARTH_RADIUS)
 earth:setOrbitalRadius(EARTH_ORBIT_RADIUS)
 earth:setOrbitalPeriod(365.25 * SECONDS_PER_DAY)
 
-luna = Spob:new() -- Luna
-luna.name = "Luna"
-luna.host = earth
-luna:setColor({ R = 200, G = 200, B = 200 })
-luna:setRadius(LUNA_RADIUS)
-luna:setOrbitalRadius(LUNA_ORBIT_RADIUS)
-luna:setOrbitalPeriod(27.3 * SECONDS_PER_DAY)
+  luna = Spob:new() -- Luna
+  luna.name = "Luna"
+  luna.host = earth
+  luna:setColor({ R = 200, G = 200, B = 200 })
+  luna:setRadius(LUNA_RADIUS)
+  luna:setOrbitalRadius(LUNA_ORBIT_RADIUS)
+  luna:setOrbitalPeriod(27.3 * SECONDS_PER_DAY)
 
 mars = Spob:new() -- Mars
 mars.name = "Mars"
@@ -52,6 +52,38 @@ jupiter:setColor({ R = 250, G = 100, B = 100 })
 jupiter:setRadius(7.149e4)
 jupiter:setOrbitalRadius(7.785e8)
 jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
+
+  io = Spob:new()
+  io.name = "Io"
+  io.host = jupiter
+  io:setColor({ R = 0xc5, G = 0x9c, B = 0x4c })
+  io:setRadius(1821.3)
+  io:setOrbitalRadius(421700)
+  io:setOrbitalPeriod(1.769 * SECONDS_PER_DAY)
+
+  europa = Spob:new()
+  europa.name = "Europa"
+  europa.host = jupiter
+  europa:setColor({ R = 0xab, G = 0x96, B = 0x76 })
+  europa:setRadius(1569)
+  europa:setOrbitalRadius(670900)
+  europa:setOrbitalPeriod(3.551 * SECONDS_PER_DAY)
+
+  ganymede = Spob:new()
+  ganymede.name = "Ganymede"
+  ganymede.host = jupiter
+  ganymede:setColor({ R = 0x9d, G = 0x86, B = 0x86 })
+  ganymede:setRadius(2634)
+  ganymede:setOrbitalRadius(1.070e6)
+  ganymede:setOrbitalPeriod(7.155 * SECONDS_PER_DAY)
+
+  callisto = Spob:new()
+  callisto.name = "Callisto"
+  callisto.host = jupiter
+  callisto:setColor({ R = 0x5c, G = 0x52, B = 0x36 })
+  callisto:setRadius(2410)
+  callisto:setOrbitalRadius(1.8827e6)
+  callisto:setOrbitalPeriod(16.689 * SECONDS_PER_DAY)
 
 saturn = Spob:new() -- Saturn
 saturn.name = "Saturn"
@@ -74,4 +106,4 @@ neptune:setRadius(2.4764e4)
 neptune:setOrbitalRadius(4.4529e9)
 neptune:setOrbitalPeriod(6.0190e4 * SECONDS_PER_DAY)
 
-return { mercury, venus, earth, luna, mars, jupiter, saturn, uranus, neptune }
+return { mercury, venus, earth, luna, mars, jupiter, io, europa, ganymede, callisto, saturn, uranus, neptune }
