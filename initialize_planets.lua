@@ -56,7 +56,7 @@ jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
   io = Spob:new()
   io.name = "Io"
   io.host = jupiter
-  io:setColor({ R = 0xc5, G = 0x9c, B = 0x4c })
+  io:setColor({ R = 0xf3, G = 0xe8, B = 0x84 })
   io:setRadius(1821.3)
   io:setOrbitalRadius(421700)
   io:setOrbitalPeriod(1.769 * SECONDS_PER_DAY)
