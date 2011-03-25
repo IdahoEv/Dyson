@@ -92,6 +92,14 @@ saturn:setRadius(6.0268e4)
 saturn:setOrbitalRadius(1.433e9)
 saturn:setOrbitalPeriod(1.0759e4 * SECONDS_PER_DAY)
 
+  titan = Spob:new()
+  titan.name = "Titan"
+  titan.host = saturn
+  titan:setColor({ R = 0xf9, G = 0xd2, B = 0x52 })
+  titan:setRadius(2576)
+  titan:setOrbitalRadius(1.221e6)
+  titan:setOrbitalPeriod(15.945 * SECONDS_PER_DAY)
+
 uranus = Spob:new() -- Uranus
 uranus.name = "Uranus"
 uranus:setColor({ R = 200, G = 250, B = 220 })
@@ -106,4 +114,13 @@ neptune:setRadius(2.4764e4)
 neptune:setOrbitalRadius(4.4529e9)
 neptune:setOrbitalPeriod(6.0190e4 * SECONDS_PER_DAY)
 
-return { mercury, venus, earth, luna, mars, jupiter, io, europa, ganymede, callisto, saturn, uranus, neptune }
+  triton = Spob:new()
+  triton.name = "Triton"
+  triton.host = neptune
+  triton:setColor({ R = 0xa7, G = 0xb2, B = 0xb9 })
+  triton:setRadius(1353)
+  triton:setOrbitalRadius(354759)
+  -- TODO:  Allow for retrograde orbits
+  triton:setOrbitalPeriod(5.877 * SECONDS_PER_DAY)
+
+return { mercury, venus, earth, luna, mars, jupiter, io, europa, ganymede, callisto, saturn, titan, uranus, neptune, triton }
