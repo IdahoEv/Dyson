@@ -34,6 +34,7 @@ earth:setOrbitalPeriod(365.25 * SECONDS_PER_DAY)
   luna = Spob:new() -- Luna
   luna.name = "Luna"
   luna.host = earth
+  table.insert(earth.satellites, luna)
   luna:setColor({ R = 200, G = 200, B = 200 })
   luna:setRadius(LUNA_RADIUS)
   luna:setOrbitalRadius(LUNA_ORBIT_RADIUS)
@@ -49,6 +50,7 @@ mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
   phobos = Spob:new() -- Phobos
   phobos.name = "Phobos"
   phobos.host = mars
+  table.insert(mars.satellites, phobos)
   phobos:setColor({ R = 0x9a, G = 0x8e, B = 0x85 })
   phobos:setRadius(11.1)
   phobos:setOrbitalRadius(9377)
@@ -57,6 +59,7 @@ mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
   deimos = Spob:new() -- Deimos
   deimos.name = "Deimos"
   deimos.host = mars
+  table.insert(mars.satellites, deimos)
   deimos:setColor({ R = 0xc9, G = 0xb5, B = 0x9a })
   deimos:setRadius(6.2)
   deimos:setOrbitalRadius(23460)
@@ -72,6 +75,7 @@ jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
   io = Spob:new()
   io.name = "Io"
   io.host = jupiter
+  table.insert(jupiter.satellites, io)
   io:setColor({ R = 0xf3, G = 0xe8, B = 0x84 })
   io:setRadius(1821.3)
   io:setOrbitalRadius(421700)
@@ -80,6 +84,7 @@ jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
   europa = Spob:new()
   europa.name = "Europa"
   europa.host = jupiter
+  table.insert(jupiter.satellites, europa)
   europa:setColor({ R = 0xab, G = 0x96, B = 0x76 })
   europa:setRadius(1569)
   europa:setOrbitalRadius(670900)
@@ -88,6 +93,7 @@ jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
   ganymede = Spob:new()
   ganymede.name = "Ganymede"
   ganymede.host = jupiter
+  table.insert(jupiter.satellites, ganymede)
   ganymede:setColor({ R = 0x9d, G = 0x86, B = 0x86 })
   ganymede:setRadius(2634)
   ganymede:setOrbitalRadius(1.070e6)
@@ -96,6 +102,7 @@ jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
   callisto = Spob:new()
   callisto.name = "Callisto"
   callisto.host = jupiter
+  table.insert(jupiter.satellites, callisto)
   callisto:setColor({ R = 0x5c, G = 0x52, B = 0x36 })
   callisto:setRadius(2410)
   callisto:setOrbitalRadius(1.8827e6)
@@ -111,6 +118,7 @@ saturn:setOrbitalPeriod(1.0759e4 * SECONDS_PER_DAY)
   titan = Spob:new()
   titan.name = "Titan"
   titan.host = saturn
+  table.insert(saturn.satellites, titan)
   titan:setColor({ R = 0xf9, G = 0xd2, B = 0x52 })
   titan:setRadius(2576)
   titan:setOrbitalRadius(1.221e6)
@@ -133,6 +141,7 @@ neptune:setOrbitalPeriod(6.0190e4 * SECONDS_PER_DAY)
   triton = Spob:new()
   triton.name = "Triton"
   triton.host = neptune
+  table.insert(neptune.satellites, triton)
   triton:setColor({ R = 0xa7, G = 0xb2, B = 0xb9 })
   triton:setRadius(1353)
   triton:setOrbitalRadius(354759)

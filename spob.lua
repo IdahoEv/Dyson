@@ -16,6 +16,8 @@ function Spob:initialize()
   self.location = { x = 0, y = 0, z = 0 }
   -- Host: body around which this Spob orbits (parent)
   self.host = nil
+  -- Satellites: bodies that orbit this Spob (children)
+  self.satellites = { }
 
   self.orbital_radius = 0 -- in kilometers
   self.orbital_period = 0 -- in seconds
@@ -50,23 +52,30 @@ end
 
 -- Draw the object in the current location
 function Spob:draw(scale)
-   local x, y = self:getCoords(scale)
-   -- If it has a host, then (optionally) draw its orbit around that host
-   if self.host ~= nil and preferences.show_orbits then 
-      local host_x, host_y = self.host:getLocation()
-      self:drawOrbit(host_x, host_y) 
-   end
-   
-   --print("drawing:", self.name, x, y, self.radius,
-   --scale:pixelScale(), self.radius*scale:pixelScale())
-   local radius = self.radius * scale:pixelScale()
-   if preferences.enlarge_planets and self.name ~= "Sol" then
-      radius = radius * PLANET_RADIUS_ZOOM
-   end
-   love.graphics.setColor(self.color.R, self.color.G, self.color.B)
-   love.graphics.circle("fill", x, y, radius, self.segments)
-   if preferences.show_reticle then self:drawReticle(x,y,radius) end
-   love.graphics.print(self.name, x+radius+4, y - 14 );
+  local x, y = self:getCoords(scale)
+  -- If it has a host, then (optionally) draw its orbit around that host
+  if self.host ~= nil and preferences.show_orbits then 
+    local host_x, host_y = self.host:getLocation()
+    self:drawOrbit(host_x, host_y) 
+  end
+  
+  --print("drawing:", self.name, x, y, self.radius,
+  --scale:pixelScale(), self.radius*scale:pixelScale())
+  local radius = self.radius * scale:pixelScale()
+  if preferences.enlarge_planets and self.name ~= "Sol" then
+    radius = radius * PLANET_RADIUS_ZOOM
+  end
+  love.graphics.setColor(self.color.R, self.color.G, self.color.B)
+  love.graphics.circle("fill", x, y, radius, self.segments)
+  if preferences.show_reticle then self:drawReticle(x,y,radius) end
+  love.graphics.print(self.name, x+radius+4, y - 14 );
+  
+  -- Now draw all children
+  if (self.satellites ~= nil) then
+    for _, sat in ipairs(self.satellites) do
+      sat:draw(scale)
+    end
+  end
 end
 
 -- Return the (absolute) x,y coordinates of this Spob
@@ -122,3 +131,13 @@ function Spob:updateCoords(time)
   -- orbital inclination
 end
 
+function Spob:printHierarchy(indent)
+  if indent == nil then indent = "" end
+  print(string.format("%s%s", indent, self.name))
+  if (self.satellites ~= nil) then
+    -- indent and recurse
+    for _, sat in ipairs(self.satellites) do
+      sat:printHierarchy(indent .. "  ")
+    end
+  end
+end

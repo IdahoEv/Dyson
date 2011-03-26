@@ -7,4 +7,4 @@ sol:setRadius(SOL_RADIUS)
 sol:setOrbitalRadius(0)
 sol:setOrbitalPeriod(1)
 
-return { sol = sol }
+return { sol }
