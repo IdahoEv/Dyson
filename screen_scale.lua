@@ -1,9 +1,10 @@
 require 'secs'
 
-ZOOM_FACTOR = 1.5
+ZOOM_FACTOR   = 1.5
+INITIAL_SCALE = 1.5e9  -- kilometers per screen HEIGHT
 
 ScreenScale = class:new()
-ScreenScale.screen_scale = 1.5e9     -- kilometers per screen HEIGHT
+ScreenScale.screen_scale = INITIAL_SCALE
 
 function ScreenScale:init()
   self:detectScreenSize()
@@ -15,16 +16,14 @@ end
 function ScreenScale:screenCoords(x, y)
    -- Compute offsets if the view center is some spob
    if self.view_center == nil then
-      px = 0
-      py = 0
+      px, py = 0, 0
    else
-      px = self.view_center.location.x
-      py = self.view_center.location.y
+      px, py = self.view_center:getLocation()
    end
-   screenx = (x-px) * self:pixelScale() + self.screen_center.x
-   screeny = (y-py) * self:pixelScale() + self.screen_center.y
+   screen_x = (x-px) * self:pixelScale() + self.screen_center.x
+   screen_y = (y-py) * self:pixelScale() + self.screen_center.y
 
-   return screenx, screeny
+   return screen_x, screen_y
 end
 
 -- pixels per kilometer
@@ -40,13 +39,16 @@ function ScreenScale:zoomOut()
   self.screen_scale = self.screen_scale * ZOOM_FACTOR
 end
 
+function ScreenScale:resetZoom()
+   self.screen_scale = INITIAL_SCALE
+end
+
 function ScreenScale:detectScreenSize()
-  self.screen_width = love.graphics.getWidth()
+  self.screen_width  = love.graphics.getWidth()
   self.screen_height = love.graphics.getHeight()
   self.screen_center = { x = self.screen_width/2,
                          y = self.screen_height/2 }
 end
-
 
 
 

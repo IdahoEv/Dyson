@@ -53,7 +53,7 @@ end
 
 function love.mousepressed(x, y, button)
    if button == 'l' then
-      -- zoom in to spob on left-click
+      -- left-click: center on spob
       -- find nearby-ish spob
       for _, planet in ipairs(planets) do
 	 px, py = planet:getCoords(scale)
@@ -70,8 +70,9 @@ function love.mousepressed(x, y, button)
 	 end
       end
    elseif button == 'r' then
-      -- zoom out on right-click
+      -- right-click: recenter at origin
       scale.view_center = nil
+      scale:resetZoom()
    end
 end
 
