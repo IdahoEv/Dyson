@@ -2,9 +2,10 @@ require 'middleclass'
 
 KEYBOARD_ZOOM_FACTOR = 1.5
 MOUSE_ZOOM_FACTOR    = 1.2
+INITIAL_SCALE = 1.5e9  -- kilometers per screen HEIGHT
 
 ScreenScale = class('ScreenScale')
-ScreenScale.screen_scale = 1.5e9     -- kilometers per screen HEIGHT
+ScreenScale.screen_scale = INITIAL_SCALE
 
 function ScreenScale:initialize()
   self:detectScreenSize()
@@ -14,18 +15,17 @@ end
 
 -- x, y in kilometers relative to the origin, which is assumed at screen center
 function ScreenScale:screenCoords(x, y)
+   local px, py
    -- Compute offsets if the view center is some spob
    if self.view_center == nil then
-      px = 0
-      py = 0
+      px, py = 0, 0
    else
-      px = self.view_center.location.x
-      py = self.view_center.location.y
+      px, py = self.view_center:getLocation()
    end
-   screenx = (x-px) * self:pixelScale() + self.screen_center.x
-   screeny = (y-py) * self:pixelScale() + self.screen_center.y
+   local screen_x = (x-px) * self:pixelScale() + self.screen_center.x
+   local screen_y = (y-py) * self:pixelScale() + self.screen_center.y
 
-   return screenx, screeny
+   return screen_x, screen_y
 end
 
 -- pixels per kilometer
@@ -41,13 +41,16 @@ function ScreenScale:zoomOut(factor)
   self.screen_scale = self.screen_scale * factor
 end
 
+function ScreenScale:resetZoom()
+   self.screen_scale = INITIAL_SCALE
+end
+
 function ScreenScale:detectScreenSize()
-  self.screen_width = love.graphics.getWidth()
+  self.screen_width  = love.graphics.getWidth()
   self.screen_height = love.graphics.getHeight()
   self.screen_center = { x = self.screen_width/2,
                          y = self.screen_height/2 }
 end
-
 
 
 

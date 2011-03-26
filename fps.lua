@@ -6,7 +6,7 @@ end
 function updateFPS(dt)
   table.remove(time_history, 1)
   table.insert(time_history, dt)
-  sum = 0
+  local sum = 0
   for _, delta in ipairs(time_history) do
     sum = sum + delta
   end
