@@ -90,9 +90,10 @@ end
 function Spob:drawOrbit(host_x, host_y)
   orbital_radius = self.orbital_radius * scale:pixelScale()
   if orbital_radius > 10 then
+    segments = math.pi / ( math.acos(1-(MAX_ORBIT_CIRCLE_ERROR/orbital_radius)))
     love.graphics.setColor(40, 40, 40)
     hx, hy = scale:screenCoords(host_x, host_y)
-    love.graphics.circle('line', hx, hy, orbital_radius, 100)
+    love.graphics.circle('line', hx, hy, orbital_radius, segments)
   end
 end
 
