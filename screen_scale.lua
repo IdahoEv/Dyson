@@ -1,12 +1,13 @@
-require 'secs'
+require 'middleclass'
 
-ZOOM_FACTOR   = 1.5
+KEYBOARD_ZOOM_FACTOR = 1.5
+MOUSE_ZOOM_FACTOR    = 1.2
 INITIAL_SCALE = 1.5e9  -- kilometers per screen HEIGHT
 
-ScreenScale = class:new()
+ScreenScale = class('ScreenScale')
 ScreenScale.screen_scale = INITIAL_SCALE
 
-function ScreenScale:init()
+function ScreenScale:initialize()
   self:detectScreenSize()
   -- view center starts as nil (i.e., origin)
   self.view_center = nil
@@ -32,12 +33,12 @@ function ScreenScale:pixelScale()
   return self.screen_height / self.screen_scale
 end
 
-function ScreenScale:zoomIn()
-  self.screen_scale = self.screen_scale / ZOOM_FACTOR
+function ScreenScale:zoomIn(factor)
+  self.screen_scale = self.screen_scale / factor
 end
 
-function ScreenScale:zoomOut()
-  self.screen_scale = self.screen_scale * ZOOM_FACTOR
+function ScreenScale:zoomOut(factor)
+  self.screen_scale = self.screen_scale * factor
 end
 
 function ScreenScale:resetZoom()

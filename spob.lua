@@ -1,10 +1,10 @@
-require "secs" -- definition of useful class construction methods
+require "middleclass" -- definition of useful class construction methods
 require 'constants'
 
-Spob = class:new()
+Spob = class('Spob')
 
 -- Name: default = ""
-function Spob:init()
+function Spob:initialize()
   self.name = ""
   -- Color: default = white
   self.color = { R = 255, G = 255, B = 255 }
