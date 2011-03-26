@@ -14,14 +14,15 @@ end
 
 -- x, y in kilometers relative to the origin, which is assumed at screen center
 function ScreenScale:screenCoords(x, y)
+   local px, py
    -- Compute offsets if the view center is some spob
    if self.view_center == nil then
       px, py = 0, 0
    else
       px, py = self.view_center:getLocation()
    end
-   screen_x = (x-px) * self:pixelScale() + self.screen_center.x
-   screen_y = (y-py) * self:pixelScale() + self.screen_center.y
+   local screen_x = (x-px) * self:pixelScale() + self.screen_center.x
+   local screen_y = (y-py) * self:pixelScale() + self.screen_center.y
 
    return screen_x, screen_y
 end
