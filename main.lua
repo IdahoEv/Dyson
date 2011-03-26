@@ -60,14 +60,14 @@ function love.mousepressed(x, y, button)
     -- left-click: center on spob
     -- find nearby-ish spob
     for _, planet in ipairs(planets) do
-      local px, py = planet:getCoords(scale)
+      local px, py = scale:screenCoords(planet:getLocation())
       if math.abs(px - x) < CLICK_TOL and
         math.abs(py - y) < CLICK_TOL then
         scale.view_center = planet
       end
     end
     for _, star in pairs(stars) do
-      local sx, sy = star:getCoords(scale)
+      local sx, sy = scale:screenCoords(star:getLocation())
       if math.abs(sx - x) < CLICK_TOL and
         math.abs(sy - y) < CLICK_TOL then
         scale.view_center = star
