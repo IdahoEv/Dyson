@@ -41,11 +41,27 @@ earth:setOrbitalPeriod(365.25 * SECONDS_PER_DAY)
 
 mars = Spob:new() -- Mars
 mars.name = "Mars"
-mars:setColor({ R = 200, G = 0, B = 0 })
+mars:setColor({ R = 0x8d, G = 0x34, B = 0x1a })
 mars:setRadius(MARS_RADIUS)
 mars:setOrbitalRadius(MARS_ORBIT_RADIUS)
 mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
 
+  phobos = Spob:new() -- Phobos
+  phobos.name = "Phobos"
+  phobos.host = mars
+  phobos:setColor({ R = 0x9a, G = 0x8e, B = 0x85 })
+  phobos:setRadius(11.1)
+  phobos:setOrbitalRadius(9377)
+  phobos:setOrbitalPeriod(0.319 * SECONDS_PER_DAY)
+
+  deimos = Spob:new() -- Deimos
+  deimos.name = "Deimos"
+  deimos.host = mars
+  deimos:setColor({ R = 0xc9, G = 0xb5, B = 0x9a })
+  deimos:setRadius(6.2)
+  deimos:setOrbitalRadius(23460)
+  deimos:setOrbitalPeriod(1.262 * SECONDS_PER_DAY)
+  
 jupiter = Spob:new() -- Jupiter
 jupiter.name = "Jupiter"
 jupiter:setColor({ R = 250, G = 100, B = 100 })
@@ -123,4 +139,4 @@ neptune:setOrbitalPeriod(6.0190e4 * SECONDS_PER_DAY)
   -- Triton is retrograde
   triton:setOrbitalPeriod(-5.877 * SECONDS_PER_DAY)
 
-return { mercury, venus, earth, luna, mars, jupiter, io, europa, ganymede, callisto, saturn, titan, uranus, neptune, triton }
+return { mercury, venus, earth, luna, mars, phobos, deimos, jupiter, io, europa, ganymede, callisto, saturn, titan, uranus, neptune, triton }
