@@ -36,12 +36,16 @@ function love.update(delta_time)
   for _, planet in ipairs(planets) do planet:updateCoords(time) end
 end
 
+function love.mousepressed(x, y, button)
+
+end
+
 function love.keypressed(key, unicode)
   -- print(key, unicode)
   if      key == 'right'  then time_scale = time_scale * 2
   elseif  key == 'left'   then time_scale = time_scale / 2
-  elseif  key == 'up'     then scale:zoomIn()
-  elseif  key == 'down'   then scale:zoomOut()
+  elseif  key == 'up'     then scale:zoomIn(KEYBOARD_ZOOM_FACTOR)
+  elseif  key == 'down'   then scale:zoomOut(KEYBOARD_ZOOM_FACTOR)
   elseif  key == 'f'      then toggleFullscreen()
   elseif  key == 'escape' or key == 'q' then love.event.push('q')
   elseif  key == 'p'      then preferences.toggle('enlarge_planets')
@@ -52,27 +56,27 @@ function love.keypressed(key, unicode)
 end
 
 function love.mousepressed(x, y, button)
-   if button == 'l' then
-      -- zoom in to spob on left-click
-      -- find nearby-ish spob
-      for _, planet in ipairs(planets) do
-	 px, py = planet:getCoords(scale)
-	 if math.abs(px - x) < CLICK_TOL and
-	    math.abs(py - y) < CLICK_TOL then
-	    scale.view_center = planet
-	 end
+  if button == 'l' then
+    -- zoom in to spob on left-click
+    -- find nearby-ish spob
+    for _, planet in ipairs(planets) do
+      px, py = planet:getCoords(scale)
+      if math.abs(px - x) < CLICK_TOL and
+        math.abs(py - y) < CLICK_TOL then
+        scale.view_center = planet
       end
-      for _, star in pairs(stars) do
-	 sx, sy = star:getCoords(scale)
-	 if math.abs(sx - x) < CLICK_TOL and
-	    math.abs(sy - y) < CLICK_TOL then
-	    scale.view_center = star
-	 end
+    end
+    for _, star in pairs(stars) do
+      sx, sy = star:getCoords(scale)
+      if math.abs(sx - x) < CLICK_TOL and
+        math.abs(sy - y) < CLICK_TOL then
+        scale.view_center = star
       end
-   elseif button == 'r' then
-      -- zoom out on right-click
-      scale.view_center = nil
-   end
+    end
+  elseif  button == 'r'  then scale.view_center = nil
+  elseif  button == 'wu' then scale:zoomIn(MOUSE_ZOOM_FACTOR)
+  elseif  button == 'wd' then scale:zoomOut(MOUSE_ZOOM_FACTOR)
+  end
 end
 
 function love.draw()
