@@ -120,7 +120,7 @@ neptune:setOrbitalPeriod(6.0190e4 * SECONDS_PER_DAY)
   triton:setColor({ R = 0xa7, G = 0xb2, B = 0xb9 })
   triton:setRadius(1353)
   triton:setOrbitalRadius(354759)
-  -- TODO:  Allow for retrograde orbits
-  triton:setOrbitalPeriod(5.877 * SECONDS_PER_DAY)
+  -- Triton is retrograde
+  triton:setOrbitalPeriod(-5.877 * SECONDS_PER_DAY)
 
 return { mercury, venus, earth, luna, mars, jupiter, io, europa, ganymede, callisto, saturn, titan, uranus, neptune, triton }

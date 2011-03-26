@@ -44,10 +44,7 @@ function Spob:setCenter(c)
 end
 
 function Spob:setOrbitalPeriod(s)
-   -- Ignore nonpositive periods
-   if (s > 0) then
-      self.orbital_period = s
-   end
+  self.orbital_period = s
 end
 
 function Spob:setOrbitalRadius(r)
