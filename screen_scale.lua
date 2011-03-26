@@ -1,11 +1,11 @@
-require 'secs'
+require 'middleclass'
 
 ZOOM_FACTOR = 1.5
 
-ScreenScale = class:new()
+ScreenScale = class('ScreenScale')
 ScreenScale.screen_scale = 1.5e9     -- kilometers per screen HEIGHT
 
-function ScreenScale:init()
+function ScreenScale:initialize()
   self:detectScreenSize()
   -- view center starts as nil (i.e., origin)
   self.view_center = nil
