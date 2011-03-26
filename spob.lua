@@ -12,10 +12,9 @@ function Spob:initialize()
   self.radius = 10
   -- Number of segments to use when drawing the circle
   self.segments = 50
-  -- Location: absolute.  With respect to what?  Center of "universe"?
-  -- Relative to parent body, in my conception.   So a planet's position is relative to its star.
+  -- Location: relative to parent body (in km)
   self.location = { x = 0, y = 0, z = 0 }
-  -- Host: body around which this Spob orbits
+  -- Host: body around which this Spob orbits (parent)
   self.host = nil
 
   self.orbital_radius = 0 -- in kilometers
@@ -36,11 +35,6 @@ function Spob:setRadius(r)
    if (r > 0) then
       self.radius = r
    end
-end
-
--- Center c should be a table with x, y, and z values
-function Spob:setCenter(c)
-   self.center = c
 end
 
 function Spob:setOrbitalPeriod(s)
@@ -77,20 +71,22 @@ end
 
 -- Return the (absolute) x,y coordinates of this Spob
 function Spob:getLocation()
-   local host_x, host_y
+   local host_x, host_y, host_z
    -- If no host, location is relative to screen center
    if (self.host == nil) then
-      host_x, host_y = 0, 0
+      host_x, host_y, host_z = 0, 0, 0
    else
       -- recurse!
-      host_x, host_y = self.host:getLocation()
+      host_x, host_y, host_z = self.host:getLocation()
    end
-   return self.location.x + host_x, self.location.y + host_y
+   return self.location.x + host_x,
+          self.location.y + host_y,
+          self.location.z + host_z
 end
 
 -- Return the screen (pixel) coordinates of this Spob
 function Spob:getCoords(scale)
-   local x, y = self:getLocation()
+   local x, y, z = self:getLocation()
    local screen_x, screen_y = scale:screenCoords(x, y)
    return screen_x, screen_y
 end
@@ -110,19 +106,19 @@ function Spob:drawReticle(x,y,radius)
 		     x+radius+RETICLE_SPACING+RETICLE_LENGTH, y )
   love.graphics.line(x-radius-RETICLE_SPACING, y, 
 		     x-radius-RETICLE_SPACING-RETICLE_LENGTH, y )
-  love.graphics.line(x, y+radius+RETICLE_SPACING, x, 
-		     y+radius+RETICLE_SPACING+RETICLE_LENGTH )
-  love.graphics.line(x, y-radius-RETICLE_SPACING, x, 
-		     y-radius-RETICLE_SPACING-RETICLE_LENGTH )
+  love.graphics.line(x, y+radius+RETICLE_SPACING,
+                     x, y+radius+RETICLE_SPACING+RETICLE_LENGTH )
+  love.graphics.line(x, y-radius-RETICLE_SPACING,
+                     x, y-radius-RETICLE_SPACING-RETICLE_LENGTH )
 end
 
 -- Update the current position of this spob relative to its parent body
 -- Time since arbitrary time 0, in seconds
 function Spob:updateCoords(time)
-  -- print(self.name, self.orbital_radius)
   local theta = TAU * (time / self.orbital_period)
   self.location.x = math.sin(theta) * self.orbital_radius
   self.location.y = math.cos(theta) * self.orbital_radius
-  -- print(self.name, self.location.x, self.location.y)
+  -- self.location.z is unchanged... since we don't (yet) have
+  -- orbital inclination
 end
 
