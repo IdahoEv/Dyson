@@ -13,8 +13,6 @@ function Spob:initialize(host)
   end
 
   self.name = ""
-  -- Color: default = white
-  self.color = { R = 255, G = 255, B = 255 }
   -- Size
   self.radius = 10
   -- Number of segments to use when drawing the circle
@@ -32,14 +30,6 @@ end
 
 function Spob:addSatellite(other_spob)
   table.insert(self.satellites, other_spob)
-end
-
--- Set the color, assuming it comes in as a table with R, G, B defined
-function Spob:setColor(c)
-   -- Ignore incorrectly specified colors
-   if (c.R ~= nil and c.G ~= nil and c.B ~= nil) then
-      self.color = c
-   end
 end
 
 function Spob:setRadius(r)

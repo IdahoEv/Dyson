@@ -1,6 +1,7 @@
 require 'constants'
 require 'paintable_disc'
 require 'paintable_disc_with_ring'
+require 'paintable_image'
 
 VENUS_ORBIT_RADIUS   = 1.08e8 -- km
 EARTH_ORBIT_RADIUS   = 1.49e8 -- km
@@ -43,7 +44,9 @@ earth:setOrbitalPeriod(365.25 * SECONDS_PER_DAY)
 
 mars = Spob:new(sol) -- Mars
 mars.name = "Mars"
-mars.paintable = PaintableDisc:new(mars,{ R = 0x8d, G = 0x34, B = 0x1a })
+--mars.paintable = PaintableDisc:new(mars,{ R = 0x8d, G = 0x34, B = 0x1a })
+mars.paintable = PaintableImage:new(mars, 'mars.png',
+                                  { R = 0x8d, G = 0x34, B = 0x1a })
 mars:setRadius(MARS_RADIUS)
 mars:setOrbitalRadius(MARS_ORBIT_RADIUS)
 mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
@@ -58,7 +61,6 @@ mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
   deimos = Spob:new(mars) -- Deimos
   deimos.name = "Deimos"
   deimos.paintable = PaintableDisc:new(deimos,{ R = 0xc9, G = 0xb5, B = 0x9a })
-  deimos:setColor({ R = 0xc9, G = 0xb5, B = 0x9a })
   deimos:setRadius(6.2)
   deimos:setOrbitalRadius(23460)
   deimos:setOrbitalPeriod(1.262 * SECONDS_PER_DAY)
