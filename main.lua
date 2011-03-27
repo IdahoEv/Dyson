@@ -21,13 +21,6 @@ function love.load()
   time_scale = 5e6
   stars   = require 'initialize_stars'
   planets = require 'initialize_planets'
-  -- set all planets to orbit the sun unless they already have a host
-  for _, planet in ipairs(planets) do
-    if not planet.host then
-      planet.host = sol
-      table.insert(sol.satellites, planet)
-    end
-  end
   sol:printHierarchy()
 
   fullscreen = false
