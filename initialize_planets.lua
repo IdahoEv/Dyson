@@ -108,6 +108,7 @@ jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
   callisto.name = "Callisto"
   callisto.host = jupiter
   callisto.paintable = PaintableDisc:new(callisto,{ R = 0x5c, G = 0x52, B = 0x36 })
+  table.insert(jupiter.satellites, callisto)
   callisto:setRadius(2410)
   callisto:setOrbitalRadius(1.8827e6)
   callisto:setOrbitalPeriod(16.689 * SECONDS_PER_DAY)
