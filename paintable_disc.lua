@@ -10,9 +10,9 @@ end
 
 function PaintableDisc:draw()
 
-  if preferences.enlarge_planets and spob.name ~= "Sol" then
+  if preferences.enlarge_planets and self.spob.name ~= "Sol" then
      self.radius = self.radius * PLANET_RADIUS_ZOOM
   end
   love.graphics.setColor(self.color.R, self.color.G, self.color.B)
-  love.graphics.circle("fill", self.x, self.y, self.radius, 100)
+  love.graphics.circle("fill", self.x, self.y, math.max(self.radius, 1), 100)
 end
