@@ -4,7 +4,14 @@ require 'constants'
 Spob = class('Spob')
 
 -- Name: default = ""
-function Spob:initialize()
+function Spob:initialize(host)
+
+  -- Host: body around which this Spob orbits (parent)
+  self.host = host
+  if self.host not == nil
+    self.host:addSatellite(self)
+  end
+
   self.name = ""
   -- Color: default = white
   self.color = { R = 255, G = 255, B = 255 }
@@ -14,14 +21,17 @@ function Spob:initialize()
   self.segments = 50
   -- Location: relative to parent body (in km)
   self.location = { x = 0, y = 0, z = 0 }
-  -- Host: body around which this Spob orbits (parent)
-  self.host = nil
   -- Satellites: bodies that orbit this Spob (children)
   self.satellites = { }
 
   self.orbital_radius = 0 -- in kilometers
   self.orbital_period = 0 -- in seconds
   self.paintable = nil
+end
+
+
+function Spob:addSatellite(other_spob)
+  table.insert(self.satellites, other_spob)
 end
 
 -- Set the color, assuming it comes in as a table with R, G, B defined
