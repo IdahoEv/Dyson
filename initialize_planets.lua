@@ -37,6 +37,7 @@ earth:setOrbitalPeriod(365.25 * SECONDS_PER_DAY)
   luna.name = "Luna"
   luna.host = earth
   luna.paintable = PaintableDisc:new(luna,{ R = 200, G = 200, B = 200 })
+  table.insert(earth.satellites, luna)
   luna:setRadius(LUNA_RADIUS)
   luna:setOrbitalRadius(LUNA_ORBIT_RADIUS)
   luna:setOrbitalPeriod(27.3 * SECONDS_PER_DAY)
@@ -52,6 +53,7 @@ mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
   phobos.name = "Phobos"
   phobos.host = mars
   phobos.paintable = PaintableDisc:new(phobos,{ R = 0x9a, G = 0x8e, B = 0x85 })
+  table.insert(mars.satellites, phobos)
   phobos:setRadius(11.1)
   phobos:setOrbitalRadius(9377)
   phobos:setOrbitalPeriod(0.319 * SECONDS_PER_DAY)
@@ -60,6 +62,8 @@ mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
   deimos.name = "Deimos"
   deimos.host = mars
   deimos.paintable = PaintableDisc:new(deimos,{ R = 0xc9, G = 0xb5, B = 0x9a })
+  table.insert(mars.satellites, deimos)
+  deimos:setColor({ R = 0xc9, G = 0xb5, B = 0x9a })
   deimos:setRadius(6.2)
   deimos:setOrbitalRadius(23460)
   deimos:setOrbitalPeriod(1.262 * SECONDS_PER_DAY)
@@ -75,6 +79,7 @@ jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
   io.name = "Io"
   io.host = jupiter
   io.paintable = PaintableDisc:new(io,{ R = 0xf3, G = 0xe8, B = 0x84 })
+  table.insert(jupiter.satellites, io)
   io:setRadius(1821.3)
   io:setOrbitalRadius(421700)
   io:setOrbitalPeriod(1.769 * SECONDS_PER_DAY)
@@ -83,6 +88,7 @@ jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
   europa.name = "Europa"
   europa.host = jupiter
   europa.paintable = PaintableDisc:new(europa,{ R = 0xab, G = 0x96, B = 0x76 })
+  table.insert(jupiter.satellites, europa)
   europa:setRadius(1569)
   europa:setOrbitalRadius(670900)
   europa:setOrbitalPeriod(3.551 * SECONDS_PER_DAY)
@@ -91,6 +97,7 @@ jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
   ganymede.name = "Ganymede"
   ganymede.host = jupiter
   ganymede.paintable = PaintableDisc:new(ganymede,{ R = 0x9d, G = 0x86, B = 0x86 })
+  table.insert(jupiter.satellites, ganymede)
   ganymede:setRadius(2634)
   ganymede:setOrbitalRadius(1.070e6)
   ganymede:setOrbitalPeriod(7.155 * SECONDS_PER_DAY)
@@ -114,6 +121,7 @@ saturn:setOrbitalPeriod(1.0759e4 * SECONDS_PER_DAY)
   titan.name = "Titan"
   titan.host = saturn
   titan.paintable = PaintableDisc:new(titan,{ R = 0xf9, G = 0xd2, B = 0x52 })
+  table.insert(saturn.satellites, titan)
   titan:setRadius(2576)
   titan:setOrbitalRadius(1.221e6)
   titan:setOrbitalPeriod(15.945 * SECONDS_PER_DAY)
@@ -136,6 +144,7 @@ neptune:setOrbitalPeriod(6.0190e4 * SECONDS_PER_DAY)
   triton.name = "Triton"
   triton.host = neptune
   triton.paintable = PaintableDisc:new(triton,{ R = 0xa7, G = 0xb2, B = 0xb9 })
+  table.insert(neptune.satellites, triton)
   triton:setRadius(1353)
   triton:setOrbitalRadius(354759)
   -- Triton is retrograde

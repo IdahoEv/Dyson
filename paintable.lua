@@ -8,7 +8,7 @@ end
 
 function Paintable:paint(x, y)
   self.x, self.y  = scale:screenCoords(x, y)
-  self.radius              = self.spob.radius * scale:pixelScale()
+  self.radius     = self.spob.radius * scale:pixelScale()
   self:draw()
 
   if preferences.show_reticle then self:drawReticle(self.x,self.y,self.radius) end

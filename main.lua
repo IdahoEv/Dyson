@@ -23,8 +23,12 @@ function love.load()
   planets = require 'initialize_planets'
   -- set all planets to orbit the sun unless they already have a host
   for _, planet in ipairs(planets) do
-    if not planet.host then planet.host = stars.sol end
+    if not planet.host then
+      planet.host = sol
+      table.insert(sol.satellites, planet)
+    end
   end
+  sol:printHierarchy()
 
   fullscreen = false
   initializeFPS()
@@ -93,11 +97,11 @@ function love.draw()
 
   if preferences.show_help then drawHelp() end
 
-  -- Draw stars
+  -- Recursively draw stars (and their children planets)
   for _, star in pairs(stars) do star:draw(scale) end
 
   -- Draw planets
-  for _, planet in ipairs(planets) do planet:draw(scale) end
+  --for _, planet in ipairs(planets) do planet:draw(scale) end
 
   ndraws = ndraws + 1
 end
