@@ -16,3 +16,4 @@ function PaintableDisc:draw()
   love.graphics.setColor(self.color.R, self.color.G, self.color.B)
   love.graphics.circle("fill", self.x, self.y, math.max(self.radius, 1), 100)
 end
+

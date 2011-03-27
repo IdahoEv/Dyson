@@ -1,5 +1,6 @@
 require 'constants'
 require 'paintable_disc'
+require 'paintable_disc_with_ring'
 
 VENUS_ORBIT_RADIUS   = 1.08e8 -- km
 EARTH_ORBIT_RADIUS   = 1.49e8 -- km
@@ -70,7 +71,8 @@ mars:setOrbitalPeriod(686 * SECONDS_PER_DAY)
 
 jupiter = Spob:new() -- Jupiter
 jupiter.name = "Jupiter"
-jupiter.paintable = PaintableDisc:new(jupiter,{ R = 250, G = 100, B = 100 })
+--jupiter.paintable = PaintableDisc:new(jupiter,{ R = 250, G = 100, B = 100 })
+jupiter.paintable = PaintableDiscWithRing:new(jupiter,{ R = 250, G = 100, B = 100 })
 jupiter:setRadius(7.149e4)
 jupiter:setOrbitalRadius(7.785e8)
 jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
