@@ -12,7 +12,10 @@ function PaintableImage:initialize(spob, imagefile, color)
 end
 
 function PaintableImage:draw()
-  local scale_factor = self.radius / self.image:getWidth()
+  if preferences.enlarge_planets and self.spob.name ~= "Sol" then
+     self.radius = self.radius * PLANET_RADIUS_ZOOM
+  end
+  local scale_factor = self.radius / self.half_width
   -- Reset color to white, 
   -- since otherwise the image gets tinted with the current color
   love.graphics.setColor(255, 255, 255)
