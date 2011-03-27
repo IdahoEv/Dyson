@@ -37,7 +37,6 @@ earth:setOrbitalPeriod(365.25 * SECONDS_PER_DAY)
   luna = Spob:new(earth) -- Luna
   luna.name = "Luna"
   luna.paintable = PaintableDisc:new(luna,{ R = 200, G = 200, B = 200 })
-  table.insert(earth.satellites, luna)
   luna:setRadius(LUNA_RADIUS)
   luna:setOrbitalRadius(LUNA_ORBIT_RADIUS)
   luna:setOrbitalPeriod(27.3 * SECONDS_PER_DAY)
@@ -96,7 +95,6 @@ jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
   callisto = Spob:new(jupiter)
   callisto.name = "Callisto"
   callisto.paintable = PaintableDisc:new(callisto,{ R = 0x5c, G = 0x52, B = 0x36 })
-  table.insert(jupiter.satellites, callisto)
   callisto:setRadius(2410)
   callisto:setOrbitalRadius(1.8827e6)
   callisto:setOrbitalPeriod(16.689 * SECONDS_PER_DAY)

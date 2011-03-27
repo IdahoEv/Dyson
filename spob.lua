@@ -8,7 +8,7 @@ function Spob:initialize(host)
 
   -- Host: body around which this Spob orbits (parent)
   self.host = host
-  if self.host not == nil
+  if self.host ~= nil then
     self.host:addSatellite(self)
   end
 
