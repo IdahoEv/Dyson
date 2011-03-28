@@ -28,6 +28,10 @@ function ScreenScale:screenCoords(x, y)
    return screen_x, screen_y
 end
 
+function ScreenScale:screenDist(dist)
+  return self:pixelScale() * dist
+end
+
 -- pixels per kilometer
 function ScreenScale:pixelScale()
   return self.screen_height / self.screen_scale

@@ -62,7 +62,7 @@ function Spob:draw(scale)
   -- Now draw all children
   if (self.satellites ~= nil) then
     for _, sat in ipairs(self.satellites) do
-      sat:draw(scale)
+      if(scale:screenDist(sat:distanceFromParent()) > MIN_SEPARATION_FOR_DRAW) then sat:draw(scale) end
     end
   end
 end
@@ -90,6 +90,14 @@ function Spob:drawOrbit(host_x, host_y)
     local hx, hy = scale:screenCoords(host_x, host_y)
     love.graphics.circle('line', hx, hy, orbital_radius, segments)
   end
+end
+
+function Spob:distanceFromParent()
+  return math.sqrt(
+    (self.location.x * self.location.x) +
+    (self.location.y * self.location.y) +
+    (self.location.z * self.location.z)
+  )
 end
 
 -- Update the current position of this spob relative to its parent body

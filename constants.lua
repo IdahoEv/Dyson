@@ -11,4 +11,5 @@ RETICLE_LENGTH = 10
 
 CLICK_TOL = 50
 
-MAX_ORBIT_CIRCLE_ERROR = .5
+MAX_ORBIT_CIRCLE_ERROR = .5 -- max half a pixel deviation from a true circle/ellipse
+MIN_SEPARATION_FOR_DRAW = 5 -- Satellite must be at least 5 pix distinct from parent to be drawn
