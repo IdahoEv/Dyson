@@ -137,4 +137,7 @@ neptune:setOrbitalPeriod(6.0190e4 * SECONDS_PER_DAY)
   -- Triton is retrograde
   triton:setOrbitalPeriod(-5.877 * SECONDS_PER_DAY)
 
-return { mercury, venus, earth, luna, mars, phobos, deimos, jupiter, io, europa, ganymede, callisto, saturn, titan, uranus, neptune, triton }
+  -- Return only the top-level planets, enabling easy access
+  -- via shift-number hotkeys.  Everything else is global anyway,
+  -- so we still have access to them in namespace.
+  return { mercury, venus, earth, mars, jupiter, saturn, uranus, neptune }

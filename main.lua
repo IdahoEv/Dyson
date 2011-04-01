@@ -48,6 +48,9 @@ function love.keypressed(key, unicode)
   elseif  key == 'p'      then preferences.toggle('enlarge_planets')
   elseif  key == 'o'      then preferences.toggle('show_orbits')
   elseif  key == 'r'      then preferences.toggle('show_reticle')
+  elseif  key >= '1' and key <= '9' and tonumber(key) <= #planets and
+     (love.keyboard.isDown('lshift') or love.keyboard.isDown('rshift')) then
+     scale.view_center = planets[tonumber(key)]
   elseif  key == '?' or key == '/' then preferences.toggle('show_help')
   end
 end
@@ -103,6 +106,7 @@ function drawHelp()
   textLine{str = "Key Commands:", x = HELP_MARGIN, y = TOP_MARGIN }
   textLine{str = "right/left: change speed"}
   textLine{str = "up/down: zoom"}
+  textLine{str = "shift+<n>: recenter to planet n"}
   textLine{str = 'f: toggle fullscreen'}
   textLine{str = 'p: toggle enlarge planets'}
   textLine{str = 'o: toggle show orbits'}
