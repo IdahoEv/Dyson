@@ -28,6 +28,8 @@ function love.load()
 end
 
 function love.update(delta_time)
+  if preferences.pause_time then return end
+
   time = time + delta_time * time_scale
   updateFPS(delta_time)
   for _, planet in ipairs(planets) do planet:updateCoords(time) end
@@ -45,6 +47,7 @@ function love.keypressed(key, unicode)
   elseif  key == 'down'   then scale:zoomOut(KEYBOARD_ZOOM_FACTOR)
   elseif  key == 'f'      then toggleFullscreen()
   elseif  key == 'escape' or key == 'q' then love.event.push('q')
+  elseif  key == ' '      then preferences.toggle('pause_time')
   elseif  key == 'p'      then preferences.toggle('enlarge_planets')
   elseif  key == 'o'      then preferences.toggle('show_orbits')
   elseif  key == 'r'      then preferences.toggle('show_reticle')
@@ -115,6 +118,7 @@ function drawHelp()
   textLine{str = 'p: toggle enlarge planets'}
   textLine{str = 'o: toggle show orbits'}
   textLine{str = 'r: toggle planet reticles'}
+  textLine{str = '<space>: pause'}
   textLine{str = 'q: quit'}
   textLine{str = ''}
   textLine{str = 'Left-click to recenter on a spob'}
