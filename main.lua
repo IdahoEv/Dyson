@@ -6,6 +6,7 @@ require 'screen_scale'
 require "Spob" -- Space Object class
 require 'constants'
 require 'screen_size'
+require 'inspector'
 require 'fps'
 require 'preferences'
 require 'text'
@@ -25,6 +26,7 @@ function love.load()
   sol:printHierarchy()
   stars = require 'initialize_stars'
   table.insert(stars, sol)
+  inspectors = { }
 
   fullscreen = false
   initializeFPS()
@@ -49,11 +51,14 @@ function love.keypressed(key, unicode)
   elseif  key == 'up'     then scale:zoomIn(KEYBOARD_ZOOM_FACTOR)
   elseif  key == 'down'   then scale:zoomOut(KEYBOARD_ZOOM_FACTOR)
   elseif  key == 'f'      then toggleFullscreen()
-  elseif  key == 'escape' or key == 'q' then love.event.push('q')
+  elseif  key == 'q'      then love.event.push('q')
   elseif  key == ' '      then preferences.toggle('pause_time')
   elseif  key == 'p'      then preferences.toggle('enlarge_planets')
   elseif  key == 'o'      then preferences.toggle('show_orbits')
   elseif  key == 'r'      then preferences.toggle('show_reticle')
+  elseif  key == 'escape' then
+    inspectors = { }
+    preferences['pause_time'] = false
   elseif  key == '0' and
      (love.keyboard.isDown('lshift') or love.keyboard.isDown('rshift')) then
      scale.view_center = sol
@@ -84,8 +89,17 @@ function love.mousepressed(x, y, button)
     end
   elseif  button == 'r'  then
     -- right-click: recenter at origin
-    scale.view_center = nil
-    scale:resetZoom()
+    --scale.view_center = nil
+    --scale:resetZoom()
+    -- right-click: bring up inspector
+    -- find nearby-ish spob
+    for _, planet in ipairs(planets) do
+      local px, py = scale:screenCoords(planet:getLocation())
+      if math.abs(px - x) < CLICK_TOL and
+        math.abs(py - y) < CLICK_TOL then
+        table.insert(inspectors, Inspector:new(planet))
+      end
+    end
   elseif  button == 'wu' then scale:zoomIn(MOUSE_ZOOM_FACTOR)
   elseif  button == 'wd' then scale:zoomOut(MOUSE_ZOOM_FACTOR)
   end
@@ -107,6 +121,13 @@ function love.draw()
 
   -- Draw planets
   --for _, planet in ipairs(planets) do planet:draw(scale) end
+
+  -- Draw inspectors
+  -- If there are any, set pause on
+  if #inspectors > 0 then preferences['pause_time'] = true end
+  for i, ins in pairs(inspectors) do
+    ins:draw(scale)
+  end
 
   ndraws = ndraws + 1
 end
