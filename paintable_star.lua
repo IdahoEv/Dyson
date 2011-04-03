@@ -14,6 +14,11 @@ end
 
 function PaintableStar:draw()
   local scale_factor = self.radius * 100 / self.image:getWidth()
+  if self.color then
+    love.graphics.setColor(self.color.R, self.color.G, self.color.B)
+  else
+    love.graphics.setColor(255, 255, 255)
+  end
   love.graphics.draw(self.image,
     self.x - (self.half_width * scale_factor),
     self.y - (self.half_height * scale_factor),
