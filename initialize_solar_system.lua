@@ -2,6 +2,9 @@ require 'constants'
 require 'paintable_disc'
 require 'paintable_disc_with_ring'
 require 'paintable_image'
+require 'paintable_disc'
+require 'paintable_star'
+require 'star'
 
 VENUS_ORBIT_RADIUS   = 1.08e8 -- km
 EARTH_ORBIT_RADIUS   = 1.49e8 -- km
@@ -14,12 +17,10 @@ MARS_RADIUS  = 3393.0 -- km
 EARTH_RADIUS = 6378.0 -- km
 LUNA_RADIUS  = 1737.4 -- km
 
-require 'paintable_disc'
-require 'paintable_star'
 
 SOL_RADIUS  = 6.955e5 -- km
 
-sol = Spob:new() -- Sol
+sol = Star:new(nil, SOLAR_MASS) -- Sol
 sol.name = "Sol"
 -- sol.paintable = PaintableDisc:new(sol,{ R = 225, G = 225, B = 0 })
 sol.paintable = PaintableStar:new(sol, 'yellow', { R = 225, G = 225, B = 0 })
