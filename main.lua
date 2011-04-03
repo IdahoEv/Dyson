@@ -19,9 +19,11 @@ function love.load()
   time = 0
 
   time_scale = 5e6
-  stars   = require 'initialize_stars'
-  planets = require 'initialize_planets'
+  sol     = require 'initialize_solar_system'
+  planets = sol.satellites
+  -- planets = require 'initialize_planets'
   sol:printHierarchy()
+  stars = { sol }
 
   fullscreen = false
   initializeFPS()

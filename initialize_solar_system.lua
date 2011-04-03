@@ -14,6 +14,19 @@ MARS_RADIUS  = 3393.0 -- km
 EARTH_RADIUS = 6378.0 -- km
 LUNA_RADIUS  = 1737.4 -- km
 
+require 'paintable_disc'
+require 'paintable_star'
+
+SOL_RADIUS  = 6.955e5 -- km
+
+sol = Spob:new() -- Sol
+sol.name = "Sol"
+-- sol.paintable = PaintableDisc:new(sol,{ R = 225, G = 225, B = 0 })
+sol.paintable = PaintableStar:new(sol, 'yellow', { R = 225, G = 225, B = 0 })
+sol:setRadius(SOL_RADIUS)
+sol:setOrbitalRadius(0)
+sol:setOrbitalPeriod(1)
+
 mercury = Spob:new(sol) -- mercury
 mercury.name = "Mercury"
 mercury.paintable = PaintableDisc:new(mercury,{ R = 100, G = 100, B = 60 })
@@ -140,4 +153,5 @@ neptune:setOrbitalPeriod(6.0190e4 * SECONDS_PER_DAY)
   -- Return only the top-level planets, enabling easy access
   -- via shift-number hotkeys.  Everything else is global anyway,
   -- so we still have access to them in namespace.
-  return { mercury, venus, earth, mars, jupiter, saturn, uranus, neptune }
+return sol
+-- return { mercury, venus, earth, mars, jupiter, saturn, uranus, neptune }
