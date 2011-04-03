@@ -17,14 +17,10 @@ MARS_RADIUS  = 3393.0 -- km
 EARTH_RADIUS = 6378.0 -- km
 LUNA_RADIUS  = 1737.4 -- km
 
-
-SOL_RADIUS  = 6.955e5 -- km
-
 sol = Star:new(nil, SOLAR_MASS) -- Sol
 sol.name = "Sol"
 -- sol.paintable = PaintableDisc:new(sol,{ R = 225, G = 225, B = 0 })
 sol.paintable = PaintableStar:new(sol, 'yellow', { R = 225, G = 225, B = 0 })
-sol:setRadius(SOL_RADIUS)
 sol:setOrbitalRadius(0)
 sol:setOrbitalPeriod(1)
 

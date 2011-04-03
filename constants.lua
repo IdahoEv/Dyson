@@ -13,6 +13,7 @@ CLICK_TOL = 50
 
 SOLAR_MASS        = 2e30 -- kG
 SOLAR_LUMINOSITY  = 3.839e26 -- Watts
+SOLAR_RADIUS   = 6.955e5 -- km
 MAIN_SEQUENCE_CONSTANT = 3.5
 
 MAX_ORBIT_CIRCLE_ERROR = .5 -- max half a pixel deviation from a true circle/ellipse

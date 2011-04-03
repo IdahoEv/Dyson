@@ -22,11 +22,11 @@ for ii = 1, STAR_COUNT do
   star.name = "Star #"..ii
   -- sol.paintable = PaintableDisc:new(sol,{ R = 225, G = 225, B = 0 })
   star.paintable = PaintableStar:new(star, 'yellow', { R = 225, G = 225, B = 225 })
-  star:setRadius(SOL_RADIUS)
   star:setOrbitalRadius(0)
   star:setOrbitalPeriod(1)
   star.location.x = (math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR
   star.location.y = (math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR
+  star.location.z = (math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR
   stars[ii] = star
 end
 
