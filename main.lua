@@ -23,7 +23,8 @@ function love.load()
   planets = sol.satellites
   -- planets = require 'initialize_planets'
   sol:printHierarchy()
-  stars = { sol }
+  stars = require 'initialize_stars'
+  table.insert(stars, sol)
 
   fullscreen = false
   initializeFPS()

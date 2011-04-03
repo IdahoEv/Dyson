@@ -1,14 +1,23 @@
-require 'paintable_disc'
-require 'paintable_star'
+STAR_COUNT    = 100
+STAR_RADIUS   = 6.955e5 -- km
+LIGHT_YEAR    = 9.46e12 -- km
+DISTANCE_SCALE = 100 -- lightears
 
-SOL_RADIUS  = 6.955e5 -- km
+stars = {}
 
-sol = Spob:new() -- Sol
-sol.name = "Sol"
--- sol.paintable = PaintableDisc:new(sol,{ R = 225, G = 225, B = 0 })
-sol.paintable = PaintableStar:new(sol, 'yellow', { R = 225, G = 225, B = 0 })
-sol:setRadius(SOL_RADIUS)
-sol:setOrbitalRadius(0)
-sol:setOrbitalPeriod(1)
+for ii = 1, STAR_COUNT do
 
-return { sol }
+  star = Spob:new() -- Sol
+  star.name = "Star #"..ii
+  -- sol.paintable = PaintableDisc:new(sol,{ R = 225, G = 225, B = 0 })
+  star.paintable = PaintableStar:new(star, 'yellow', { R = 225, G = 225, B = 0 })
+  star:setRadius(SOL_RADIUS)
+  star:setOrbitalRadius(0)
+  star:setOrbitalPeriod(1)
+  star.location.x = (math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR
+  star.location.y = (math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR
+  stars[ii] = star
+end
+
+return stars
+
