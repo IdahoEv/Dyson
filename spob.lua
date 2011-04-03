@@ -120,3 +120,10 @@ function Spob:printHierarchy(indent)
     end
   end
 end
+
+function Spob:getAttribs()
+  return { Host = self.host.name,
+           Radius = self.radius,
+           Orbital_radius = self.orbital_radius,
+           Period = self.orbital_period }
+end 
