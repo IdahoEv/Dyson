@@ -20,7 +20,7 @@ LUNA_RADIUS  = 1737.4 -- km
 sol = Star:new(nil, SOLAR_MASS) -- Sol
 sol.name = "Sol"
 -- sol.paintable = PaintableDisc:new(sol,{ R = 225, G = 225, B = 0 })
-sol.paintable = PaintableStar:new(sol, 'yellow', { R = 225, G = 225, B = 0 })
+sol.paintable = PaintableStar:new(sol, { R = 255, G = 255, B = 225 })
 sol:setOrbitalRadius(0)
 sol:setOrbitalPeriod(1)
 

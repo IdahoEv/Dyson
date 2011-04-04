@@ -11,7 +11,7 @@ function Paintable:paint(x, y)
   self.radius     = self.spob.radius * scale:pixelScale()
   self:draw()
 
-  if self.color then
+  if self.color and self.color.R then
     love.graphics.setColor(self.color.R, self.color.G, self.color.B)
   end
 
