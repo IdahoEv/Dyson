@@ -36,7 +36,7 @@ end
 function love.update(delta_time)
   if not preferences.pause_time then
     time = time + delta_time * time_scale
-    for _, planet in ipairs(planets) do planet:updateCoords(time) end
+    for _, spob in ipairs(stars) do spob:updateCoords(time) end
   end
 
   updateFPS(delta_time)
@@ -112,11 +112,8 @@ function love.draw()
 
   if preferences.show_help then drawHelp() end
 
-  -- Recursively draw stars (and their children planets)
-  for _, star in pairs(stars) do star:draw(scale) end
-
-  -- Draw planets
-  --for _, planet in ipairs(planets) do planet:draw(scale) end
+  -- draw the visible spobs
+  for _, spob in pairs(visible_spobs) do spob:draw(scale) end
 
   -- Draw inspectors
   -- If there are any, set pause on
@@ -158,8 +155,10 @@ function findVisibleSpobs(stars_to_check)
     for _, spob in ipairs(spob_array) do
       local dist_from_center  = spob:distanceFromPoint(scale:viewCenterLocation())
       local dist_from_host    = spob:distanceFromParent()
-      -- print('checking visibility: ', spob.name, dist_from_center, dist_from_host)
-      if (dist_from_center < max_dist) and (not spob.host or (dist_from_host > min_dist)) then
+      -- if spob.class ~= Star then
+      --   print('checking visibility: ', spob.class, spob.name, dist_from_center, max_dist, '-', dist_from_host, min_dist)
+      -- end
+      if (dist_from_center < max_dist) and ((spob.host == nil) or (dist_from_host > min_dist)) then
         table.insert(vspobs, spob)
         if #(spob.satellites) > 0 then
           appendVisibleSpobsAndSatellites(vspobs, spob.satellites)
