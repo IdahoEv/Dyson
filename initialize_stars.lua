@@ -1,7 +1,7 @@
 require 'star'
 
---STAR_COUNT    = 100
-STAR_COUNT    = 3
+STAR_COUNT    = 100
+--STAR_COUNT    = 3
 STAR_RADIUS   = 6.955e5 -- km
 LIGHT_YEAR    = 9.46e12 -- km
 DISTANCE_SCALE = 100 -- lightears
@@ -44,8 +44,8 @@ centroid.location = {
   z = (stars[star_ind1].location.z + stars[star_ind2].location.z) / 2 }
 stars[star_ind1].host = centroid
 stars[star_ind2].host = centroid
-stars[star_ind1]:setOrbitalRadius(1e15)
-stars[star_ind2]:setOrbitalRadius(5e15)
+stars[star_ind1]:setOrbitalRadius(3e13)
+stars[star_ind2]:setOrbitalRadius(5e13)
 stars[star_ind1]:setOrbitalPeriod(70 * SECONDS_PER_DAY)
 stars[star_ind2]:setOrbitalPeriod(70 * SECONDS_PER_DAY)
 

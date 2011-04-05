@@ -71,7 +71,7 @@ function Spob:getLocation()
       -- recurse!
       host_loc = self.host:getLocation()
     end
-    print(self.name, host_loc.x, host_loc.y)
+    -- print(self.name, host_loc.x, host_loc.y)
    return { x = self.location.x + host_loc.x,
             y = self.location.y + host_loc.y,
             z = self.location.z + host_loc.z }

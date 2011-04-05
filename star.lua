@@ -46,11 +46,11 @@ function Star:getAttribs()
               Luminosity = self.luminosity,
               Radius = self.radius }
   if (self.host) then
-    a['Host'] = self.host
+    a['Host'] = self.host.name
     a['Orbital_radius'] = self.orbital_radius
     a['Orbital_period'] = self.orbital_period
   end
   return a
-end  
+end
 
 
