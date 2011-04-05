@@ -19,7 +19,7 @@ function Inspector:draw(scale)
     num_attr = num_attr + 1
   end
   -- Check whether the spob is (still) in view
-  local x, y = scale:screenCoords(self.spob.location.x, self.spob.location.y)
+  local x, y = scale:screenCoords(self.spob.location)
   if x <= 0 or y <= 0 or
     x > scale.screen_width and y > scale.screen_height then
     return
