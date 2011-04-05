@@ -34,12 +34,12 @@ function love.load()
 end
 
 function love.update(delta_time)
-  if preferences.pause_time then return end
+  if not preferences.pause_time then
+    time = time + delta_time * time_scale
+    for _, spob in ipairs(stars) do spob:updateCoords(time) end
+  end
 
-  time = time + delta_time * time_scale
   updateFPS(delta_time)
-  for _, planet in ipairs(planets) do planet:updateCoords(time) end
-
   visible_spobs = findVisibleSpobs(stars)
 end
 
@@ -69,39 +69,36 @@ function love.keypressed(key, unicode)
 end
 
 function love.mousepressed(x, y, button)
+  local spob = findClickedSpob(x, y, visible_spobs)
   if button == 'l' then
-    -- left-click: center on spob
-    -- find nearby-ish spob
-    for _, planet in ipairs(planets) do
-      local px, py = scale:screenCoords(planet:getLocation())
-      if math.abs(px - x) < CLICK_TOL and
-        math.abs(py - y) < CLICK_TOL then
-        scale.view_center = planet
-      end
-    end
-    for _, star in pairs(stars) do
-      local sx, sy = scale:screenCoords(star:getLocation())
-      if math.abs(sx - x) < CLICK_TOL and
-        math.abs(sy - y) < CLICK_TOL then
-        scale.view_center = star
-      end
-    end
+    if spob then scale.view_center = spob end
   elseif  button == 'r'  then
-    -- right-click: recenter at origin
-    --scale.view_center = nil
-    --scale:resetZoom()
-    -- right-click: bring up inspector
-    -- find nearby-ish spob
-    for _, planet in ipairs(planets) do
-      local px, py = scale:screenCoords(planet:getLocation())
-      if math.abs(px - x) < CLICK_TOL and
-        math.abs(py - y) < CLICK_TOL then
-        table.insert(inspectors, Inspector:new(planet))
-      end
-    end
+    if spob then table.insert(inspectors, Inspector:new(spob)) end
   elseif  button == 'wu' then scale:zoomIn(MOUSE_ZOOM_FACTOR)
   elseif  button == 'wd' then scale:zoomOut(MOUSE_ZOOM_FACTOR)
   end
+end
+
+-- given screen coordinates (i.e. a mouse click), find the spob from the list
+-- that is closest to the click, if it is within the click tolerance
+function findClickedSpob(x, y, spobs)
+  local best_proximity = CLICK_TOL
+  local dist = 0
+  local best_spob = nil
+  for _, spob in ipairs(spobs) do
+    sx, sy = scale:screenCoords(spob:getLocation())
+    dist = math.sqrt( (sx-x)^2 + (sy-y) )
+    -- print(spob.name, "click", x, y, 'spob', sx, sy, 'dist', dist)
+    if dist < best_proximity then
+      -- print('best yet:', spob.name)
+      best_proximity = dist
+      best_spob = spob
+    end
+  end
+  -- if best_spob then
+  --   print('**** Best spob:', best_spob.name)
+  -- end
+  return best_spob
 end
 
 function love.draw()
@@ -115,11 +112,8 @@ function love.draw()
 
   if preferences.show_help then drawHelp() end
 
-  -- Recursively draw stars (and their children planets)
-  for _, star in pairs(stars) do star:draw(scale) end
-
-  -- Draw planets
-  --for _, planet in ipairs(planets) do planet:draw(scale) end
+  -- draw the visible spobs
+  for _, spob in pairs(visible_spobs) do spob:draw(scale) end
 
   -- Draw inspectors
   -- If there are any, set pause on
@@ -150,7 +144,7 @@ end
 
 -- Naive first version just iterates the stars to see if they are within a delta of onscreen,
 -- and adds their satellites if those satellites' orbits aren't too small
-function findVisibleSpobs(stars)
+function findVisibleSpobs(stars_to_check)
   local vspobs = {}
 
   local function appendVisibleSpobsAndSatellites(vspobs, spob_array)
@@ -161,20 +155,25 @@ function findVisibleSpobs(stars)
     for _, spob in ipairs(spob_array) do
       local dist_from_center  = spob:distanceFromPoint(scale:viewCenterLocation())
       local dist_from_host    = spob:distanceFromParent()
-
-      if (dist_from_center < max_dist) and (dist_from_host > min_dist) then
-        table.insert(vspobs, star)
+      -- if spob.class ~= Star then
+      --   print('checking visibility: ', spob.class, spob.name, dist_from_center, max_dist, '-', dist_from_host, min_dist)
+      -- end
+      if (dist_from_center < max_dist) and ((spob.host == nil) or (dist_from_host > min_dist)) then
+        table.insert(vspobs, spob)
         if #(spob.satellites) > 0 then
           appendVisibleSpobsAndSatellites(vspobs, spob.satellites)
         end
       end
     end
   end
+
   if scale.view_center then
     table.insert(vspobs, scale.view_center)
     appendVisibleSpobsAndSatellites(vspobs, scale.view_center.satellites)
   end
-  appendVisibleSpobsAndSatellites(vspobs, stars)
+  appendVisibleSpobsAndSatellites(vspobs, stars_to_check)
+  -- print('------------------- VISIBLE:---------------')
+  -- for _, spob in ipairs(vspobs) do print(spob.name) end
   return vspobs
 end
 

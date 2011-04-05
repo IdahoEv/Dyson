@@ -56,14 +56,14 @@ function Spob:draw(scale)
   if self.host ~= nil and preferences.show_orbits then
     self:drawOrbit(self.host:getLocation())
   end
-  
+
   self.paintable:paint(self:getLocation())
   -- Now draw all children
-  if (self.satellites ~= nil) then
-    for _, sat in ipairs(self.satellites) do
-      if(scale:screenDist(sat:distanceFromParent()) > MIN_SEPARATION_FOR_DRAW) then sat:draw(scale) end
-    end
-  end
+  -- if (self.satellites ~= nil) then
+  --   for _, sat in ipairs(self.satellites) do
+  --     if(scale:screenDist(sat:distanceFromParent()) > MIN_SEPARATION_FOR_DRAW) then sat:draw(scale) end
+  --   end
+  -- end
 end
 
 -- Return the (absolute) x,y coordinates of this Spob
@@ -94,26 +94,32 @@ end
 function Spob:distanceFromParent()
   return math.sqrt(
     (self.location.x * self.location.x) +
-    (self.location.y * self.location.y) +
-    (self.location.z * self.location.z)
+    (self.location.y * self.location.y)
+    -- + (self.location.z * self.location.z)
   )
 end
 
 function Spob:distanceFromPoint(point)
-  local dx = self.location.x - point.x
-  local dy = self.location.y - point.y
-  local dz = self.location.z - point.z
-  return math.sqrt(dx * dx + dy * dy + dz * dz)
+  local loc = self:getLocation()
+  local dx = loc.x - point.x
+  local dy = loc.y - point.y
+  local dz = loc.z - point.z
+  return math.sqrt(dx * dx + dy * dy) -- + dz * dz)
 end
 
 -- Update the current position of this spob relative to its parent body
 -- Time since arbitrary time 0, in seconds
 function Spob:updateCoords(time)
-  local theta = TAU * (time / self.orbital_period)
-  self.location.x = math.sin(theta) * self.orbital_radius
-  self.location.y = math.cos(theta) * self.orbital_radius
+  if self.host then
+    local theta = TAU * (time / self.orbital_period)
+    self.location.x = math.sin(theta) * self.orbital_radius
+    self.location.y = math.cos(theta) * self.orbital_radius
+  end
   -- self.location.z is unchanged... since we don't (yet) have
   -- orbital inclination
+  if #(self.satellites) > 0 then
+    for _, spob in ipairs(self.satellites) do spob:updateCoords(time) end
+  end
 end
 
 function Spob:printHierarchy(indent)
