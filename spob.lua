@@ -52,12 +52,12 @@ end
 
 -- Draw the object in the current location
 function Spob:draw(scale)
-   -- If it has a host, then (optionally) draw its orbit around that host
-   if self.host ~= nil and preferences.show_orbits then
-      self:drawOrbit(self.host:getLocation())
-   end
-
-   self.paintable:paint(self:getLocation())
+  -- If it has a host, then (optionally) draw its orbit around that host
+  if self.host ~= nil and preferences.show_orbits then
+    self:drawOrbit(self.host:getLocation())
+  end
+  
+  self.paintable:paint(self:getLocation())
   -- Now draw all children
   if (self.satellites ~= nil) then
     for _, sat in ipairs(self.satellites) do
