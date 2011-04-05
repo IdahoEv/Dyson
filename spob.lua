@@ -56,7 +56,7 @@ function Spob:draw(scale)
   if self.host ~= nil and preferences.show_orbits then
     self:drawOrbit(self.host:getLocation())
   end
-  
+
   self.paintable:paint(self:getLocation())
   -- Now draw all children
   if (self.satellites ~= nil) then
@@ -94,8 +94,8 @@ end
 function Spob:distanceFromParent()
   return math.sqrt(
     (self.location.x * self.location.x) +
-    (self.location.y * self.location.y) +
-    (self.location.z * self.location.z)
+    (self.location.y * self.location.y)
+    -- + (self.location.z * self.location.z)
   )
 end
 
@@ -103,7 +103,7 @@ function Spob:distanceFromPoint(point)
   local dx = self.location.x - point.x
   local dy = self.location.y - point.y
   local dz = self.location.z - point.z
-  return math.sqrt(dx * dx + dy * dy + dz * dz)
+  return math.sqrt(dx * dx + dy * dy) -- + dz * dz)
 end
 
 -- Update the current position of this spob relative to its parent body

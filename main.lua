@@ -34,12 +34,12 @@ function love.load()
 end
 
 function love.update(delta_time)
-  if preferences.pause_time then return end
+  if not preferences.pause_time then
+    time = time + delta_time * time_scale
+    for _, planet in ipairs(planets) do planet:updateCoords(time) end
+  end
 
-  time = time + delta_time * time_scale
   updateFPS(delta_time)
-  for _, planet in ipairs(planets) do planet:updateCoords(time) end
-
   visible_spobs = findVisibleSpobs(stars)
 end
 
@@ -88,14 +88,16 @@ function findClickedSpob(x, y, spobs)
   for _, spob in ipairs(spobs) do
     sx, sy = scale:screenCoords(spob:getLocation())
     dist = math.sqrt( (sx-x)^2 + (sy-y) )
-    print(spob.name, "click", x, y, 'spob', sx, sy, 'dist', dist)
+    -- print(spob.name, "click", x, y, 'spob', sx, sy, 'dist', dist)
     if dist < best_proximity then
-      print('best yet:', spob.name)
+      -- print('best yet:', spob.name)
       best_proximity = dist
       best_spob = spob
     end
   end
-
+  -- if best_spob then
+  --   print('**** Best spob:', best_spob.name)
+  -- end
   return best_spob
 end
 
@@ -171,6 +173,8 @@ function findVisibleSpobs(stars_to_check)
     appendVisibleSpobsAndSatellites(vspobs, scale.view_center.satellites)
   end
   appendVisibleSpobsAndSatellites(vspobs, stars_to_check)
+  -- print('------------------- VISIBLE:---------------')
+  -- for _, spob in ipairs(vspobs) do print(spob.name) end
   return vspobs
 end
 
