@@ -15,11 +15,11 @@ end
 
 -- x, y in kilometers relative to the origin, which is assumed at screen center
 function ScreenScale:screenCoords(location)
-   local center_loc = self:viewCenterLocation()
-   local screen_x = (location.x-center_loc.x) * self:pixelScale() + self.screen_center.x
-   local screen_y = (location.y-center_loc.y) * self:pixelScale() + self.screen_center.y
+  local center_loc = self:viewCenterLocation()
+  local screen_x = (location.x-center_loc.x) * self:pixelScale() + self.screen_center.x
+  local screen_y = (location.y-center_loc.y) * self:pixelScale() + self.screen_center.y
 
-   return screen_x, screen_y
+  return screen_x, screen_y
 end
 
 function ScreenScale:viewCenterLocation()
