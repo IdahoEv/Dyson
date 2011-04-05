@@ -38,3 +38,19 @@ function Star:findClass()
     return "M"
   end
 end
+
+function Star:getAttribs()
+  local a = { Stellar_class = self.stellar_class,
+              Mass = self.mass,
+              Temp = self.temperature,
+              Luminosity = self.luminosity,
+              Radius = self.radius }
+  if (self.host) then
+    a['Host'] = self.host
+    a['Orbital_radius'] = self.orbital_radius
+    a['Orbital_period'] = self.orbital_period
+  end
+  return a
+end  
+
+

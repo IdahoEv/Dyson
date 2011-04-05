@@ -1,6 +1,7 @@
 require 'star'
 
-STAR_COUNT    = 100
+--STAR_COUNT    = 100
+STAR_COUNT    = 3
 STAR_RADIUS   = 6.955e5 -- km
 LIGHT_YEAR    = 9.46e12 -- km
 DISTANCE_SCALE = 100 -- lightears
@@ -30,6 +31,26 @@ for ii = 1, STAR_COUNT do
   stars[ii] = star
 end
 
+-- Create a binary star by taking the first two stars above and
+-- making them orbit a common center
+centroid = Spob:new(nil)
+centroid.name = "Centroid #1"
+star_ind1 = 2
+star_ind2 = 3
+print(centroid.host)
+centroid.location = {
+  x = (stars[star_ind1].location.x + stars[star_ind2].location.x) / 2,
+  y = (stars[star_ind1].location.y + stars[star_ind2].location.y) / 2,
+  z = (stars[star_ind1].location.z + stars[star_ind2].location.z) / 2 }
+stars[star_ind1].host = centroid
+stars[star_ind2].host = centroid
+stars[star_ind1]:setOrbitalRadius(1e15)
+stars[star_ind2]:setOrbitalRadius(5e15)
+stars[star_ind1]:setOrbitalPeriod(70 * SECONDS_PER_DAY)
+stars[star_ind2]:setOrbitalPeriod(70 * SECONDS_PER_DAY)
+
+table.insert(stars, centroid)
+--stars[STAR_COUNT+1] = centroid
 
 return stars
 
