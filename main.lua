@@ -41,12 +41,6 @@ function love.update(delta_time)
   for _, planet in ipairs(planets) do planet:updateCoords(time) end
 
   visible_spobs = findVisibleSpobs(stars)
-
-  print("Visible spobs has: "..(#visible_spobs).."  entries")
-end
-
-function love.mousepressed(x, y, button)
-
 end
 
 function love.keypressed(key, unicode)
@@ -163,11 +157,12 @@ function findVisibleSpobs(stars)
     local ALLOWABLE_DISTANCE = 2 -- screen heights
     local MIN_RESOLVABLE     = 5 -- pixels
     local max_dist = ALLOWABLE_DISTANCE * scale.screen_scale
-    local min_dist = MIN_RESOLVABLE * scale.screen_height / scale.screen_scale
+    local min_dist = MIN_RESOLVABLE / scale.screen_height * scale.screen_scale
     for _, spob in ipairs(spob_array) do
-      local dist = spob:distanceFromPoint(scale:viewCenterLocation())
+      local dist_from_center  = spob:distanceFromPoint(scale:viewCenterLocation())
+      local dist_from_host    = spob:distanceFromParent()
 
-      if (dist < max_dist) and (dist > min_dist) then
+      if (dist_from_center < max_dist) and (dist_from_host > min_dist) then
         table.insert(vspobs, star)
         if #(spob.satellites) > 0 then
           appendVisibleSpobsAndSatellites(vspobs, spob.satellites)
