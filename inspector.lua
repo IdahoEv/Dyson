@@ -25,11 +25,19 @@ function Inspector:draw(scale)
     return
   end
   -- Create a see-through box to the right of the spob
-  love.graphics.setColor(50, 50, 200, 150)
-  love.graphics.rectangle('fill', x+10, y-10, self.width, num_attr * 20)
+  local box_width  = self.width
+  local box_height = num_attr * 20
+  local box_upperLx = x+10
+  local box_upperLy = y
+  love.graphics.setColor(50, 50, 100, 200)
+  love.graphics.rectangle('fill', box_upperLx, box_upperLy,
+                          box_width, box_height)
+  love.graphics.setColor(50, 50, 200, 255)
+  love.graphics.rectangle('line', box_upperLx, box_upperLy,
+                          box_width, box_height)
   love.graphics.setColor(255, 255, 255)
   -- Show the spob's attributes
-  textLine{str = self.spob.name, x = x+12, y = y-8}
+  textLine{str = self.spob.name, x = box_upperLx+33, y = box_upperLy+2}
   for key, att in pairs(attr) do
     textLine{str = key .. ': ' .. att}
   end
