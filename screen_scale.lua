@@ -14,18 +14,20 @@ function ScreenScale:initialize()
 end
 
 -- x, y in kilometers relative to the origin, which is assumed at screen center
-function ScreenScale:screenCoords(x, y)
-   local px, py, pz
-   -- Compute offsets if the view center is some spob
-   if self.view_center == nil then
-      px, py, pz = 0, 0
-   else
-      px, py, pz = self.view_center:getLocation()
-   end
-   local screen_x = (x-px) * self:pixelScale() + self.screen_center.x
-   local screen_y = (y-py) * self:pixelScale() + self.screen_center.y
+function ScreenScale:screenCoords(location)
+   local center_loc = self:viewCenterLocation()
+   local screen_x = (location.x-center_loc.x) * self:pixelScale() + self.screen_center.x
+   local screen_y = (location.y-center_loc.y) * self:pixelScale() + self.screen_center.y
 
    return screen_x, screen_y
+end
+
+function ScreenScale:viewCenterLocation()
+  if self.view_center == nil then
+    return { x = 0, y = 0, z = 0 }
+  else
+    return self.view_center:getLocation()
+  end
 end
 
 function ScreenScale:screenDist(dist)

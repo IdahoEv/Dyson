@@ -54,8 +54,7 @@ end
 function Spob:draw(scale)
    -- If it has a host, then (optionally) draw its orbit around that host
    if self.host ~= nil and preferences.show_orbits then
-      local host_x, host_y = self.host:getLocation()
-      self:drawOrbit(host_x, host_y)
+      self:drawOrbit(self.host:getLocation())
    end
 
    self.paintable:paint(self:getLocation())
@@ -72,22 +71,22 @@ function Spob:getLocation()
    local host_x, host_y, host_z
    -- If no host, location is relative to screen center
    if (self.host == nil) then
-      host_x, host_y, host_z = 0, 0, 0
+      host_loc = { x = 0, y = 0, z = 0 }
    else
       -- recurse!
-      host_x, host_y, host_z = self.host:getLocation()
+      host_loc = self.host:getLocation()
    end
-   return self.location.x + host_x,
-          self.location.y + host_y,
-          self.location.z + host_z
+   return { x = self.location.x + host_loc.x,
+            y = self.location.y + host_loc.y,
+            z = self.location.z + host_loc.z }
 end
 
-function Spob:drawOrbit(host_x, host_y)
+function Spob:drawOrbit(host_loc)
   local orbital_radius = self.orbital_radius * scale:pixelScale()
   if orbital_radius > 10 then
     local segments = math.pi / ( math.acos(1-(MAX_ORBIT_CIRCLE_ERROR/orbital_radius)))
     love.graphics.setColor(40, 40, 40)
-    local hx, hy = scale:screenCoords(host_x, host_y)
+    local hx, hy = scale:screenCoords(host_loc)
     love.graphics.circle('line', hx, hy, orbital_radius, segments)
   end
 end
@@ -98,6 +97,13 @@ function Spob:distanceFromParent()
     (self.location.y * self.location.y) +
     (self.location.z * self.location.z)
   )
+end
+
+function Spob:distanceFromPoint(point)
+  local dx = self.location.x - point.x
+  local dy = self.location.y - point.y
+  local dz = self.location.z - point.z
+  return math.sqrt(dx * dx + dy * dy + dz * dz)
 end
 
 -- Update the current position of this spob relative to its parent body
@@ -126,4 +132,4 @@ function Spob:getAttribs()
            Radius = self.radius,
            Orbital_radius = self.orbital_radius,
            Period = self.orbital_period }
-end 
+end

@@ -2,12 +2,12 @@ require "middleclass" -- definition of useful class construction methods
 require "paintable"
 
 PaintableStar = Paintable:subclass('PaintableStar')
-PaintableStar.defaultImage = love.graphics.newImage("images/star_white.png")
+PaintableStar.default_image = love.graphics.newImage("images/star_white.png")
 
 function PaintableStar:initialize(spob, color)
   self.spob  = spob
   self.colorname = colorname
-  self.image = PaintableStar.defaultImage
+  self.image = PaintableStar.default_image
   self.half_width = self.image:getWidth() / 2
   self.half_height = self.image:getHeight() / 2
   self.color = color

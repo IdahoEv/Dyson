@@ -6,8 +6,8 @@ function Paintable:initialize(spob)
   self.spob  = spob
 end
 
-function Paintable:paint(x, y)
-  self.x, self.y  = scale:screenCoords(x, y)
+function Paintable:paint(location)
+  self.x, self.y  = scale:screenCoords(location)
   self.radius     = self.spob.radius * scale:pixelScale()
   self:draw()
 

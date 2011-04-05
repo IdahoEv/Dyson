@@ -21,6 +21,7 @@ function love.load()
 
   time_scale = 5e6
   sol     = require 'initialize_solar_system'
+  scale.view_center = sol
   planets = sol.satellites
   -- planets = require 'initialize_planets'
   sol:printHierarchy()
@@ -38,6 +39,10 @@ function love.update(delta_time)
   time = time + delta_time * time_scale
   updateFPS(delta_time)
   for _, planet in ipairs(planets) do planet:updateCoords(time) end
+
+  visible_spobs = findVisibleSpobs(stars)
+
+  print("Visible spobs has: "..(#visible_spobs).."  entries")
 end
 
 function love.mousepressed(x, y, button)
@@ -148,4 +153,35 @@ function drawHelp()
   textLine{str = 'Left-click to recenter on a spob'}
   textLine{str = 'Right-click to recenter at origin'}
 end
+
+-- Naive first version just iterates the stars to see if they are within a delta of onscreen,
+-- and adds their satellites if those satellites' orbits aren't too small
+function findVisibleSpobs(stars)
+  local vspobs = {}
+
+  local function appendVisibleSpobsAndSatellites(vspobs, spob_array)
+    local ALLOWABLE_DISTANCE = 2 -- screen heights
+    local MIN_RESOLVABLE     = 5 -- pixels
+    local max_dist = ALLOWABLE_DISTANCE * scale.screen_scale
+    local min_dist = MIN_RESOLVABLE * scale.screen_height / scale.screen_scale
+    for _, spob in ipairs(spob_array) do
+      local dist = spob:distanceFromPoint(scale:viewCenterLocation())
+
+      if (dist < max_dist) and (dist > min_dist) then
+        table.insert(vspobs, star)
+        if #(spob.satellites) > 0 then
+          appendVisibleSpobsAndSatellites(vspobs, spob.satellites)
+        end
+      end
+    end
+  end
+  if scale.view_center then
+    table.insert(vspobs, scale.view_center)
+    appendVisibleSpobsAndSatellites(vspobs, scale.view_center.satellites)
+  end
+  appendVisibleSpobsAndSatellites(vspobs, stars)
+  return vspobs
+end
+
+
 
