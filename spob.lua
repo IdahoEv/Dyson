@@ -118,6 +118,7 @@ function Spob:updateCoords(time)
   end
 end
 
+-- Recursively print this spob and its satellites
 function Spob:printHierarchy(indent)
   if indent == nil then indent = "" end
   print(string.format("%s%s", indent, self.name))
@@ -129,9 +130,16 @@ function Spob:printHierarchy(indent)
   end
 end
 
+-- Return a table containing attributes we'd like to display
+-- in the Inspector
 function Spob:getAttribs()
   return { Host = self.host.name,
            Radius = self.radius,
            Orbital_radius = self.orbital_radius,
            Period = self.orbital_period }
+end
+
+-- Avoid problems created by doing print(spob) 
+function Spob:__tostring()
+  return self.name
 end
