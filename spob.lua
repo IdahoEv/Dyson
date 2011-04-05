@@ -13,7 +13,7 @@ function Spob:initialize(host)
   end
 
   self.name = ""
-  -- Size
+  -- Size (in km)
   self.radius = 10
   -- Number of segments to use when drawing the circle
   self.segments = 50
@@ -57,13 +57,8 @@ function Spob:draw(scale)
     self:drawOrbit(self.host:getLocation())
   end
 
-  self.paintable:paint(self:getLocation())
-  -- Now draw all children
-  -- if (self.satellites ~= nil) then
-  --   for _, sat in ipairs(self.satellites) do
-  --     if(scale:screenDist(sat:distanceFromParent()) > MIN_SEPARATION_FOR_DRAW) then sat:draw(scale) end
-  --   end
-  -- end
+  -- Draw self, if visible (e.g. Centroids are not)
+  if (self.paintable) then self.paintable:paint(self:getLocation()) end
 end
 
 -- Return the (absolute) x,y coordinates of this Spob
@@ -75,7 +70,8 @@ function Spob:getLocation()
    else
       -- recurse!
       host_loc = self.host:getLocation()
-   end
+    end
+    print(self.name, host_loc.x, host_loc.y)
    return { x = self.location.x + host_loc.x,
             y = self.location.y + host_loc.y,
             z = self.location.z + host_loc.z }
