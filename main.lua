@@ -155,9 +155,9 @@ function findVisibleSpobs(stars_to_check)
     for _, spob in ipairs(spob_array) do
       local dist_from_center  = spob:distanceFromPoint(scale:viewCenterLocation())
       local dist_from_host    = spob:distanceFromParent()
-      -- if spob.class ~= Star then
-      -- print('checking visibility: ', spob.class, spob.name, dist_from_center, max_dist, '-', dist_from_host, min_dist)
-      -- end
+      if spob.class == Centroid or (spob.host and spob.host.name == "Centauri System") then
+        print('checking visibility: ', spob.class, spob.name, dist_from_center, max_dist, '-', dist_from_host, min_dist)
+      end
       if (dist_from_center < max_dist) and ((spob.host == nil) or (dist_from_host > min_dist)) then
         table.insert(vspobs, spob)
         if #(spob.satellites) > 0 then

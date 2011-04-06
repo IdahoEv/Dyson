@@ -9,7 +9,7 @@ end
 function Paintable:paint(location)
   self.x, self.y  = scale:screenCoords(location)
   self.radius     = self.spob.radius * scale:pixelScale()
-  self:draw()
+  if self.draw then self:draw() end
 
   if self.color and self.color.R then
     love.graphics.setColor(self.color.R, self.color.G, self.color.B)

@@ -5,12 +5,7 @@ Spob = class('Spob')
 
 -- Name: default = ""
 function Spob:initialize(host)
-
-  -- Host: body around which this Spob orbits (parent)
-  self.host = host
-  if self.host ~= nil then
-    self.host:addSatellite(self)
-  end
+  self:setHost(host)
 
   self.name = ""
   -- Size (in km)
@@ -28,6 +23,13 @@ function Spob:initialize(host)
   self.paintable = nil
 end
 
+function Spob:setHost(host)
+  -- Host: body around which this Spob orbits (parent)
+  self.host = host
+  if self.host ~= nil then
+    self.host:addSatellite(self)
+  end
+end
 
 function Spob:addSatellite(other_spob)
   table.insert(self.satellites, other_spob)
