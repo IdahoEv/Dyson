@@ -10,6 +10,7 @@ MIN_MASS = math.log10(.1)
 MAX_MASS = math.log10(80)
 MASS_RANGE = MAX_MASS-MIN_MASS
 
+
 stars = {}
 
 function randomMass()
@@ -24,7 +25,6 @@ function randomLocation()
     z = (math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR
   }
 end
-
 
 function randomStar()
   local star = Star:new(nil, randomMass())
@@ -59,6 +59,7 @@ stars[star_ind1]:setOrbitalRadius(3e13)
 stars[star_ind2]:setOrbitalRadius(5e13)
 stars[star_ind1]:setOrbitalPeriod(70 * SECONDS_PER_DAY)
 stars[star_ind2]:setOrbitalPeriod(70 * SECONDS_PER_DAY)
+stars[star_ind2].orbital_phase = TAU / 2
 
 table.insert(stars, centroid)
 --stars[STAR_COUNT+1] = centroid

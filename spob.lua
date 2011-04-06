@@ -24,6 +24,7 @@ function Spob:initialize(host)
 
   self.orbital_radius = 0 -- in kilometers
   self.orbital_period = 0 -- in seconds
+  self.orbital_phase  = 0  -- in radians
   self.paintable = nil
 end
 
@@ -107,7 +108,7 @@ end
 -- Time since arbitrary time 0, in seconds
 function Spob:updateCoords(time)
   if self.host then
-    local theta = TAU * (time / self.orbital_period)
+    local theta = (TAU * (time / self.orbital_period)) + self.orbital_phase
     self.location.x = math.sin(theta) * self.orbital_radius
     self.location.y = math.cos(theta) * self.orbital_radius
   end
@@ -139,7 +140,7 @@ function Spob:getAttribs()
            Period = self.orbital_period }
 end
 
--- Avoid problems created by doing print(spob) 
+-- Avoid problems created by doing print(spob)
 function Spob:__tostring()
   return self.name
 end
