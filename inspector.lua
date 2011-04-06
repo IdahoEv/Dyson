@@ -19,11 +19,7 @@ function Inspector:draw(scale)
     num_attr = num_attr + 1
   end
   -- Check whether the spob is (still) in view
-  local x, y = scale:screenCoords(self.spob.location)
-  if x <= 0 or y <= 0 or
-    x > scale.screen_width and y > scale.screen_height then
-    return
-  end
+  local x, y = scale:screenCoords(self.spob:getLocation())
   -- Create a see-through box to the right of the spob
   local box_width  = self.width
   local box_height = num_attr * 20
@@ -37,7 +33,7 @@ function Inspector:draw(scale)
                           box_width, box_height)
   love.graphics.setColor(255, 255, 255)
   -- Show the spob's attributes
-  textLine{str = self.spob.name, x = box_upperLx+33, y = box_upperLy+2}
+  textLine{str = self.spob.name, x = box_upperLx+3, y = box_upperLy+2}
   for key, att in pairs(attr) do
     textLine{str = key .. ': ' .. att}
   end
