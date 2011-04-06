@@ -23,3 +23,13 @@ function Centroid:addSatellite(other_spob)
     self.mass = self.mass + spob.mass
   end
 end
+
+-- Return a table containing attributes we'd like to display
+-- in the Inspector
+function Centroid:getAttribs()
+  return { } 
+  -- Host = self.host.name,
+  --          Radius = self.radius,
+  --          Orbital_radius = self.orbital_radius,
+  --          Period = self.orbital_period }
+end

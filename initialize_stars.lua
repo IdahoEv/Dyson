@@ -12,7 +12,7 @@ MIN_MASS = math.log10(.1)
 MAX_MASS = math.log10(80)
 MASS_RANGE = MAX_MASS-MIN_MASS
 
-BINARY_ORBIT = 1495980000 -- km, = 10AU
+AU = 149598000 -- km
 BINARY_PROBABILITY = 1 / 6 -- should make 1/3 of stars binary
 
 STAR_NAMES = require('star_names')
@@ -43,17 +43,29 @@ function randomStar(name)
 end
 
 function randomBinary(name)
-  alpha = randomStar(name..' Alpha')
-  beta = randomStar(name..' Beta')
+  local alpha = randomStar(name..' Alpha')
+  local beta = randomStar(name..' Beta')
+  -- Alpha should be the more luminous star
+  if beta.luminosity > alpha.luminosity then
+    alpha, beta = beta, alpha
+    alpha.name, beta.name = beta.name, alpha.name
+  end
   centroid = Centroid:new(nil)
   centroid.name = name .. ' System'
   centroid.location = randomLocation()
   alpha:setHost(centroid)
   beta:setHost(centroid)
-  alpha:setOrbitalRadius(BINARY_ORBIT * 2 /3)
-  beta:setOrbitalRadius(BINARY_ORBIT / 3)
-  alpha:setOrbitalPeriod(70 * SECONDS_PER_DAY)
-  beta:setOrbitalPeriod(70 * SECONDS_PER_DAY)
+  local diameter = ((math.random() * 99) + 1) * AU
+  local total_mass = alpha.mass + beta.mass
+  -- Set radii inverse relative to the proportional mass
+  -- TODO: See if this is actually correct!
+  alpha:setOrbitalRadius(diameter * (beta.mass / total_mass))
+  beta:setOrbitalRadius(diameter * (alpha.mass / total_mass))
+
+  -- what units is this in?
+  local period = math.sqrt( ((diameter^3) * TAU) / (GRAVITATIONAL_CONSTANT_KM * total_mass))
+  alpha:setOrbitalPeriod(period)
+  beta:setOrbitalPeriod(period)
   beta.orbital_phase = TAU / 2
   return centroid
 end
@@ -71,26 +83,6 @@ for ii = 1, STAR_COUNT do
   end
   stars[ii] = spob
 end
-
-
--- -- Create a binary star by taking the first two stars above and
--- -- making them orbit a common center
--- centroid = Spob:new(nil)
--- centroid.name = "Centroid #1"
--- star_ind1 = 2
--- star_ind2 = 3
--- print(centroid.host)
--- centroid.location = {
---   x = (stars[star_ind1].location.x + stars[star_ind2].location.x) / 2,
---   y = (stars[star_ind1].location.y + stars[star_ind2].location.y) / 2,
---   z = (stars[star_ind1].location.z + stars[star_ind2].location.z) / 2 }
--- stars[star_ind1].host = centroid
--- stars[star_ind2].host = centroid
--- stars[star_ind1]:setOrbitalRadius(3e13)
--- stars[star_ind2]:setOrbitalRadius(5e13)
--- stars[star_ind1]:setOrbitalPeriod(70 * SECONDS_PER_DAY)
--- stars[star_ind2]:setOrbitalPeriod(70 * SECONDS_PER_DAY)
--- stars[star_ind2].orbital_phase = TAU / 2
 
 table.insert(stars, randomBinary('Centauri'))
 --stars[STAR_COUNT+1] = centroid

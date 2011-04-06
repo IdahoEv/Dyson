@@ -18,3 +18,6 @@ MAIN_SEQUENCE_CONSTANT = 3.5
 
 MAX_ORBIT_CIRCLE_ERROR = .5 -- max half a pixel deviation from a true circle/ellipse
 MIN_SEPARATION_FOR_DRAW = 5 -- Satellite must be at least 5 pix distinct from parent to be drawn
+
+GRAVITATIONAL_CONSTANT = 6.67e-11 -- this is in meters cubed
+GRAVITATIONAL_CONSTANT_KM = GRAVITATIONAL_CONSTANT * 1e-9
