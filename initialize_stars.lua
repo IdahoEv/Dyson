@@ -1,5 +1,6 @@
 require 'star'
 require 'centroid'
+require 'star_names'
 
 STAR_COUNT    = 100
 --STAR_COUNT    = 3
@@ -12,7 +13,9 @@ MAX_MASS = math.log10(80)
 MASS_RANGE = MAX_MASS-MIN_MASS
 
 BINARY_ORBIT = 1495980000 -- km, = 10AU
+BINARY_PROBABILITY = 1 / 6 -- should make 1/3 of stars binary
 
+STAR_NAMES = require('star_names')
 stars = {}
 
 function randomMass()
@@ -55,9 +58,18 @@ function randomBinary(name)
   return centroid
 end
 
+function randomName()
+  return STAR_NAMES[math.floor((math.random() * #STAR_NAMES))]
+end
+
 for ii = 1, STAR_COUNT do
-  local star = randomStar("Star #"..ii)
-  stars[ii] = star
+  local spob
+  if math.random() < BINARY_PROBABILITY then
+    spob = randomStar(randomName())
+  else
+    spob = randomBinary(randomName())
+  end
+  stars[ii] = spob
 end
 
 

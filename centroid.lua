@@ -12,6 +12,14 @@ function Centroid:initialize(host, mass)
 end
 
 function Centroid:draw(scale)
-  print('Drawing centroid', self.name)
+  -- print('Drawing centroid', self.name)
   Spob.draw(self, scale)
+end
+
+function Centroid:addSatellite(other_spob)
+  Spob.addSatellite(self, other_spob)
+  self.mass = 0
+  for _, spob in ipairs(self.satellites) do
+    self.mass = self.mass + spob.mass
+  end
 end
