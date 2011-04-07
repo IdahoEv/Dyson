@@ -121,6 +121,18 @@ function Spob:updateCoords(time)
   end
 end
 
+-- Determine whether this spob is visible, i.e., its current location
+-- is more than min_dist and less than max_dist from the view center.
+function Spob:isVisible(min_dist, max_dist)
+  local dist_from_center  = self:distanceFromPoint(scale:viewCenterLocation())
+  local dist_from_host    = self:distanceFromParent()
+  if (dist_from_center < max_dist) and
+    ((self.host == nil) or (dist_from_host > min_dist)) then
+      return true
+  end
+  return false
+end
+
 -- Recursively print this spob and its satellites
 function Spob:printHierarchy(indent)
   if indent == nil then indent = "" end
@@ -151,5 +163,9 @@ end
 -- on objects being concatenated.  Help it along here in case we
 -- concatenate a spob with something else.
 function Spob:__concat(obj)
-  return self.name .. obj
+  if instanceOf(Spob, obj) then
+    return self .. obj.name
+  else
+    return self.name .. obj
+  end
 end

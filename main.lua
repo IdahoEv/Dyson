@@ -129,21 +129,25 @@ end
 -- and adds their satellites if those satellites' orbits aren't too small
 function findVisibleSpobs(stars_to_check)
   local vspobs = {}
+  local ALLOWABLE_DISTANCE = 2 -- screen heights
+  local MIN_RESOLVABLE     = 5 -- pixels
+  local max_dist = ALLOWABLE_DISTANCE * scale.screen_scale
+  local min_dist = MIN_RESOLVABLE / scale.screen_height * scale.screen_scale
 
   local function appendVisibleSpobsAndSatellites(vspobs, spob_array)
-    local ALLOWABLE_DISTANCE = 2 -- screen heights
-    local MIN_RESOLVABLE     = 5 -- pixels
-    local max_dist = ALLOWABLE_DISTANCE * scale.screen_scale
-    local min_dist = MIN_RESOLVABLE / scale.screen_height * scale.screen_scale
     for _, spob in ipairs(spob_array) do
-      local dist_from_center  = spob:distanceFromPoint(scale:viewCenterLocation())
-      local dist_from_host    = spob:distanceFromParent()
       -- if spob.class == Centroid or (spob.host and spob.host.name == "Centauri System") then
       --   print('checking visibility: ', spob.class, spob.name, dist_from_center, max_dist, '-', dist_from_host, min_dist)
       -- end
-      if (dist_from_center < max_dist) and ((spob.host == nil) or (dist_from_host > min_dist)) then
+      if spob:isVisible(min_dist, max_dist) then
         table.insert(vspobs, spob)
         if #(spob.satellites) > 0 then
+          appendVisibleSpobsAndSatellites(vspobs, spob.satellites)
+        end
+      else
+        -- Recurse on satellites of invisible spobs too,
+        -- if they happen to be Centroids.
+        if instanceOf(Centroid, spob) then
           appendVisibleSpobsAndSatellites(vspobs, spob.satellites)
         end
       end
@@ -151,12 +155,22 @@ function findVisibleSpobs(stars_to_check)
   end
 
   if scale.view_center then
-    table.insert(vspobs, scale.view_center)
+    if instanceOf(Centroid, scale.view_center) then
+      -- Only show it if at least one satellite is not visible
+      for _, sat in ipairs(scale.view_center.satellites) do
+        if sat:isVisible(min_dist, max_dist) == false then
+          table.insert(vspobs, scale.view_center)
+          break
+        end
+      end
+    else
+      table.insert(vspobs, scale.view_center)
+    end
     appendVisibleSpobsAndSatellites(vspobs, scale.view_center.satellites)
   end
   appendVisibleSpobsAndSatellites(vspobs, stars_to_check)
-  -- print('------------------- VISIBLE:---------------')
-  -- for _, spob in ipairs(vspobs) do print(spob.name) end
+  --print('------------------- VISIBLE:---------------')
+  --for _, spob in ipairs(vspobs) do print(spob.name) end
   return vspobs
 end
 

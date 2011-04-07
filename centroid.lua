@@ -16,6 +16,24 @@ function Centroid:draw(scale)
   Spob.draw(self, scale)
 end
 
+-- Override isVisible so that if the centroid's two stars
+-- are both visible, the centroid itself is not.
+function Centroid:isVisible(min_dist, max_dist)
+  local dist_from_center  = self:distanceFromPoint(scale:viewCenterLocation())
+  local dist_from_host    = self:distanceFromParent()
+  if (dist_from_center < max_dist) and
+    ((self.host == nil) or (dist_from_host > min_dist)) then
+    -- If any are not visible, return true
+    for _, sat in ipairs(self.satellites) do
+      if sat:isVisible(min_dist, max_dist) == false then return true end
+    end
+    -- All satellites are visible, so omit centroid
+    return false
+  end
+  -- Centroid isn't within the view screen
+  return false
+end
+
 function Centroid:addSatellite(other_spob)
   Spob.addSatellite(self, other_spob)
   self.mass = 0
