@@ -35,7 +35,12 @@ function Inspector:draw(scale)
   -- Show the spob's attributes
   textLine{str = self.spob.name, x = box_upperLx+3, y = box_upperLy+2}
   for key, att in pairs(attr) do
-    textLine{str = key .. ': ' .. att}
+    if type(att) == 'number' then
+      attval = string.format('%10.3g', att)
+    else
+      attval = att
+    end
+    textLine{str = key .. ': ' .. attval}
   end
   -- Permit editing
 end
