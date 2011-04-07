@@ -21,8 +21,11 @@ end
 function Centroid:isVisible(min_dist, max_dist)
   local dist_from_center  = self:distanceFromPoint(scale:viewCenterLocation())
   local dist_from_host    = self:distanceFromParent()
-  if (dist_from_center < max_dist) and
-    ((self.host == nil) or (dist_from_host > min_dist)) then
+  -- If this Spob *is* the view_center, check it for visibility
+  -- despite the distances being too small
+  if self == scale.view_center or
+    ((dist_from_center < max_dist) and
+     ((self.host == nil) or (dist_from_host > min_dist))) then
     -- If any are not visible, return true
     for _, sat in ipairs(self.satellites) do
       if sat:isVisible(min_dist, max_dist) == false then return true end

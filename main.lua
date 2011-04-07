@@ -155,15 +155,8 @@ function findVisibleSpobs(stars_to_check)
   end
 
   if scale.view_center then
-    if instanceOf(Centroid, scale.view_center) then
-      -- Only show it if at least one satellite is not visible
-      for _, sat in ipairs(scale.view_center.satellites) do
-        if sat:isVisible(min_dist, max_dist) == false then
-          table.insert(vspobs, scale.view_center)
-          break
-        end
-      end
-    else
+    -- Check visibility, since Centroid Spobs may not be visible
+    if scale.view_center:isVisible(min_dist, max_dist) then
       table.insert(vspobs, scale.view_center)
     end
     appendVisibleSpobsAndSatellites(vspobs, scale.view_center.satellites)

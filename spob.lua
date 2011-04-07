@@ -124,6 +124,9 @@ end
 -- Determine whether this spob is visible, i.e., its current location
 -- is more than min_dist and less than max_dist from the view center.
 function Spob:isVisible(min_dist, max_dist)
+  -- If this Spob *is* the view_center, it's obviously visible.
+  if self == scale.view_center then return true end
+  -- Otherwise, check the distance constraints
   local dist_from_center  = self:distanceFromPoint(scale:viewCenterLocation())
   local dist_from_host    = self:distanceFromParent()
   if (dist_from_center < max_dist) and
