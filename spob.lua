@@ -142,7 +142,14 @@ function Spob:getAttribs()
            Period = self.orbital_period }
 end
 
--- Avoid problems created by doing print(spob)
+-- Return the spob's name instead of "instance of Spob"
 function Spob:__tostring()
   return self.name
+end
+
+-- For some reason, Lua doesn't automatically call __tostring()
+-- on objects being concatenated.  Help it along here in case we
+-- concatenate a spob with something else.
+function Spob:__concat(obj)
+  return self.name .. obj
 end
