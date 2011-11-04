@@ -24,12 +24,13 @@ sol.paintable = PaintableStar:new(sol, { R = 255, G = 255, B = 225 })
 sol:setOrbitalRadius(0)
 sol:setOrbitalPeriod(1)
 
-evan = Spob:new(sol) -- evan
-evan.name = "Evan"
-evan.paintable = PaintableDisc:new(evan,{ R = 150, G = 50, B = 150 })
-evan:setRadius(3000)
-evan:setOrbitalRadius(4e7) -- km
-evan:setOrbitalPeriod(50 * SECONDS_PER_DAY)
+kiri = Spob:new(sol) -- kiri
+kiri.name = "Kiri"
+kiri.paintable = PaintableImage:new(kiri, 'heart.png',
+                                  { R = 0x8d, G = 0x34, B = 0x1a })
+kiri:setRadius(30000)
+kiri:setOrbitalRadius(4e7) -- km
+kiri:setOrbitalPeriod(50 * SECONDS_PER_DAY)
 
 mercury = Spob:new(sol) -- mercury
 mercury.name = "Mercury"
