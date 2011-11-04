@@ -13,6 +13,7 @@ Keys:
   r           - Toggle reticle (crosshairs) around planets
   o           - Toggle display of orbital paths
   q           - Quit
+  spacebar    - Pause 
   shift 0-9   - Center on primary (0) or planet (1-9) of the solar system
 
 Mouse:
