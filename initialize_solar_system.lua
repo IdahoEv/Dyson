@@ -24,7 +24,7 @@ sol.paintable = PaintableStar:new(sol, { R = 255, G = 255, B = 225 })
 sol:setOrbitalRadius(0)
 sol:setOrbitalPeriod(1)
 
-kiri = Sphere:new(sol) -- kiri
+kiri = Spob:new(sol) -- kiri
 kiri.name = "Kiri"
 kiri.paintable = PaintableImage:new(kiri, 'heart.png',
                                   { R = 0x8d, G = 0x34, B = 0x1a })
