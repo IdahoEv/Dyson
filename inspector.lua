@@ -4,7 +4,7 @@ require 'text'
 
 Inspector = class('Inspector')
 
--- Create a inspector for the indicated Spob
+-- Create a inspector for the indicated Sphere
 function Inspector:initialize(spob)
   self.spob = spob
   self.title = "Inspector"

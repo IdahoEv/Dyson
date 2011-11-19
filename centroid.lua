@@ -2,10 +2,10 @@ require "middleclass" -- definition of useful class construction methods
 require 'constants'
 require "spob"
 
-Centroid = Spob:subclass('Centroid')
+Centroid = Sphere:subclass('Centroid')
 
 function Centroid:initialize(host, mass)
-  Spob.initialize(self, host)
+  Sphere.initialize(self, host)
 
   -- a bare paintable just shows the name
   self.paintable = Paintable:new(self)
@@ -13,7 +13,7 @@ end
 
 function Centroid:draw(scale)
   -- print('Drawing centroid', self.name)
-  Spob.draw(self, scale)
+  Sphere.draw(self, scale)
 end
 
 -- Override isVisible so that if the centroid's two stars
@@ -21,7 +21,7 @@ end
 function Centroid:isVisible(min_dist, max_dist)
   local dist_from_center  = self:distanceFromPoint(scale:viewCenterLocation())
   local dist_from_host    = self:distanceFromParent()
-  -- If this Spob *is* the view_center, check it for visibility
+  -- If this Sphere *is* the view_center, check it for visibility
   -- despite the distances being too small
   if self == scale.view_center or
     ((dist_from_center < max_dist) and
@@ -38,7 +38,7 @@ function Centroid:isVisible(min_dist, max_dist)
 end
 
 function Centroid:addSatellite(other_spob)
-  Spob.addSatellite(self, other_spob)
+  Sphere.addSatellite(self, other_spob)
   self.mass = 0
   for _, spob in ipairs(self.satellites) do
     self.mass = self.mass + spob.mass

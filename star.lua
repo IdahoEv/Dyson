@@ -2,11 +2,11 @@ require "middleclass" -- definition of useful class construction methods
 require 'constants'
 require "spob"
 
-Star = Spob:subclass('Star')
+Star = Sphere:subclass('Star')
 
 
 function Star:initialize(host, mass)
-  Spob.initialize(self, host)
+  Sphere.initialize(self, host)
   self.mass           = mass -- kg
   self.temperature    = 0    -- K
   self.luminosity     = (self.mass / SOLAR_MASS)^MAIN_SEQUENCE_CONSTANT * SOLAR_LUMINOSITY
