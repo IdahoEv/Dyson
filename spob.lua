@@ -8,10 +8,6 @@ function Spob:initialize(host)
   self:setHost(host)
 
   self.name = ""
-  -- Size (in km)
-  self.radius = 10
-  -- Number of segments to use when drawing the circle
-  self.segments = 50
   -- Location: relative to parent body (in km)
   self.location = { x = 0, y = 0, z = 0 }
   -- Satellites: bodies that orbit this Spob (children)
