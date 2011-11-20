@@ -14,8 +14,8 @@ function Spob:initialize(host)
   self.satellites = { }
 
   self.orbital_radius = 0 -- in kilometers
-  self.orbital_period = 0 -- in seconds
-  self.orbital_phase  = 0  -- in radians
+  self.orbital_period = 1 -- in seconds
+  self.orbital_phase  = 0 -- in radians
   self.paintable = nil
 end
 

@@ -40,7 +40,7 @@ function love.update(delta_time)
   end
 
   updateFPS(delta_time)
-  visible_spobs = findVisibleSpheres(stars)
+  visible_spobs = findVisibleSpobs(stars)
 end
 
 function love.keypressed(key, unicode)
@@ -127,28 +127,28 @@ end
 
 -- Naive first version just iterates the stars to see if they are within a delta of onscreen,
 -- and adds their satellites if those satellites' orbits aren't too small
-function findVisibleSpheres(stars_to_check)
+function findVisibleSpobs(stars_to_check)
   local vspobs = {}
   local ALLOWABLE_DISTANCE = 2 -- screen heights
   local MIN_RESOLVABLE     = 5 -- pixels
   local max_dist = ALLOWABLE_DISTANCE * scale.screen_scale
   local min_dist = MIN_RESOLVABLE / scale.screen_height * scale.screen_scale
 
-  local function appendVisibleSpheresAndSatellites(vspobs, spob_array)
+  local function appendVisibleSpobsAndSatellites(vspobs, spob_array)
     for _, spob in ipairs(spob_array) do
-      -- if spob.class == Centroid or (spob.host and spob.host.name == "Centauri System") then
-      --   print('checking visibility: ', spob.class, spob.name, dist_from_center, max_dist, '-', dist_from_host, min_dist)
-      -- end
+      --if spob.class == Centroid or (spob.host and spob.host.name == "Centauri System") then
+--	print('checking visibility: ', spob.class, spob.name, dist_from_center, max_dist, '-', dist_from_host, min_dist)
+--      end
       if spob:isVisible(min_dist, max_dist) then
         table.insert(vspobs, spob)
         if #(spob.satellites) > 0 then
-          appendVisibleSpheresAndSatellites(vspobs, spob.satellites)
+          appendVisibleSpobsAndSatellites(vspobs, spob.satellites)
         end
       else
         -- Recurse on satellites of invisible spobs too,
         -- if they happen to be Centroids.
         if instanceOf(Centroid, spob) then
-          appendVisibleSpheresAndSatellites(vspobs, spob.satellites)
+          appendVisibleSpobsAndSatellites(vspobs, spob.satellites)
         end
       end
     end
@@ -159,9 +159,9 @@ function findVisibleSpheres(stars_to_check)
     if scale.view_center:isVisible(min_dist, max_dist) then
       table.insert(vspobs, scale.view_center)
     end
-    appendVisibleSpheresAndSatellites(vspobs, scale.view_center.satellites)
+    appendVisibleSpobsAndSatellites(vspobs, scale.view_center.satellites)
   end
-  appendVisibleSpheresAndSatellites(vspobs, stars_to_check)
+  appendVisibleSpobsAndSatellites(vspobs, stars_to_check)
   --print('------------------- VISIBLE:---------------')
   --for _, spob in ipairs(vspobs) do print(spob.name) end
   return vspobs

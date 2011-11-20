@@ -4,7 +4,9 @@ require 'paintable_disc_with_ring'
 require 'paintable_image'
 require 'paintable_disc'
 require 'paintable_star'
+require 'paintable_construct'
 require 'star'
+require 'construct'
 
 VENUS_ORBIT_RADIUS   = 1.08e8 -- km
 EARTH_ORBIT_RADIUS   = 1.49e8 -- km
@@ -55,10 +57,14 @@ earth:setOrbitalPeriod(365.25 * SECONDS_PER_DAY)
 
   luna = Sphere:new(earth) -- Luna
   luna.name = "Luna"
-  luna.paintable = PaintableDisc:new(luna,{ R = 200, G = 200, B = 200 })
+  luna.paintable = PaintableDisc:new(luna,{ R = 200, G = 200, B = 230 })
   luna:setRadius(LUNA_RADIUS)
   luna:setOrbitalRadius(LUNA_ORBIT_RADIUS)
   luna:setOrbitalPeriod(27.3 * SECONDS_PER_DAY)
+
+  ring = Construct:new(earth, 12, EARTH_RADIUS*2, 10, 10)
+  ring.name = "Square"
+  ring.paintable = PaintableConstruct:new(ring, { R = 200, G = 200, B = 200 })
 
 mars = Sphere:new(sol) -- Mars
 mars.name = "Mars"
@@ -91,7 +97,7 @@ jupiter:setRadius(7.149e4)
 jupiter:setOrbitalRadius(7.785e8)
 jupiter:setOrbitalPeriod(4331.6 * SECONDS_PER_DAY)
 
-  io = Sphere:new(jupiter)
+  local io = Sphere:new(jupiter)
   io.name = "Io"
   io.paintable = PaintableDisc:new(io,{ R = 0xf3, G = 0xe8, B = 0x84 })
   io:setRadius(1821.3)
