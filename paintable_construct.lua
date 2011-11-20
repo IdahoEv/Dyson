@@ -24,7 +24,9 @@ function PaintableConstruct:draw()
         table.insert(polygon, screen_x)
         table.insert(polygon, screen_y)
       end
+      -- Need line mode to be able to see edge-on polygons!
       love.graphics.polygon("line", polygon)      
+      love.graphics.polygon("fill", polygon)      
     end    
   end
 
