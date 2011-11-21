@@ -18,8 +18,12 @@ function PaintableConstruct:draw()
     for face_i, face in pairs(segment.faces) do
       polygon = {}
       for _, point in pairs(face) do
-	local p = { x = point.x + construct_location.x,
-		    y = point.y + construct_location.y }
+	sin_theta = math.sin(self.spob.rotation_angle)
+	cos_theta = math.cos(self.spob.rotation_angle)
+	local rot_p = { x = point.x * cos_theta - point.y * sin_theta,
+			y = point.x * sin_theta + point.y * cos_theta }
+	local p = { x = rot_p.x + construct_location.x,
+		    y = rot_p.y + construct_location.y }
         screen_x, screen_y = scale:screenCoords(p)
         table.insert(polygon, screen_x)
         table.insert(polygon, screen_y)

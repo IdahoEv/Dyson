@@ -10,13 +10,15 @@ Construct = Spob:subclass('Construct')
 -- For now, constructs are all cylinders; later refactor this
 -- so we pass in a "geometry" object that specifies how the
 -- segments are shaped and how they connect.
-function Construct:initialize(host, n_segments, radius, height, thickness)
-  Spob.initialize(self, host)
+function Construct:initialize(host, n_segments, radius, height, thickness, period)
+  Spob.initialize(self,host)
 
   self.n_segments = n_segments
   self.radius = radius
   self.height = height
   self.thickness = thickness
+  self.rotational_period = period
+  self.rotation_angle = 0 -- radians
 
   local angle_subtended = TAU / n_segments -- in radians
   self.segments = { }
@@ -59,4 +61,12 @@ function Construct:isVisible(min_dist, max_dist)
       return true
   end
   return false
+end
+
+function Construct:updateCoords(time)
+  Spob.updateCoords(self,time)
+
+  -- Update rotation angle
+  self.rotation_angle = time / self.rotational_period
+
 end
