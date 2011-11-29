@@ -87,7 +87,7 @@ function findClickedSphere(x, y, spobs)
   local best_spob = nil
   for _, spob in ipairs(spobs) do
     sx, sy = scale:screenCoords(spob:getLocation())
-    dist = math.sqrt( (sx-x)^2 + (sy-y) )
+    dist = math.sqrt( (sx-x)^2 + (sy-y)^2 )
     -- print(spob.name, "click", x, y, 'spob', sx, sy, 'dist', dist)
     if dist < best_proximity then
       -- print('best yet:', spob.name)
