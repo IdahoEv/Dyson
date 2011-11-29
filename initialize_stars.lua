@@ -1,6 +1,7 @@
 require 'star'
 require 'centroid'
 require 'star_names'
+local matrix = require 'lua-matrix/lua/matrix'
 
 STAR_COUNT    = 100
 --STAR_COUNT    = 3
