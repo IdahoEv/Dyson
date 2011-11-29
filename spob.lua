@@ -1,5 +1,6 @@
 require "middleclass" -- definition of useful class construction methods
 require 'constants'
+local matrix = require 'lua_matrix/lua/matrix'
 
 Spob = class('Spob')
 
@@ -9,7 +10,7 @@ function Spob:initialize(host)
 
   self.name = ""
   -- Location: relative to parent body (in km)
-  self.location = { x = 0, y = 0, z = 0 }
+  self.location = matrix:new{ 0, 0, 0 }
   -- Satellites: bodies that orbit this Spob (children)
   self.satellites = { }
 
@@ -65,15 +66,16 @@ function Spob:getLocation()
    local host_x, host_y, host_z
    -- If no host, location is relative to screen center
    if (self.host == nil) then
-      host_loc = { x = 0, y = 0, z = 0 }
+      host_loc = matrix:new{ 0, 0, 0 }
    else
       -- recurse!
       host_loc = self.host:getLocation()
     end
     -- print(self.name, host_loc.x, host_loc.y)
-   return { x = self.location.x + host_loc.x,
-            y = self.location.y + host_loc.y,
-            z = self.location.z + host_loc.z }
+   return self.location + host_loc 
+   --{ x = self.location.x + host_loc.x,
+            --y = self.location.y + host_loc.y,
+            --z = self.location.z + host_loc.z }
 end
 
 function Spob:drawOrbit(host_loc)
@@ -87,19 +89,17 @@ function Spob:drawOrbit(host_loc)
 end
 
 function Spob:distanceFromParent()
-  return math.sqrt(
-    (self.location.x * self.location.x) +
-    (self.location.y * self.location.y)
-    -- + (self.location.z * self.location.z)
-  )
+  return self.location.len
+  --return math.sqrt(
+    --(self.location[1][1] * self.location[1][1]) +
+    --(self.location[2][1] * self.location[2][1])
+    ---- + (self.location.z * self.location.z)
+  --)
 end
 
 function Spob:distanceFromPoint(point)
   local loc = self:getLocation()
-  local dx = loc.x - point.x
-  local dy = loc.y - point.y
-  local dz = loc.z - point.z
-  return math.sqrt(dx * dx + dy * dy) -- + dz * dz)
+  return (loc - point).len
 end
 
 -- Update the current position of this spob relative to its parent body
@@ -107,8 +107,8 @@ end
 function Spob:updateCoords(time)
   if self.host then
     local theta = (TAU * (time / self.orbital_period)) + self.orbital_phase
-    self.location.x = math.sin(theta) * self.orbital_radius
-    self.location.y = math.cos(theta) * self.orbital_radius
+    self.location[1][1] = math.sin(theta) * self.orbital_radius -- X coord
+    self.location[2][1] = math.cos(theta) * self.orbital_radius -- Y coord
   end
   -- self.location.z is unchanged... since we don't (yet) have
   -- orbital inclination
