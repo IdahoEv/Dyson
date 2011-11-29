@@ -27,7 +27,7 @@ sol.paintable = PaintableStar:new(sol, { R = 255, G = 255, B = 225 })
 sol:setOrbitalRadius(0)
 sol:setOrbitalPeriod(1)
 
-local ring2 = Construct:new(sol, 20, EARTH_ORBIT_RADIUS*2, EARTH_ORBIT_RADIUS * .5, 10, 
+local ring2 = Construct:new(sol, 20, EARTH_ORBIT_RADIUS*2, EARTH_ORBIT_RADIUS, 10, 
 			    500 * SECONDS_PER_DAY, matrix:new{ .3, .3, 1 })
 ring2.name = "Asteroids?"
 ring2.paintable = PaintableConstruct:new(ring2, { R = 200, G = 100, B = 100 })
@@ -68,7 +68,7 @@ luna:setRadius(LUNA_RADIUS)
 luna:setOrbitalRadius(LUNA_ORBIT_RADIUS)
 luna:setOrbitalPeriod(27.3 * SECONDS_PER_DAY)
 
-local ring = Construct:new(earth, 12, EARTH_RADIUS*2, 10, 10, SECONDS_PER_DAY, matrix:new{ 0, 0, 1})
+local ring = Construct:new(earth, 12, EARTH_RADIUS*2, 7000, 10, SECONDS_PER_DAY, matrix:new{ 0, 0, 1})
 ring.name = "Square"
 ring.paintable = PaintableConstruct:new(ring, { R = 200, G = 200, B = 200 })
 

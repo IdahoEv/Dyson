@@ -28,27 +28,34 @@ function Construct:initialize(
   self.thickness = thickness
   self.rotational_period = period
   self.rotation_angle = 0 -- radians
-  self.rotation_axis = rotation_axis
+  self.rotation_axis = matrix.unit(rotation_axis)
 
   local angle_subtended = TAU / n_segments -- in radians
   self.segments = { }
+
+  -- compute a rotation matrix between the z-axis and the desired axis of the
+  -- cylinder
+  rot_matrix = matrix.rot_matrix_between(matrix:new{0,0,1}, self.rotation_axis)
 
   -- construct segments around the z-axis
   for s = 1, n_segments do
     -- faces should include 6 faces in the most general case
     -- but here we're simplifying to a single face.
-    local half_thickness = math.floor(thickness / 2)
+    local half_height = math.floor(height / 2)
     local start = { x = math.cos((s-1) * angle_subtended) * self.radius, 
 		    y = math.sin((s-1) * angle_subtended) * self.radius } 
     local stop  = { x = math.cos(s * angle_subtended) * self.radius, 
 		    y = math.sin(s * angle_subtended) * self.radius } 
     -- Walk out the points of the face in clockwise fashion
-    local p1 = matrix{ start.x, start.y,  half_thickness }
-    local p2 = matrix{ stop.x,  stop.y,   half_thickness }
-    local p3 = matrix{ stop.x,  stop.y,  -half_thickness }
-    local p4 = matrix{ start.x, start.y, -half_thickness }
+    local p1 = matrix{ start.x, start.y,  half_height }
+    local p2 = matrix{ stop.x,  stop.y,   half_height }
+    local p3 = matrix{ stop.x,  stop.y,  -half_height }
+    local p4 = matrix{ start.x, start.y, -half_height }
     local faces = { { p1, p2, p3, p4 } }
-    table.insert(self.segments, Segment:new(self, faces))
+    segment = Segment:new(self, faces)
+    segment:rotateInitialFaces(rot_matrix)
+
+    table.insert(self.segments, segment)
 
 --    for seg_i, seg in pairs(self.segments) do
 --      print(string.format('Segment %d is %s )\n',
@@ -56,9 +63,7 @@ function Construct:initialize(
 --    end
   end
 
-  -- compute a rotation matrix between the z-axis and the desired axis of the
-  -- cylinder
-  rot_matrix = matrix.rot_matrix_between(matrix:new{0,0,1}, self.rotation_axis)
+
   
 --  print string.format(unpack(segments))
   

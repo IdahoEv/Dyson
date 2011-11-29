@@ -11,8 +11,7 @@ end
 function PaintableConstruct:draw()
   local segments = self.spob.segments
 
-  love.graphics.setColor(self.color.R, self.color.G, self.color.B)
-
+  
   local construct_location = self.spob:getLocation()
   for seg_i, segment in pairs(self.spob.segments) do
     for face_i, face in pairs(segment.current_faces) do
@@ -23,8 +22,12 @@ function PaintableConstruct:draw()
         table.insert(polygon, screen_y)
       end
       -- Need line mode to be able to see edge-on polygons!
-      love.graphics.polygon("line", polygon)      
+        
+      love.graphics.setColor(self.color.R, self.color.G, self.color.B)
+
       love.graphics.polygon("fill", polygon)      
+      love.graphics.setColor(self.color.R *.5, self.color.G * .5, self.color.B * .5)
+      love.graphics.polygon("line", polygon)   
     end    
   end
 

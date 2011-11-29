@@ -33,6 +33,10 @@ function Segment:rotateFaces(rot_matrix)
   return result_faces
 end
 
+function Segment:rotateInitialFaces(rot_matrix) 
+  self.initial_faces = self:rotateFaces(rot_matrix)
+end
+
 function Segment:updateFaces(rot_matrix)
   self.current_faces = self:rotateFaces(rot_matrix)
 end
