@@ -2,6 +2,7 @@ require "middleclass" -- definition of useful class construction methods
 require 'constants'
 require 'spob'
 require 'segment'
+local matrix = require 'lua-matrix/lua/matrix'
 
 -- Construct class: Spob composed of multiple Segments
 
@@ -31,10 +32,14 @@ function Construct:initialize(host, n_segments, radius, height, thickness, perio
     stop  = { x = math.cos(s * angle_subtended) * self.radius, 
 	      y = math.sin(s * angle_subtended) * self.radius } 
     -- Walk out the points of the face in clockwise fashion
-    p1 = { x = start.x, y = start.y, z =  half_thickness }
-    p2 = { x = stop.x,  y = stop.y,  z =  half_thickness }
-    p3 = { x = stop.x,  y = stop.y,  z = -half_thickness }
-    p4 = { x = start.x, y = start.y, z = -half_thickness }
+--    p1 = { x = start.x, y = start.y, z =  half_thickness }
+--    p2 = { x = stop.x,  y = stop.y,  z =  half_thickness }
+--    p3 = { x = stop.x,  y = stop.y,  z = -half_thickness }
+--    p4 = { x = start.x, y = start.y, z = -half_thickness }
+    p1 = matrix{ start.x, start.y,  half_thickness }
+    p2 = matrix{ stop.x,  stop.y,   half_thickness }
+    p3 = matrix{ stop.x,  stop.y,   -half_thickness }
+    p4 = matrix{ start.x, start.y,  -half_thickness }
     faces = { { p1, p2, p3, p4 } }
     table.insert(self.segments, Segment:new(self, faces))
 
