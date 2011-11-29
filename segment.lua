@@ -21,15 +21,20 @@ function Segment:getLocation()
 end
 
 -- figure current location of faces, rotated by theta from original location
-function Segment:updateFaces(rot_matrix)
-  self.current_faces = {}
+function Segment:rotateFaces(rot_matrix)
+  local result_faces = {}
   for face_i, face in pairs(self.initial_faces) do
     local rotated_face = {}
     for point_i, point in pairs(face) do
-      --local p = { x = rot_p.x + construct_location.x,
-      --	    y = rot_p.y + construct_location.y }
       rotated_face[point_i] = rot_matrix * point
     end
-    self.current_faces[face_i] = rotated_face
+    result_faces[face_i] = rotated_face
   end    
+  return result_faces
 end
+
+function Segment:updateFaces(rot_matrix)
+  self.current_faces = self:rotateFaces(rot_matrix)
+end
+
+

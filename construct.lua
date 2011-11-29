@@ -11,8 +11,15 @@ Construct = Spob:subclass('Construct')
 -- For now, constructs are all cylinders; later refactor this
 -- so we pass in a "geometry" object that specifies how the
 -- segments are shaped and how they connect.
-function Construct:initialize(host, n_segments, radius, height, 
-			      thickness, period, rotation_axis)
+function Construct:initialize(
+    host, 
+    n_segments, 
+    radius, 
+    height,
+    thickness, 
+    period, 
+    rotation_axis
+  )
   Spob.initialize(self,host)
 
   self.n_segments = n_segments
@@ -25,6 +32,8 @@ function Construct:initialize(host, n_segments, radius, height,
 
   local angle_subtended = TAU / n_segments -- in radians
   self.segments = { }
+
+  -- construct segments around the z-axis
   for s = 1, n_segments do
     -- faces should include 6 faces in the most general case
     -- but here we're simplifying to a single face.
@@ -46,6 +55,10 @@ function Construct:initialize(host, n_segments, radius, height,
 --			  seg_i, unpack(seg)))
 --    end
   end
+
+  -- compute a rotation matrix between the z-axis and the desired axis of the
+  -- cylinder
+  rot_matrix = matrix.rot_matrix_between(matrix:new{0,0,1}, self.rotation_axis)
   
 --  print string.format(unpack(segments))
   
