@@ -11,7 +11,8 @@ Construct = Spob:subclass('Construct')
 -- For now, constructs are all cylinders; later refactor this
 -- so we pass in a "geometry" object that specifies how the
 -- segments are shaped and how they connect.
-function Construct:initialize(host, n_segments, radius, height, thickness, period)
+function Construct:initialize(host, n_segments, radius, height, 
+			      thickness, period, rotation_axis)
   Spob.initialize(self,host)
 
   self.n_segments = n_segments
@@ -20,27 +21,24 @@ function Construct:initialize(host, n_segments, radius, height, thickness, perio
   self.thickness = thickness
   self.rotational_period = period
   self.rotation_angle = 0 -- radians
+  self.rotation_axis = rotation_axis
 
   local angle_subtended = TAU / n_segments -- in radians
   self.segments = { }
   for s = 1, n_segments do
     -- faces should include 6 faces in the most general case
     -- but here we're simplifying to a single face.
-    half_thickness = math.floor(thickness / 2)
-    start = { x = math.cos((s-1) * angle_subtended) * self.radius, 
-	      y = math.sin((s-1) * angle_subtended) * self.radius } 
-    stop  = { x = math.cos(s * angle_subtended) * self.radius, 
-	      y = math.sin(s * angle_subtended) * self.radius } 
+    local half_thickness = math.floor(thickness / 2)
+    local start = { x = math.cos((s-1) * angle_subtended) * self.radius, 
+		    y = math.sin((s-1) * angle_subtended) * self.radius } 
+    local stop  = { x = math.cos(s * angle_subtended) * self.radius, 
+		    y = math.sin(s * angle_subtended) * self.radius } 
     -- Walk out the points of the face in clockwise fashion
---    p1 = { x = start.x, y = start.y, z =  half_thickness }
---    p2 = { x = stop.x,  y = stop.y,  z =  half_thickness }
---    p3 = { x = stop.x,  y = stop.y,  z = -half_thickness }
---    p4 = { x = start.x, y = start.y, z = -half_thickness }
-    p1 = matrix{ start.x, start.y,  half_thickness }
-    p2 = matrix{ stop.x,  stop.y,   half_thickness }
-    p3 = matrix{ stop.x,  stop.y,   -half_thickness }
-    p4 = matrix{ start.x, start.y,  -half_thickness }
-    faces = { { p1, p2, p3, p4 } }
+    local p1 = matrix{ start.x, start.y,  half_thickness }
+    local p2 = matrix{ stop.x,  stop.y,   half_thickness }
+    local p3 = matrix{ stop.x,  stop.y,  -half_thickness }
+    local p4 = matrix{ start.x, start.y, -half_thickness }
+    local faces = { { p1, p2, p3, p4 } }
     table.insert(self.segments, Segment:new(self, faces))
 
 --    for seg_i, seg in pairs(self.segments) do
