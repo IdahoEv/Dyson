@@ -24,11 +24,9 @@ function randomMass()
 end
 
 function randomLocation()
-  return {
-    x = (math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR,
-    y = (math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR,
-    z = (math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR
-  }
+  return matrix{(math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR,
+		(math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR,
+		(math.random() - 0.5) * DISTANCE_SCALE * LIGHT_YEAR}
 end
 
 function randomStar(name)
