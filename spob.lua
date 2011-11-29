@@ -1,6 +1,6 @@
 require "middleclass" -- definition of useful class construction methods
 require 'constants'
-local matrix = require 'lua_matrix/lua/matrix'
+local matrix = require 'lua-matrix/lua/matrix'
 
 Spob = class('Spob')
 
@@ -107,8 +107,13 @@ end
 function Spob:updateCoords(time)
   if self.host then
     local theta = (TAU * (time / self.orbital_period)) + self.orbital_phase
-    self.location[1][1] = math.sin(theta) * self.orbital_radius -- X coord
-    self.location[2][1] = math.cos(theta) * self.orbital_radius -- Y coord
+    self.location = matrix:new{ 
+     math.sin(theta) * self.orbital_radius, -- X coord
+     math.cos(theta) * self.orbital_radius, -- Y coord
+     0   
+    }
+    --self.location[1][1] = math.sin(theta) * self.orbital_radius -- X coord
+    --self.location[2][1] = math.cos(theta) * self.orbital_radius -- Y coord
   end
   -- self.location.z is unchanged... since we don't (yet) have
   -- orbital inclination

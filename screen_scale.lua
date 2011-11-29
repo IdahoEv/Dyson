@@ -1,5 +1,5 @@
 require 'middleclass'
-local matrix = require 'lua_matrix/lua/matrix'
+local matrix = require 'lua-matrix/lua/matrix'
 
 KEYBOARD_ZOOM_FACTOR = 1.5
 MOUSE_ZOOM_FACTOR    = 1.2
