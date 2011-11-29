@@ -98,8 +98,7 @@ function Spob:distanceFromParent()
 end
 
 function Spob:distanceFromPoint(point)
-  local loc = self:getLocation()
-  return matrix.len(loc - point)
+  return matrix.len(self:getLocation() - point)
 end
 
 -- Update the current position of this spob relative to its parent body
