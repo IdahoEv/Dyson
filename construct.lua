@@ -72,6 +72,6 @@ function Construct:updateCoords(time)
   Spob.updateCoords(self,time)
 
   -- Update rotation angle
-  self.rotation_angle = time / self.rotational_period
+  self.rotation_angle = - time / self.rotational_period
 
 end
