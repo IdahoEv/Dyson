@@ -71,11 +71,7 @@ function Spob:getLocation()
       -- recurse!
       host_loc = self.host:getLocation()
     end
-    -- print(self.name, host_loc.x, host_loc.y)
    return self.location + host_loc 
-   --{ x = self.location.x + host_loc.x,
-            --y = self.location.y + host_loc.y,
-            --z = self.location.z + host_loc.z }
 end
 
 function Spob:drawOrbit(host_loc)
@@ -90,11 +86,6 @@ end
 
 function Spob:distanceFromParent()
   return matrix.len(self.location)
-  --return math.sqrt(
-    --(self.location[1][1] * self.location[1][1]) +
-    --(self.location[2][1] * self.location[2][1])
-    ---- + (self.location.z * self.location.z)
-  --)
 end
 
 function Spob:distanceFromPoint(point)
@@ -111,10 +102,7 @@ function Spob:updateCoords(time)
      math.cos(theta) * self.orbital_radius, -- Y coord
      0   
     }
-    --self.location[1][1] = math.sin(theta) * self.orbital_radius -- X coord
-    --self.location[2][1] = math.cos(theta) * self.orbital_radius -- Y coord
   end
-  -- self.location.z is unchanged... since we don't (yet) have
   -- orbital inclination
   if #(self.satellites) > 0 then
     for _, spob in ipairs(self.satellites) do spob:updateCoords(time) end

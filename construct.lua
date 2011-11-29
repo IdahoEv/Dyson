@@ -71,5 +71,7 @@ function Construct:updateCoords(time)
 
   -- Update rotation angle
   self.rotation_angle = - time / self.rotational_period
-
+  for seg_i, segment in pairs(self.segments) do
+    segment:updateFaces(self.rotation_angle)
+  end
 end
