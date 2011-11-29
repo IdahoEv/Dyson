@@ -2,7 +2,7 @@ require 'constants'
 require 'middleclass'
 require "spob"
 
-local matrix = require "lua-matrix/lua/matrix"
+local matrix = require 'matrix_utils'
 
 Segment = class('Segment')
 

@@ -2,7 +2,7 @@ require "middleclass" -- definition of useful class construction methods
 require 'constants'
 require 'spob'
 require 'segment'
-local matrix = require 'lua-matrix/lua/matrix'
+local matrix = require 'matrix_utils'
 
 -- Construct class: Spob composed of multiple Segments
 
@@ -73,9 +73,10 @@ function Construct:updateCoords(time)
   self.rotation_angle = - time / self.rotational_period
   local sin_theta = math.sin(self.rotation_angle)
   local cos_theta = math.cos(self.rotation_angle)
-  local rot_matrix = matrix{{cos_theta,-sin_theta,0},
-                       {sin_theta, cos_theta,0},
-                       {        0,         0,1}}
+  --local rot_matrix = matrix{{cos_theta,-sin_theta,0},
+  --                     {sin_theta, cos_theta,0},
+  --                     {        0,         0,1}}
+  local rot_matrix = matrix.rotmatrix(matrix{0,0,1}, self.rotation_angle)
   for seg_i, segment in pairs(self.segments) do
     segment:updateFaces(rot_matrix)
   end

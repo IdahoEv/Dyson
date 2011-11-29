@@ -1,6 +1,5 @@
 require "middleclass" -- definition of useful class construction methods
 require "paintable"
-local matrix = require 'lua-matrix/lua/matrix'
 
 PaintableConstruct = Paintable:subclass('PaintableConstruct')
 

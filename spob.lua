@@ -1,6 +1,6 @@
 require "middleclass" -- definition of useful class construction methods
 require 'constants'
-local matrix = require 'lua-matrix/lua/matrix'
+local matrix = require 'matrix_utils'
 
 Spob = class('Spob')
 

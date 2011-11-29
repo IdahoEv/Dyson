@@ -1,4 +1,5 @@
 -- More matrix stuff we needed that the library didn't provide.
+require 'math'
 local matrix = require 'lua-matrix/lua/matrix'
 
 -- Like the main matrix library, we assume throughout that
@@ -23,3 +24,13 @@ function matrix.tensorprod(m)
 		{m_x * m_y, m_y * m_y, m_z * m_y},
 		{m_x * m_z, m_y * m_z, m_z * m_z}}
 end
+
+function matrix.rotmatrix(m, theta)
+  local cos_theta = math.cos(theta)
+  local sin_theta = math.sin(theta)
+  return matrix:new(3,'I') * cos_theta + 
+    sin_theta * matrix.crossprodmatrix(m) + 
+    (1-cos_theta) * matrix.tensorprod(m)
+end
+
+return matrix
