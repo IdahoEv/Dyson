@@ -21,22 +21,14 @@ function Segment:getLocation()
 end
 
 -- figure current location of faces, rotated by theta from original location
-function Segment:updateFaces(theta)
+function Segment:updateFaces(rot_matrix)
   self.current_faces = {}
   for face_i, face in pairs(self.initial_faces) do
     local rotated_face = {}
     for point_i, point in pairs(face) do
-      local sin_theta = math.sin(theta)
-      local cos_theta = math.cos(theta)
-      --local rot_p = { x = point.x * cos_theta - point.y * sin_theta,
-      --		y = point.x * sin_theta + point.y * cos_theta }
-      -- This is a 3D rotation matrix around the z axis
-      local rot_p = matrix{{cos_theta,-sin_theta,0},
-                           {sin_theta, cos_theta,0},
-                           {        0,         0,1}} * point    
       --local p = { x = rot_p.x + construct_location.x,
       --	    y = rot_p.y + construct_location.y }
-      rotated_face[point_i] = rot_p
+      rotated_face[point_i] = rot_matrix * point
     end
     self.current_faces[face_i] = rotated_face
   end    

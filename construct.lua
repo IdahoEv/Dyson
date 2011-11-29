@@ -71,9 +71,14 @@ end
 function Construct:updateCoords(time)
   Spob.updateCoords(self,time)
 
-  -- Update rotation angle
+  
   self.rotation_angle = time / self.rotational_period
+  local sin_theta = math.sin(self.rotation_angle)
+  local cos_theta = math.cos(self.rotation_angle)
+  local rot_matrix = matrix{{cos_theta,-sin_theta,0},
+                       {sin_theta, cos_theta,0},
+                       {        0,         0,1}}
   for seg_i, segment in pairs(self.segments) do
-    segment:updateFaces(self.rotation_angle)
+    segment:updateFaces(rot_matrix)
   end
 end
