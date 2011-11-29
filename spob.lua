@@ -89,7 +89,7 @@ function Spob:drawOrbit(host_loc)
 end
 
 function Spob:distanceFromParent()
-  return self.location.len
+  return matrix.len(self.location)
   --return math.sqrt(
     --(self.location[1][1] * self.location[1][1]) +
     --(self.location[2][1] * self.location[2][1])
@@ -99,7 +99,7 @@ end
 
 function Spob:distanceFromPoint(point)
   local loc = self:getLocation()
-  return (loc - point).len
+  return matrix.len(loc - point)
 end
 
 -- Update the current position of this spob relative to its parent body
