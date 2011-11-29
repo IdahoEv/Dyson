@@ -12,12 +12,12 @@ function Star:initialize(host, mass)
   self.luminosity     = (self.mass / SOLAR_MASS)^MAIN_SEQUENCE_CONSTANT * SOLAR_LUMINOSITY
   self.stellar_class  = self:findClass()
   self.radius         = (self.mass / SOLAR_MASS) ^ 0.8 * SOLAR_RADIUS
-  print(string.format("Class %s star with %.2f solar masses, luminosity %.2e, and radius %.2e kM",
-    self.stellar_class,
-    (self.mass / SOLAR_MASS),
-    (self.luminosity / SOLAR_LUMINOSITY),
-    self.radius
-  ))
+--  print(string.format("Class %s star with %.2f solar masses, luminosity %.2e, and radius %.2e kM",
+--    self.stellar_class,
+--    (self.mass / SOLAR_MASS),
+--    (self.luminosity / SOLAR_LUMINOSITY),
+--    self.radius
+--  ))
 end
 
 function Star:findClass()
