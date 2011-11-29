@@ -46,11 +46,15 @@ function Construct:initialize(
 		    y = math.sin((s-1) * angle_subtended) * self.radius } 
     local stop  = { x = math.cos(s * angle_subtended) * self.radius, 
 		    y = math.sin(s * angle_subtended) * self.radius } 
-    -- Walk out the points of the face in clockwise fashion
+
+    -- Walk out the points of the face in counterclockwise fashion
+    -- counterclockwise so that a cross product of (p2-p1 X p3-p1) 
+    -- will give us a proper outward-facing normal.
     local p1 = matrix{ start.x, start.y,  half_height }
-    local p2 = matrix{ stop.x,  stop.y,   half_height }
+    local p2 = matrix{ start.x, start.y, -half_height }
     local p3 = matrix{ stop.x,  stop.y,  -half_height }
-    local p4 = matrix{ start.x, start.y, -half_height }
+    local p4 = matrix{ stop.x,  stop.y,   half_height }
+
     local faces = { { p1, p2, p3, p4 } }
     segment = Segment:new(self, faces)
     segment:rotateInitialFaces(rot_matrix)

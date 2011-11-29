@@ -27,10 +27,16 @@ sol.paintable = PaintableStar:new(sol, { R = 255, G = 255, B = 225 })
 sol:setOrbitalRadius(0)
 sol:setOrbitalPeriod(1)
 
-local ring2 = Construct:new(sol, 20, EARTH_ORBIT_RADIUS*2, EARTH_ORBIT_RADIUS, 10, 
-			    500 * SECONDS_PER_DAY, matrix:new{ .3, .3, 1 })
-ring2.name = "Asteroids?"
-ring2.paintable = PaintableConstruct:new(ring2, { R = 200, G = 100, B = 100 })
+local niven_ring = Construct:new(sol, 
+   30, 
+   EARTH_ORBIT_RADIUS * 2.5,
+   EARTH_ORBIT_RADIUS * .5, -- cylinder height, km
+   10,                      -- cylinder thickness, km
+   500 * SECONDS_PER_DAY, 
+   matrix:new{ .5, .5, 1 }
+)
+niven_ring.name = "Niven Ring"
+niven_ring.paintable = PaintableConstruct:new(niven_ring, { R = 200, G = 100, B = 100 })
 
 local kiri = Spob:new(sol) -- kiri
 kiri.name = "Kiri"
