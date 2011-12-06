@@ -25,16 +25,14 @@ function PaintableConstruct:draw()
       normal = matrix.unit_cross(face[1],face[2],face[3])
      
       view_facingness = math.abs(matrix.dot(normal, VIEW_AXIS))
-      -- FIXME:  this assumes the construct is orbiting a star.  Need to get the 
-      -- location relative to the nearest star.
-      sun_vector = face[1] + star_location
+      sun_vector = self:faceCenter(face) + star_location
       sun_facingness = matrix.dot(normal, matrix.unit(sun_vector))
       if (sun_facingness > 0) then
         illumination= 0.4 + 0.6 * sun_facingness
       else
         illumination = 0.4
       end
-      color_scale = (0.5 + 0.5 * view_facingness) * illumination
+      color_scale = (0.3 + 0.7 * view_facingness) * illumination
 
       for _, point in pairs(face) do
         local screen_x, screen_y = scale:screenCoords(point + construct_location)
@@ -51,9 +49,9 @@ function PaintableConstruct:draw()
 
       love.graphics.polygon("fill", polygon)      
       love.graphics.setColor(
-        self.color.R * .5 * color_scale, 
-        self.color.G * .5 * color_scale, 
-        self.color.B * .5 * color_scale
+        self.color.R * .8 * color_scale, 
+        self.color.G * .8 * color_scale, 
+        self.color.B * .8 * color_scale
       )
       love.graphics.polygon("line", polygon)   
     end    
@@ -61,3 +59,10 @@ function PaintableConstruct:draw()
 
 end
 
+function PaintableConstruct:faceCenter(face)
+  local sum = matrix:new{0,0,0}
+  for _, point in pairs(face) do
+    sum = sum + point
+  end
+  return sum / #face
+end
