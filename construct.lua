@@ -40,12 +40,17 @@ function Construct:initialize(
   -- construct segments around the z-axis
   for s = 1, n_segments do
     -- faces should include 6 faces in the most general case
-    -- but here we're simplifying to a single face.
+    -- but here we're simplifying to two faces.
+    local outer_radius = self.radius + self.thickness
     local half_height = math.floor(height / 2)
     local start = { x = math.cos((s-1) * angle_subtended) * self.radius, 
 		    y = math.sin((s-1) * angle_subtended) * self.radius } 
     local stop  = { x = math.cos(s * angle_subtended) * self.radius, 
 		    y = math.sin(s * angle_subtended) * self.radius } 
+    local start2 = { x = math.cos((s-1) * angle_subtended) * outer_radius , 
+		    y = math.sin((s-1) * angle_subtended) * outer_radius } 
+    local stop2  = { x = math.cos(s * angle_subtended) * outer_radius, 
+		    y = math.sin(s * angle_subtended) * outer_radius } 
 
     -- Walk out the points of the face in counterclockwise fashion
     -- counterclockwise so that a cross product of (p2-p1 X p3-p1) 
@@ -55,7 +60,12 @@ function Construct:initialize(
     local p3 = matrix{ stop.x,  stop.y,  -half_height }
     local p4 = matrix{ stop.x,  stop.y,   half_height }
 
-    local faces = { { p1, p2, p3, p4 } }
+    local p5 = matrix{ start2.x, start2.y,  half_height }
+    local p6 = matrix{ stop2.x,  stop2.y,   half_height }
+    local p7 = matrix{ stop2.x,  stop2.y,  -half_height }
+    local p8 = matrix{ start2.x, start2.y, -half_height }
+
+    local faces = { { p1, p2, p3, p4 }, {p5, p6, p7, p8} }
     segment = Segment:new(self, faces)
     segment:rotateInitialFaces(rot_matrix)
 
@@ -66,10 +76,7 @@ function Construct:initialize(
 --			  seg_i, unpack(seg)))
 --    end
   end
-
-
-  
---  print string.format(unpack(segments))
+  --  print string.format(unpack(segments))
   
 end
 
