@@ -93,11 +93,6 @@ function Construct:updateCoords(time)
 
   
   self.rotation_angle = - time / self.rotational_period
-  local sin_theta = math.sin(self.rotation_angle)
-  local cos_theta = math.cos(self.rotation_angle)
-  --local rot_matrix = matrix{{cos_theta,-sin_theta,0},
-  --                     {sin_theta, cos_theta,0},
-  --                     {        0,         0,1}}
   local rot_matrix = matrix.rotmatrix(self.rotation_axis, self.rotation_angle)
   for seg_i, segment in pairs(self.segments) do
     segment:updateFaces(rot_matrix)

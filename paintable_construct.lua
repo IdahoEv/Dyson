@@ -18,6 +18,7 @@ function PaintableConstruct:draw()
   for seg_i, segment in pairs(self.spob.segments) do
     for face_i, face in pairs(segment.current_faces) do
 
+
       polygon = {}
       normal = matrix.unit_cross(face[1],face[2],face[3])
      
@@ -34,7 +35,7 @@ function PaintableConstruct:draw()
       color_scale = (0.5 + 0.5 * view_facingness) * illumination
 
       for _, point in pairs(face) do
-        local screen_x, screen_y = scale:screenCoords(point)
+        local screen_x, screen_y = scale:screenCoords(point + construct_location)
         table.insert(polygon, screen_x)
         table.insert(polygon, screen_y)
       end

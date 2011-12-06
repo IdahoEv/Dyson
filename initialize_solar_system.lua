@@ -28,7 +28,7 @@ sol:setOrbitalRadius(0)
 sol:setOrbitalPeriod(1)
 
 local niven_ring = Construct:new(sol, 
-   30, 
+   60, 
    EARTH_ORBIT_RADIUS * 2.5,
    EARTH_ORBIT_RADIUS * .5, -- cylinder height, km
    10,                      -- cylinder thickness, km
@@ -37,6 +37,19 @@ local niven_ring = Construct:new(sol,
 )
 niven_ring.name = "Niven Ring"
 niven_ring.paintable = PaintableConstruct:new(niven_ring, { R = 200, G = 100, B = 100 })
+
+local solar_halo = Construct:new(sol, 
+   30, 
+   VENUS_ORBIT_RADIUS * 0.1,
+   VENUS_ORBIT_RADIUS * .01, -- cylinder height, km
+   10,                       -- cylinder thickness, km
+   10 * SECONDS_PER_DAY, 
+   matrix:new{ .5, .5, .25 }
+)
+solar_halo.name = "Solar Halo"
+solar_halo:setOrbitalRadius(1.2*EARTH_ORBIT_RADIUS)
+solar_halo:setOrbitalPeriod(410 * SECONDS_PER_DAY)
+solar_halo.paintable = PaintableConstruct:new(solar_halo, { R = 100, G = 220, B = 200 })
 
 local kiri = Spob:new(sol) -- kiri
 kiri.name = "Kiri"
