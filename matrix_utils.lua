@@ -48,4 +48,17 @@ function matrix.unit(v)
   return v / matrix.normf(v)
 end
 
+-- returns the surface normal of a plane defined by three points,
+-- i.e. the unit vector of the cross product of the two vectors defined
+-- by those points
+function matrix.unit_cross(v1,v2,v3)
+  return matrix.unit(matrix.cross((v2-v1),(v3-v1)))
+end
+
+function matrix.dot(v1,v2)
+  return v1[1][1]*v2[1][1] + v1[2][1]*v2[2][1] + v1[3][1]*v2[3][1]
+end
+
+
+
 return matrix

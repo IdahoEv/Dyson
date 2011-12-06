@@ -1,3 +1,5 @@
+local matrix = require 'matrix_utils'
+
 TAU = 2 * math.pi
 
 SECONDS_PER_DAY = 24 * 60 * 60
@@ -10,6 +12,8 @@ RETICLE_SPACING = 4
 RETICLE_LENGTH = 10
 
 CLICK_TOL = 50
+
+VIEW_AXIS = matrix:new{0,0,1}
 
 SOLAR_MASS        = 2e30 -- kG
 SOLAR_LUMINOSITY  = 3.839e26 -- Watts
