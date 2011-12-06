@@ -15,6 +15,8 @@ function PaintableConstruct:draw()
 
   
   local construct_location = self.spob:getLocation()
+  local star_location = construct_location + self.spob:getStar():getLocation()
+
   for seg_i, segment in pairs(self.spob.segments) do
     for face_i, face in pairs(segment.current_faces) do
 
@@ -25,7 +27,7 @@ function PaintableConstruct:draw()
       view_facingness = math.abs(matrix.dot(normal, VIEW_AXIS))
       -- FIXME:  this assumes the construct is orbiting a star.  Need to get the 
       -- location relative to the nearest star.
-      sun_vector = face[1] + construct_location
+      sun_vector = face[1] + star_location
       sun_facingness = matrix.dot(normal, matrix.unit(sun_vector))
       if (sun_facingness > 0) then
         illumination= 0.4 + 0.6 * sun_facingness

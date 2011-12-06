@@ -87,7 +87,7 @@ luna:setRadius(LUNA_RADIUS)
 luna:setOrbitalRadius(LUNA_ORBIT_RADIUS)
 luna:setOrbitalPeriod(27.3 * SECONDS_PER_DAY)
 
-local ring = Construct:new(earth, 12, EARTH_RADIUS*2, 7000, 10, SECONDS_PER_DAY, matrix:new{ 0, 0, 1})
+local ring = Construct:new(earth, 12, EARTH_RADIUS*4, 14000, 10, SECONDS_PER_DAY, matrix:new{ 0.2, 0.2, 1})
 ring.name = "Square"
 ring.paintable = PaintableConstruct:new(ring, { R = 200, G = 200, B = 200 })
 

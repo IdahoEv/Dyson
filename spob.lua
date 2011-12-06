@@ -28,6 +28,16 @@ function Spob:setHost(host)
   end
 end
 
+function Spob:getStar()
+  if instanceOf(Star, self) then
+    return self
+  elseif self.host ~= nil then
+    return self.host:getStar()
+  else 
+    return nil
+  end
+end
+
 function Spob:addSatellite(other_spob)
   table.insert(self.satellites, other_spob)
 end
