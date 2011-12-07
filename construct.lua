@@ -2,6 +2,7 @@ require "middleclass" -- definition of useful class construction methods
 require 'constants'
 require 'spob'
 require 'segment'
+require 'face'
 local matrix = require 'matrix_utils'
 
 -- Construct class: Spob composed of multiple Segments
@@ -65,7 +66,11 @@ function Construct:initialize(
     local p7 = matrix{ stop2.x,  stop2.y,  -half_height }
     local p8 = matrix{ start2.x, start2.y, -half_height }
 
-    local faces = { { p1, p2, p3, p4 }, {p5, p6, p7, p8} }
+    -- All rings are red-type on the inside, blue-type on the outside.
+    -- Todo: generalize this to be information about type that is passed in
+    -- to the Construct constructor.
+    local faces = { Face:new({p1, p2, p3, p4}, {R = 220, G = 100, B = 100}), 
+		    Face:new({p5, p6, p7, p8}, {R = 100, G = 100, B = 220}) }
     segment = Segment:new(self, faces)
     segment:rotateInitialFaces(rot_matrix)
 

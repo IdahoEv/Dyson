@@ -22,7 +22,7 @@ function PaintableConstruct:draw()
 
       
       local polygon = {}
-      local normal = matrix.unit_cross(face[1],face[2],face[3])
+      local normal = matrix.unit_cross(face.coords[1],face.coords[2],face.coords[3])
      
       local view_facingness = matrix.dot(normal, VIEW_AXIS)
 
@@ -39,7 +39,7 @@ function PaintableConstruct:draw()
         end
         local color_scale = (0.4 + 0.6 * view_facingness) * illumination
 
-        for _, point in pairs(face) do
+        for _, point in pairs(face.coords) do
           local screen_x, screen_y = scale:screenCoords(point + construct_location)
           table.insert(polygon, screen_x)
           table.insert(polygon, screen_y)
@@ -47,17 +47,17 @@ function PaintableConstruct:draw()
         -- Need line mode to be able to see edge-on polygons!
           
         love.graphics.setColor(
-          self.color.R * color_scale, 
-          self.color.G * color_scale, 
-          self.color.B * color_scale
+          face.color.R * color_scale, 
+          face.color.G * color_scale, 
+          face.color.B * color_scale
         )
 
         love.graphics.polygon("fill", polygon)      
         local wireframe_scale = math.max(0.8 * color_scale, 0.3)
         love.graphics.setColor(
-          self.color.R * wireframe_scale, 
-          self.color.G * wireframe_scale, 
-          self.color.B * wireframe_scale
+          face.color.R * wireframe_scale, 
+          face.color.G * wireframe_scale, 
+          face.color.B * wireframe_scale
         )
         love.graphics.polygon("line", polygon)   
       end
@@ -68,8 +68,8 @@ end
 
 function PaintableConstruct:faceCenter(face)
   local sum = matrix:new{0,0,0}
-  for _, point in pairs(face) do
+  for _, point in pairs(face.coords) do
     sum = sum + point
   end
-  return sum / #face
+  return sum / #face.coords
 end

@@ -1,6 +1,7 @@
 require 'constants'
 require 'middleclass'
 require "spob"
+require 'face'
 
 local matrix = require 'matrix_utils'
 
@@ -25,10 +26,10 @@ function Segment:rotateFaces(rot_matrix)
   local result_faces = {}
   for face_i, face in pairs(self.initial_faces) do
     local rotated_face = {}
-    for point_i, point in pairs(face) do
+    for point_i, point in pairs(face.coords) do
       rotated_face[point_i] = rot_matrix * point
     end
-    result_faces[face_i] = rotated_face
+    result_faces[face_i] = Face:new(rotated_face, face.color)
   end    
   return result_faces
 end

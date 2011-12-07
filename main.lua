@@ -11,8 +11,10 @@ require 'fps'
 require 'preferences'
 require 'text'
 require 'help'
+-- require 'profiler'
 
 function love.load()
+--  profiler.start()
   initializeScreen()
   scale = ScreenScale:new()
   scale.screen_scale = 0.6e9
@@ -50,7 +52,9 @@ function love.keypressed(key, unicode)
   elseif  key == 'up'     then scale:zoomIn(KEYBOARD_ZOOM_FACTOR)
   elseif  key == 'down'   then scale:zoomOut(KEYBOARD_ZOOM_FACTOR)
   elseif  key == 'f'      then toggleFullscreen()
-  elseif  key == 'q'      then love.event.push('q')
+  elseif  key == 'q'      then 
+--    profiler.stop()
+    love.event.push('q')
   elseif  key == ' '      then preferences.toggle('pause_time')
   elseif  key == 'p'      then preferences.toggle('enlarge_planets')
   elseif  key == 'o'      then preferences.toggle('show_orbits')
