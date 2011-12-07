@@ -25,11 +25,16 @@ end
 function Segment:rotateFaces(rot_matrix)
   local result_faces = {}
   for face_i, face in pairs(self.initial_faces) do
-    local rotated_face = {}
+    local rotated_coords = {}
     for point_i, point in pairs(face.coords) do
-      rotated_face[point_i] = rot_matrix * point
+      rotated_coords[point_i] = rot_matrix * point
     end
-    result_faces[face_i] = Face:new(rotated_face, face.color)
+    -- We really need a copy constructor here, so types propagate
+    if instanceOf(FaceAgro, face) then
+      result_faces[face_i] = FaceAgro:new(rotated_coords)
+    else
+      result_faces[face_i] = Face:new(rotated_coords, face.color)
+    end
   end    
   return result_faces
 end

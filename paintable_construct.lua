@@ -49,7 +49,26 @@ function PaintableConstruct:draw()
           face.color.G * color_scale, 
           face.color.B * color_scale
         )
-        love.graphics.polygon("fill", polygon)      
+	love.graphics.polygon("fill", polygon)      
+	if face.image then
+	  -- Compute the center of the polygon
+	  local npts = #polygon/2
+	  local x_sum = 0
+	  local y_sum = 0
+	  for p = 1,npts*2,2 do
+	    x_sum = x_sum + polygon[p]
+	    y_sum = y_sum + polygon[p+1]
+	  end
+	  local x_mean = x_sum / npts
+	  local y_mean = y_sum / npts
+	  -- Hack for now; assume face has at least 3 points
+	  local height = math.min(math.sqrt((polygon[1] - polygon[3])^2 +
+					    (polygon[2] - polygon[4])^2),
+				  math.sqrt((polygon[3] - polygon[5])^2 +
+					    (polygon[4] - polygon[6])^2))
+	  local scale_factor = 0.8 * height / face.image:getHeight()
+	  love.graphics.draw(face.image, x_mean-height/2, y_mean-height/2, 0, scale_factor)
+	end
         local wireframe_scale = math.max(0.8 * color_scale, 0.3)
         love.graphics.setColor(
 	  self.color.R * wireframe_scale, 
