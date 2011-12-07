@@ -44,20 +44,17 @@ function PaintableConstruct:draw()
           table.insert(polygon, screen_x)
           table.insert(polygon, screen_y)
         end
-        -- Need line mode to be able to see edge-on polygons!
-          
         love.graphics.setColor(
           face.color.R * color_scale, 
           face.color.G * color_scale, 
           face.color.B * color_scale
         )
-
         love.graphics.polygon("fill", polygon)      
         local wireframe_scale = math.max(0.8 * color_scale, 0.3)
         love.graphics.setColor(
-          face.color.R * wireframe_scale, 
-          face.color.G * wireframe_scale, 
-          face.color.B * wireframe_scale
+	  self.color.R * wireframe_scale, 
+          self.color.G * wireframe_scale, 
+          self.color.B * wireframe_scale
         )
         love.graphics.polygon("line", polygon)   
       end
